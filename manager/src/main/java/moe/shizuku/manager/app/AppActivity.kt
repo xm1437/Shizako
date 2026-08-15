@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import androidx.annotation.RequiresApi
 import moe.shizuku.manager.R
 import rikka.core.res.isNight
@@ -11,6 +12,46 @@ import rikka.core.res.resolveColor
 import rikka.material.app.MaterialActivity
 
 abstract class AppActivity : MaterialActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        applyHighRefreshRate()
+    }
+
+    /**
+     * Prefer the highest refresh rate supported by the display so that UI
+     * animations run smoothly on high refresh rate devices.
+     *
+     * On Android 11+ (API 30) the same can be declared per-activity via
+     * android:preferredRefreshRate in the manifest, but setting the window's
+     * preferred display mode at runtime works from API 23 on every device.
+     */
+    private fun applyHighRefreshRate() {
+        val window = window ?: return
+        val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            this.display
+        } else {
+            @Suppress("DEPRECATION")
+            window.windowManager.defaultDisplay
+        } ?: return
+
+        val modes = display.supportedModes
+        if (modes.isEmpty()) return
+
+        val current = display.mode
+        // Prefer modes with the same resolution as the current one, so devices
+        // whose peak refresh mode uses a lower resolution keep their full size.
+        val best = modes
+            .filter { it.physicalWidth == current.physicalWidth && it.physicalHeight == current.physicalHeight }
+            .maxByOrNull { it.refreshRate }
+            ?: modes.maxByOrNull { it.refreshRate }
+            ?: return
+
+        val lp = window.attributes
+        if (lp.preferredDisplayModeId == best.modeId) return
+        lp.preferredDisplayModeId = best.modeId
+        window.attributes = lp
+    }
 
     override fun computeUserThemeKey(): String {
         return ThemeHelper.getTheme(this) + ThemeHelper.isUsingSystemColor()
