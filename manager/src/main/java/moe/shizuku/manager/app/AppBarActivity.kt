@@ -1,6 +1,5 @@
 package moe.shizuku.manager.app
 
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -12,7 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.AppBarLayout
 import moe.shizuku.manager.R
-import moe.shizuku.manager.utils.FrostDrawable
 import rikka.core.ktx.unsafeLazy
 
 abstract class AppBarActivity : AppActivity() {
@@ -29,39 +27,11 @@ abstract class AppBarActivity : AppActivity() {
         findViewById<Toolbar>(R.id.toolbar)
     }
 
-    companion object {
-
-        /** Decoded once per process; ~2.5MB at 540x1138. */
-        private var frostBitmap: android.graphics.Bitmap? = null
-
-        // Slightly stronger than the window background's #B3 white so the bar reads as frosted glass.
-        private const val FROST_SCRIM = 0xC8FFFFFF.toInt()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setContentView(getLayoutId())
 
         setSupportActionBar(toolbar)
-        applyFrostBackground()
-    }
-
-    private fun applyFrostBackground() {
-        val bmp = frostBitmap ?: BitmapFactory.decodeResource(
-            resources, R.drawable.bg_wallpaper_blur
-        )?.also { frostBitmap = it } ?: return
-
-        val frost = FrostDrawable(bmp, FROST_SCRIM)
-        toolbarContainer.background = frost
-
-        // The wallpaper is stretched to the whole window; keep the blurred copy
-        // aligned with it as the window (root view) size changes.
-        rootView.addOnLayoutChangeListener { _, left, top, right, bottom, _, _, _, _ ->
-            frost.windowWidth = right - left
-            frost.windowHeight = bottom - top
-        }
-        frost.windowWidth = rootView.width
-        frost.windowHeight = rootView.height
     }
 
     @LayoutRes
