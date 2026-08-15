@@ -140,6 +140,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
 
     <!-- Notification -->
     <string name="notification_channel_service_status">Service start status</string>
+    <string name="notification_channel_status">Service status</string>
     <string name="notification_service_starting">Shizako service is starting…</string>
     <string name="notification_service_start_failed">Start Shizako service failed.</string>
     <string name="notification_service_start_no_root">Failed to request root permission.</string>
