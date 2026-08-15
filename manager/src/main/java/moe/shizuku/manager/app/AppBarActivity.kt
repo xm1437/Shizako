@@ -1,6 +1,5 @@
 package moe.shizuku.manager.app
 
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -10,9 +9,10 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
+import moe.shizuku.blurview.BlurTarget
+import moe.shizuku.blurview.BlurView
 import com.google.android.material.appbar.AppBarLayout
 import moe.shizuku.manager.R
-import moe.shizuku.manager.utils.FrostDrawable
 import rikka.core.ktx.unsafeLazy
 
 abstract class AppBarActivity : AppActivity() {
@@ -29,44 +29,47 @@ abstract class AppBarActivity : AppActivity() {
         findViewById<Toolbar>(R.id.toolbar)
     }
 
-    companion object {
-
-        /** Decoded once per process; ~2.5MB at 540x1138. */
-        private var frostBitmap: android.graphics.Bitmap? = null
-
-        // 94% white: much more solid than the content area's ~70% white mask,
-        // so the bar is clearly distinguishable and text stays readable,
-        // while the blurred wallpaper tint still shows through.
-        private const val FROST_SCRIM = 0xF0FFFFFF.toInt()
+    private val blurView: BlurView by unsafeLazy {
+        findViewById<BlurView>(R.id.blur_view)
     }
+
+    /**
+     * Everything below the app bar is wrapped in a BlurTarget so the BlurView
+     * in the toolbar can snapshot and blur it in real time as it scrolls
+     * behind the bar (Bundled source of https://github.com/Dimezis/BlurView (Apache-2.0),
+     * repackaged under moe.shizuku.blurview.).
+     */
+    private var blurTarget: BlurTarget? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setContentView(getLayoutId())
 
         setSupportActionBar(toolbar)
-        applyFrostBackground()
+
+        // The M3 AppBarLayout style applies a surface background tint over any
+        // background; the frosted glass is drawn by the BlurView child instead,
+        // so the container itself must stay backgroundless. See
+        // material-components#1597.
+        toolbarContainer.backgroundTintList = null
+
+        // Fragment-based activities declare their BlurTarget directly in the
+        // layout (appbar_fragment_activity.xml).
+        findViewById<BlurTarget>(R.id.blur_target)?.let { attachBlur(it) }
     }
 
-    private fun applyFrostBackground() {
-        val bmp = frostBitmap ?: BitmapFactory.decodeResource(
-            resources, R.drawable.bg_wallpaper_blur
-        )?.also { frostBitmap = it } ?: return
+    private fun attachBlur(target: BlurTarget) {
+        if (blurTarget === target) return
+        blurTarget = target
 
-        val frost = FrostDrawable(bmp, FROST_SCRIM)
-        // AppBarLayout's style applies a surface backgroundTintList to every
-        // background; clearing it keeps our drawable untinted.
-        toolbarContainer.backgroundTintList = null
-        toolbarContainer.background = frost
-
-        // The wallpaper is stretched to the whole window; keep the blurred copy
-        // aligned with it as the window (root view) size changes.
-        rootView.addOnLayoutChangeListener { _, left, top, right, bottom, _, _, _, _ ->
-            frost.windowWidth = right - left
-            frost.windowHeight = bottom - top
-        }
-        frost.windowWidth = rootView.width
-        frost.windowHeight = rootView.height
+        // The window background (wallpaper + mask) is drawn under each blurred
+        // frame so the frosted bar stays opaque even where the content is
+        // fully transparent.
+        val windowBackground = window?.decorView?.background
+        val radius = 20f * resources.displayMetrics.density
+        blurView.setupWith(target)
+            .setFrameClearDrawable(windowBackground)
+            .setBlurRadius(radius)
     }
 
     @LayoutRes
@@ -75,8 +78,7 @@ abstract class AppBarActivity : AppActivity() {
     }
 
     override fun setContentView(layoutResID: Int) {
-        layoutInflater.inflate(layoutResID, rootView, true)
-        rootView.bringChildToFront(toolbarContainer)
+        setContentView(layoutInflater.inflate(layoutResID, null, false))
     }
 
     override fun setContentView(view: View?) {
@@ -84,7 +86,19 @@ abstract class AppBarActivity : AppActivity() {
     }
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        rootView.addView(view, 0, params)
+        val content = view ?: return
+
+        val target = blurTarget ?: BlurTarget(this).also {
+            it.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            rootView.addView(it, 0)
+            attachBlur(it)
+        }
+        target.addView(content, 0, params)
+
+        rootView.bringChildToFront(toolbarContainer)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

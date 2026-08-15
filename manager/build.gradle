@@ -167,6 +167,11 @@ dependencies {
 
     implementation 'com.github.topjohnwu.libsu:core:6.0.0'
 
+    // Real-time frosted glass for the app bar: https://github.com/Dimezis/BlurView
+    // (RenderNode/RenderEffect on API 31+, RenderScript fallback below).
+    // Bundled as source in src/main/java/eightbitlab/com/blurview (Apache-2.0):
+    // the build sandbox cannot reach Maven mirrors reliably.
+
     implementation 'dev.rikka.rikkax.appcompat:appcompat:1.6.1'
     implementation 'dev.rikka.rikkax.compatibility:compatibility:2.0.0'
     implementation 'dev.rikka.rikkax.core:core-ktx:1.4.1'

@@ -11,10 +11,17 @@
     app:fitsSystemWindowsInsets="start|end"
     tools:viewBindingIgnore="true">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <moe.shizuku.blurview.BlurTarget
+        android:id="@+id/blur_target"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </moe.shizuku.blurview.BlurTarget>
 
     <include layout="@layout/appbar" />
 

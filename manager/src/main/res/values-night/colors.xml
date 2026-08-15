@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark variant of the real-time frosted app bar overlay (BlurView):
+         dark scrim keeps light toolbar text and status bar icons readable
+         while blurred content shows through. -->
+    <color name="appbar_frost_scrim">#D9191C20</color>
+</resources>

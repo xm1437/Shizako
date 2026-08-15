@@ -17,6 +17,10 @@
 
 -keepnames class moe.shizuku.api.BinderContainer
 
+# BlurView is inflated from XML; keep its view constructors and facade
+# (https://github.com/Dimezis/BlurView)
+-keep class moe.shizuku.blurview.** { *; }
+
 # Missing class android.app.IProcessObserver$Stub
 # Missing class android.app.IUidObserver$Stub
 -keepclassmembers class rikka.hidden.compat.adapter.ProcessObserverAdapter {

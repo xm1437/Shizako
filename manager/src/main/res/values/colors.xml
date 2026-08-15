@@ -4,4 +4,10 @@
 
     <color name="app_color_light">#3F51B5</color>
     <color name="app_color_dark">#B1B8DF</color>
+
+    <!-- Real-time frosted app bar overlay (BlurView). Slightly more solid
+         than the content area's ~70% white wallpaper mask so the bar reads
+         as a distinct glass layer, while the blurred scrolling content
+         behind it still shows through. -->
+    <color name="appbar_frost_scrim">#D9FFFFFF</color>
 </resources>
