@@ -130,6 +130,15 @@ class AdbPairingService : Service() {
         adbMdns?.stop()
     }
 
+    override fun onTimeout(startId: Int) {
+        // A shortService foreground service must stop within ~3 minutes,
+        // otherwise the system raises an ANR. Stop everything gracefully.
+        super.onTimeout(startId)
+        stopSearch()
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         stopSearch()

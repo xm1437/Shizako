@@ -69,7 +69,8 @@ class AdbPairDialogFragment : DialogFragment() {
             intent.putExtra(":settings:fragment_args_key", "toggle_adb_wireless")
             try {
                 it.context.startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 

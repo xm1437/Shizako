@@ -52,7 +52,10 @@ class AdbPairingTutorialActivity : AppBarActivity() {
                 intent.putExtra(":settings:fragment_args_key", "toggle_adb_wireless")
                 try {
                     context.startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
+                } catch (e: Exception) {
+                    // Some vendor ROMs (ColorOS/MIUI/OriginOS) throw SecurityException
+                    // because their settings components require vendor permissions.
+                    e.printStackTrace()
                 }
             }
 
@@ -61,7 +64,8 @@ class AdbPairingTutorialActivity : AppBarActivity() {
                 intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
                 try {
                     context.startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }
