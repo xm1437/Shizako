@@ -9,6 +9,8 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import moe.shizuku.blurview.BlurTarget
 import moe.shizuku.blurview.BlurView
 import com.google.android.material.appbar.AppBarLayout
@@ -52,6 +54,22 @@ abstract class AppBarActivity : AppActivity() {
         // so the container itself must stay backgroundless. See
         // material-components#1597.
         toolbarContainer.backgroundTintList = null
+
+        // Extend the frost under the status bar. The AppBarLayout used to
+        // inset itself via fitsSystemWindows, which pushed the BlurView below
+        // the status bar and left an unfrosted strip at the top of the screen.
+        // This listener replaces the AppBarLayout's internal inset handling:
+        // the inset is applied to the BlurView as padding instead, and since
+        // BlurView draws its blur, noise and scrim over its full bounds
+        // (padding only offsets the toolbar child), the frosted glass now
+        // covers the status bar area as well.
+        ViewCompat.setOnApplyWindowInsetsListener(toolbarContainer) { _, insets ->
+            val top = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            ).top
+            blurView.setPadding(0, top, 0, 0)
+            insets
+        }
 
         // Fragment-based activities declare their BlurTarget directly in the
         // layout (appbar_fragment_activity.xml).
