@@ -53,4 +53,13 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_debug">
+
+        <Preference
+            android:key="crash_logs"
+            android:summary="@string/settings_crash_logs_summary"
+            android:title="@string/settings_crash_logs" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

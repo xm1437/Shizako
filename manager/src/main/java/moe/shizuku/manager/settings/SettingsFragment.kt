@@ -2,6 +2,8 @@ package moe.shizuku.manager.settings
 
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,9 +11,13 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ScrollView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.*
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
@@ -22,6 +28,7 @@ import moe.shizuku.manager.ktx.isComponentEnabled
 import moe.shizuku.manager.ktx.setComponentEnabled
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.receiver.BootCompleteReceiver
+import moe.shizuku.manager.utils.CrashLog
 import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.core.util.ResourceUtils
 import rikka.material.app.LocaleDelegate
@@ -137,6 +144,95 @@ class SettingsFragment : PreferenceFragmentCompat() {
             translationContributorsPreference.summary = contributors
         } else {
             translationContributorsPreference.isVisible = false
+        }
+
+        crashLogsPreference = findPreference("crash_logs")!!
+        updateCrashLogsSummary()
+        crashLogsPreference.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener { showCrashLogsDialog(); true }
+    }
+
+    private lateinit var crashLogsPreference: Preference
+
+    private fun updateCrashLogsSummary() {
+        val count = CrashLog.files().size
+        crashLogsPreference.summary = if (count == 0) {
+            getString(R.string.settings_crash_logs_summary)
+        } else {
+            getString(R.string.settings_crash_logs_count, count)
+        }
+    }
+
+    private fun showCrashLogsDialog() {
+        val context = requireContext()
+        val files = CrashLog.files()
+        if (files.isEmpty()) {
+            Toast.makeText(context, R.string.settings_crash_logs_empty, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val labels = files.map { displayName(it) }.toTypedArray()
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.settings_crash_logs)
+            .setItems(labels) { _, which -> showCrashLogContent(files[which]) }
+            .setNegativeButton(R.string.settings_crash_logs_delete_all) { _, _ ->
+                CrashLog.deleteAll()
+                updateCrashLogsSummary()
+                Toast.makeText(context, R.string.settings_crash_logs_deleted, Toast.LENGTH_SHORT).show()
+            }
+            .setPositiveButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun showCrashLogContent(file: java.io.File) {
+        val context = requireContext()
+        val content = file.readText()
+
+        val padding = (context.resources.displayMetrics.density * 16).toInt()
+        val textView = TextView(context).apply {
+            typeface = Typeface.MONOSPACE
+            setTextIsSelectable(true)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+            text = content
+        }
+        val scrollView = ScrollView(context).apply {
+            setPadding(padding, padding / 2, padding, 0)
+            addView(textView)
+        }
+
+        MaterialAlertDialogBuilder(context)
+            .setTitle(displayName(file))
+            .setView(scrollView)
+            .setNeutralButton(R.string.settings_crash_logs_share) { _, _ ->
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_SUBJECT, file.name)
+                    putExtra(Intent.EXTRA_TEXT, content)
+                }
+                try {
+                    startActivity(Intent.createChooser(intent, file.name))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            .setPositiveButton(R.string.settings_crash_logs_delete) { _, _ ->
+                file.delete()
+                updateCrashLogsSummary()
+                Toast.makeText(context, R.string.settings_crash_logs_deleted, Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun displayName(file: java.io.File): String {
+        // crash-yyyyMMdd-HHmmss.txt -> yyyy-MM-dd HH:mm:ss
+        return try {
+            val name = file.name.removePrefix("crash-").removeSuffix(".txt")
+            val sdf = java.text.SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US)
+            val out = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            out.format(sdf.parse(name)!!)
+        } catch (e: Exception) {
+            file.name
         }
     }
 

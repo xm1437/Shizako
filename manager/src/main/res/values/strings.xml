@@ -115,6 +115,16 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="settings_startup">Startup</string>
     <string name="settings_translation_contributors">Translation contributors</string>
     <string name="settings_translation">Participate in translation</string>
+
+    <string name="settings_debug">Debug</string>
+    <string name="settings_crash_logs">Crash logs</string>
+    <string name="settings_crash_logs_summary">Crashes are saved here when the app unexpectedly exits</string>
+    <string name="settings_crash_logs_empty">No crash logs</string>
+    <string name="settings_crash_logs_count">%1$d crash log(s)</string>
+    <string name="settings_crash_logs_share">Share</string>
+    <string name="settings_crash_logs_delete">Delete</string>
+    <string name="settings_crash_logs_delete_all">Delete all</string>
+    <string name="settings_crash_logs_deleted">Deleted</string>
     <string name="settings_translation_summary">Help us translate %s into your language</string>
     <string name="settings_start_on_boot">Start on boot (root)</string>
     <string name="settings_start_on_boot_summary">For rooted devices, Shizako is able to start automatically on boot</string>

@@ -52,6 +52,16 @@
     <string name="settings_translation_contributors">翻译贡献者</string>
     <string name="translation_contributors"/>
     <string name="settings_translation">参与翻译</string>
+
+    <string name="settings_debug">调试</string>
+    <string name="settings_crash_logs">崩溃日志</string>
+    <string name="settings_crash_logs_summary">应用闪退时会自动保存崩溃记录在这里</string>
+    <string name="settings_crash_logs_empty">暂无崩溃记录</string>
+    <string name="settings_crash_logs_count">%1$d 条崩溃记录</string>
+    <string name="settings_crash_logs_share">分享</string>
+    <string name="settings_crash_logs_delete">删除</string>
+    <string name="settings_crash_logs_delete_all">全部删除</string>
+    <string name="settings_crash_logs_deleted">已删除</string>
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
     <string name="dialog_adb_port">端口号</string>
     <string name="adb_pairing">狠狠地蹂躏调教</string>
