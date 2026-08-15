@@ -97,6 +97,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activation.OneClickActivationActivity"
+            android:exported="false"
+            android:label="@string/activation_title"
+            android:parentActivityName=".settings.SettingsActivity" />
+        <activity
             android:name=".starter.StarterActivity"
             android:label="@string/starter" />
         <activity

@@ -125,6 +125,37 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="settings_crash_logs_delete">Delete</string>
     <string name="settings_crash_logs_delete_all">Delete all</string>
     <string name="settings_crash_logs_deleted">Deleted</string>
+
+    <!-- One-click activation -->
+    <string name="settings_activation">One-click activation</string>
+    <string name="settings_activation_summary">Activate apps that normally need ADB commands from a computer (Brevent, Stopapp, etc.)</string>
+    <string name="activation_title">One-click activation</string>
+    <string name="activation_subtitle">Run the ADB commands that used to require a computer, right from here</string>
+    <string name="activation_service_running">Shizako is running (uid %1$d), ready to run activation commands</string>
+    <string name="activation_service_not_running">Shizaku is not running, please start the service from the home page first</string>
+    <string name="activation_activate">Activate</string>
+    <string name="activation_activated">Activated</string>
+    <string name="activation_status_not_installed">%1$s · not installed</string>
+    <string name="activation_status_installed">%1$s · installed</string>
+    <string name="activation_status_activated">%1$s · already activated</string>
+    <string name="activation_status_not_activated">%1$s · installed, not activated</string>
+    <string name="activation_status_checking">%1$s</string>
+    <string name="activation_note_device_owner">Requires all accounts and secondary users (guest mode / app twin) to be removed first; you can add them back after activation. Vendor ROM quirks may apply.</string>
+    <string name="activation_note_brevent">The Brevent server needs to be activated again after every reboot.</string>
+    <string name="activation_custom_title">Custom command</string>
+    <string name="activation_custom_hint">Any shell command, e.g. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Command is empty</string>
+    <string name="activation_run">Run</string>
+    <string name="activation_running">Running…</string>
+    <string name="activation_success">Activated</string>
+    <string name="activation_failed">Failed, see output below</string>
+    <string name="activation_failed_with_code">Failed (exit code %1$d), see output below</string>
+    <string name="activation_timeout">The command is still running; stopped waiting (normal for server-like commands)</string>
+    <string name="activation_output">Output</string>
+    <string name="activation_output_empty">(no output yet)</string>
+    <string name="activation_copy">Copy</string>
+    <string name="activation_copied">Copied</string>
+
     <string name="settings_translation_summary">Help us translate %s into your language</string>
     <string name="settings_start_on_boot">Start on boot (root)</string>
     <string name="settings_start_on_boot_summary">For rooted devices, Shizako is able to start automatically on boot</string>

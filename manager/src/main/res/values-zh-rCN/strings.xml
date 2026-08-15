@@ -63,6 +63,37 @@
     <string name="settings_crash_logs_delete">删除</string>
     <string name="settings_crash_logs_delete_all">全部删除</string>
     <string name="settings_crash_logs_deleted">已删除</string>
+
+    <!-- One-click activation -->
+    <string name="settings_activation">一键激活</string>
+    <string name="settings_activation_summary">激活原本需要电脑 ADB 指令的应用（黑域、小黑屋等）</string>
+    <string name="activation_title">一键激活</string>
+    <string name="activation_subtitle">让 Shizako酱替主人执行那些原本需要电脑的指令❤️</string>
+    <string name="activation_service_running">Shizako 正在运行（uid %1$d），可以执行激活指令</string>
+    <string name="activation_service_not_running">Shizako 未运行，请先回到主页启动服务</string>
+    <string name="activation_activate">激活</string>
+    <string name="activation_activated">已激活</string>
+    <string name="activation_status_not_installed">%1$s · 未安装</string>
+    <string name="activation_status_installed">%1$s · 已安装</string>
+    <string name="activation_status_activated">%1$s · 已激活</string>
+    <string name="activation_status_not_activated">%1$s · 已安装，未激活</string>
+    <string name="activation_status_checking">%1$s</string>
+    <string name="activation_note_device_owner">需要先移除设备上的全部账号与多用户（访客模式/应用双开），激活后可以恢复。部分厂商系统可能有兼容性限制。</string>
+    <string name="activation_note_brevent">黑域服务在每次重启手机后需要重新激活。</string>
+    <string name="activation_custom_title">自定义命令</string>
+    <string name="activation_custom_hint">任意 shell 命令，例如 dpm set-device-owner …</string>
+    <string name="activation_custom_empty">命令为空</string>
+    <string name="activation_run">运行</string>
+    <string name="activation_running">正在执行…</string>
+    <string name="activation_success">激活成功</string>
+    <string name="activation_failed">激活失败，请查看下方输出</string>
+    <string name="activation_failed_with_code">激活失败（退出码 %1$d），请查看下方输出</string>
+    <string name="activation_timeout">命令仍在运行，已停止等待（服务型命令属正常现象）</string>
+    <string name="activation_output">输出</string>
+    <string name="activation_output_empty">（暂无输出）</string>
+    <string name="activation_copy">复制</string>
+    <string name="activation_copied">已复制</string>
+
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
     <string name="dialog_adb_port">端口号</string>
     <string name="adb_pairing">狠狠地蹂躏调教</string>
