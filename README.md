@@ -10,7 +10,7 @@
 
 [![Release](https://img.shields.io/github/v/release/xm1437/Shizako?style=flat-square&label=%E7%89%88%E6%9C%AC)](https://github.com/xm1437/Shizako/releases)
 [![Downloads](https://img.shields.io/github/downloads/xm1437/Shizako/total?style=flat-square&label=%E4%B8%8B%E8%BD%BD)](https://github.com/xm1437/Shizako/releases)
-[![Platform](https://img.shields.io/badge/Android-6.0%2B-34A853?style=flat-square&logo=android&logoColor=white)](https://github.com/xm1437/Shizako/releases)
+[![Platform](https://img.shields.io/badge/Android-7.0%2B-34A853?style=flat-square&logo=android&logoColor=white)](https://github.com/xm1437/Shizako/releases)
 [![Based on](https://img.shields.io/badge/%E5%9F%BA%E4%BA%8E-Shizuku%2013.x-3F51B5?style=flat-square)](https://github.com/RikkaApps/Shizuku)
 [![License](https://img.shields.io/github/license/xm1437/Shizako?style=flat-square)](LICENSE)
 
@@ -35,7 +35,7 @@ Root 不是获取特权的唯一途径。Shizako 把 ADB 或 Root 启动的特�
 
 | 要求 | 说明 |
 |------|------|
-| 系统版本 | Android 6.0 及以上 |
+| 系统版本 | Android 7.0 及以上 |
 | 无线调试激活 | 需 Android 11 及以上 |
 | USB / Root 激活 | 无额外要求 |
 
