@@ -35,7 +35,11 @@ public class ShizukuUserServiceManager extends UserServiceManager {
         return ServiceStarter.commandForUserService(
                 appProcess,
                 ShizukuService.getManagerApplicationInfo().sourceDir,
-                token, packageName, classname, processNameSuffix, callingUid, debug);
+                token, packageName, classname, processNameSuffix, callingUid,
+                // Shizako runs under a renamed applicationId; the user service process
+                // needs it to send its binder back through the manager provider.
+                ShizukuService.getManagerApplicationInfo().packageName,
+                debug);
     }
 
     @Override

@@ -43,19 +43,19 @@ public class ServiceStarter {
 
     private static final String USER_SERVICE_CMD_FORMAT = "(CLASSPATH='%s' %s%s /system/bin " +
             "--nice-name='%s' moe.shizuku.starter.ServiceStarter " +
-            "--token='%s' --package='%s' --class='%s' --uid=%d%s)&";
+            "--token='%s' --package='%s' --class='%s' --uid=%d --manager-package='%s'%s)&";
 
     // DeathRecipient will automatically be unlinked when all references to the
     // binder is dropped, so we hold the reference here.
     @SuppressWarnings("FieldCanBeLocal")
     private static IBinder shizukuBinder;
 
-    public static String commandForUserService(String appProcess, String managerApkPath, String token, String packageName, String classname, String processNameSuffix, int callingUid, boolean debug) {
+    public static String commandForUserService(String appProcess, String managerApkPath, String token, String packageName, String classname, String processNameSuffix, int callingUid, String managerPackageName, boolean debug) {
         String processName = String.format("%s:%s", packageName, processNameSuffix);
         return String.format(Locale.ENGLISH, USER_SERVICE_CMD_FORMAT,
                 managerApkPath, appProcess, debug ? (" " + DEBUG_ARGS) : "",
                 processName,
-                token, packageName, classname, callingUid, debug ? (" " + "--debug-name=" + processName) : "");
+                token, packageName, classname, callingUid, managerPackageName, debug ? (" " + "--debug-name=" + processName) : "");
     }
 
     public static void main(String[] args) {
@@ -65,6 +65,22 @@ public class ServiceStarter {
 
         IBinder service;
         String token;
+        String managerPackageName = null;
+
+        // The manager package is injected by the server as --manager-package in the
+        // start command. Upstream Shizuku hard-codes "moe.shizuku.privileged.api"
+        // here; Shizako ships under a different applicationId, so without this the
+        // user service process cannot find the manager provider to send its binder
+        // back, and the server times out after 30s ("Service record ... is not
+        // started in 30000 ms").
+        for (String arg : args) {
+            if (arg.startsWith("--manager-package=")) {
+                managerPackageName = arg.substring("--manager-package=".length());
+            }
+        }
+        if (managerPackageName == null) {
+            managerPackageName = "moe.shizuku.privileged.api";
+        }
 
         UserService.setTag(TAG);
         Pair<IBinder, String> result = UserService.create(args);
@@ -77,7 +93,7 @@ public class ServiceStarter {
         service = result.first;
         token = result.second;
 
-        if (!sendBinder(service, token)) {
+        if (!sendBinder(service, token, managerPackageName)) {
             System.exit(1);
         }
 
@@ -87,13 +103,12 @@ public class ServiceStarter {
         Log.i(TAG, "service exited");
     }
 
-    private static boolean sendBinder(IBinder binder, String token) {
-        return sendBinder(binder, token, true);
+    private static boolean sendBinder(IBinder binder, String token, String managerPackageName) {
+        return sendBinder(binder, token, managerPackageName, true);
     }
 
-    private static boolean sendBinder(IBinder binder, String token, boolean retry) {
-        String packageName = "moe.shizuku.privileged.api";
-        String name = packageName + ".shizuku";
+    private static boolean sendBinder(IBinder binder, String token, String managerPackageName, boolean retry) {
+        String name = managerPackageName + ".shizuku";
         int userId = 0;
         IContentProvider provider = null;
 
@@ -109,10 +124,10 @@ public class ServiceStarter {
                 if (retry) {
                     // For unknown reason, sometimes this could happens
                     // Kill Shizuku app and try again could work
-                    ActivityManagerApis.forceStopPackageNoThrow(packageName, userId);
-                    Log.e(TAG, String.format("kill %s in user %d and try again", packageName, userId));
+                    ActivityManagerApis.forceStopPackageNoThrow(managerPackageName, userId);
+                    Log.e(TAG, String.format("kill %s in user %d and try again", managerPackageName, userId));
                     Thread.sleep(1000);
-                    return sendBinder(binder, token, false);
+                    return sendBinder(binder, token, managerPackageName, false);
                 }
                 return false;
             }
@@ -130,7 +145,7 @@ public class ServiceStarter {
             if (reply != null) {
                 reply.setClassLoader(BinderContainer.class.getClassLoader());
 
-                Log.i(TAG, String.format("send binder to %s in user %d", packageName, userId));
+                Log.i(TAG, String.format("send binder to %s in user %d", managerPackageName, userId));
                 BinderContainer container = reply.getParcelable(EXTRA_BINDER);
 
                 if (container != null && container.binder != null && container.binder.pingBinder()) {
@@ -147,7 +162,7 @@ public class ServiceStarter {
 
             return false;
         } catch (Throwable tr) {
-            Log.e(TAG, String.format("failed send binder to %s in user %d", packageName, userId), tr);
+            Log.e(TAG, String.format("failed send binder to %s in user %d", managerPackageName, userId), tr);
             return false;
         } finally {
             if (provider != null) {
