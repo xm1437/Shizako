@@ -13,6 +13,7 @@ import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_ALLOWED
 import static rikka.shizuku.ShizukuApiConstants.REQUEST_PERMISSION_REPLY_IS_ONETIME;
 import static rikka.shizuku.server.ServerConstants.MANAGER_APPLICATION_ID;
 import static rikka.shizuku.server.ServerConstants.PERMISSION;
+import static rikka.shizuku.server.ServerConstants.PERMISSION_UPSTREAM_API;
 
 import android.content.Context;
 import android.content.IContentProvider;
@@ -163,7 +164,16 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         if (UserHandleCompat.getAppId(callingUid) == managerAppId) {
             return true;
         }
-        if (clientRecord == null && checkCallingPermission() == PackageManager.PERMISSION_GRANTED) {
+        if (clientRecord != null) {
+            // Attached clients are authorized by the server-side grant record
+            // (ClientRecord.allowed, persisted in the server config). This keeps
+            // apps built with the official Shizuku-API working: they hold no
+            // Shizaku permission (undefined on this side), but went through the
+            // same user-confirmation dialog, so record.allowed is the source of
+            // truth. This restores the pre-refactor upstream semantics.
+            return clientRecord.allowed;
+        }
+        if (checkCallingPermission() == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
         return false;
@@ -446,7 +456,8 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 } else if (pi.applicationInfo.metaData != null
                         && pi.applicationInfo.metaData.getBoolean("moe.shizuku.client.V3_SUPPORT", false)
                         && pi.requestedPermissions != null
-                        && ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                        && (ArraysKt.contains(pi.requestedPermissions, PERMISSION)
+                        || ArraysKt.contains(pi.requestedPermissions, PERMISSION_UPSTREAM_API))) {
                     list.add(pi);
                 }
             }

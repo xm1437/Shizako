@@ -31,6 +31,10 @@ public class BinderSender {
 
     private static final String PERMISSION_MANAGER = "com.churan.shizako.permission.MANAGER";
     private static final String PERMISSION = "com.churan.shizako.permission.API_V23";
+    // 官方 Shizuku-API 应用（dev.rikka.shizuku:api）只请求上游权限名，Shizako 侧该权限
+    // 未定义、也无法被授予。此处仅按"请求了该权限"识别官方生态应用并向其推送 binder；
+    // 真正的授权仍在服务端逐应用确认（ClientRecord.allowed + 授权弹窗），与自有生态一致。
+    private static final String PERMISSION_UPSTREAM_API = "moe.shizuku.manager.permission.API_V23";
 
     private static ShizukuService sShizukuService;
 
@@ -162,7 +166,8 @@ public class BinderSender {
                     ShizukuService.sendBinderToManger(sShizukuService, userId);
                     return;
                 }
-            } else if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+            } else if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)
+                    || ArraysKt.contains(pi.requestedPermissions, PERMISSION_UPSTREAM_API)) {
                 ShizukuService.sendBinderToUserApp(sShizukuService, packageName, userId);
                 return;
             }

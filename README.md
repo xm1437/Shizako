@@ -44,7 +44,7 @@ Root 不是获取特权的唯一途径。Shizako 把 ADB 或 Root 启动的特�
 | 项目 | 说明 |
 |------|------|
 | 一键注入 | 首页新增授权卡片，服务运行时批量授权常用应用 |
-| 双权限 API | 内置 API 库同时请求两个生态的权限，见下文 |
+| 官方生态兼容 | 官方 Shizuku-API 应用免重编译直连 Shizako，见下文 |
 | 品牌与版本 | 独立名称、图标与版本号 `zako2.1` |
 | 合规改名 | applicationId 与自定义权限全部更换，见下文 |
 
@@ -63,20 +63,20 @@ Root 不是获取特权的唯一途径。Shizako 把 ADB 或 Root 启动的特�
 | applicationId | `com.churan.shizako` |
 | API 权限 | `com.churan.shizako.permission.API_V23` |
 
-### 双权限适配
+### 官方生态兼容
 
-内置 API 库为使用它的应用同时请求两个生态的权限。每台特权服务只向请求了自己权限的应用推送 binder、只授予自己定义的权限，互不干扰：
+官方 Shizuku-API（`dev.rikka.shizuku:api`）编译的应用可以**免重编译直连** Shizako：
 
 | 应用类型 | 官方 Shizuku | Shizako |
 |----------|:---:|:---:|
+| 官方 `dev.rikka.shizuku:api` 应用 | ✅ 可连接 | ✅ 可连接 |
 | 用本仓库 `api/` 编译的应用 | ✅ 可连接 | ✅ 可连接 |
-| 官方 `dev.rikka.shizuku:api` 应用 | ✅ 可连接 | ❌ 无法连接 |
 
-两个管理器可并存安装，互不影响。官方 API 应用如需同时连接 Shizako，换用本仓库的 `api/` 重新编译即可。
+实现上，服务端向"请求了官方权限名"的应用一视同仁地推送 binder；授权判定完全在服务端完成——每个应用首次连接时弹出与上游一致的确认对话框，结果持久化于服务端配置，随时可在 Shizako 内撤销。整个过程不声明、不定义任何上游权限，符合 [上游许可条款](https://github.com/RikkaApps/Shizuku#license)；两个管理器也可并存安装，互不干扰。
 
 ## 开发者适配
 
-把 `api/` 目录复制进你的项目，替换原有依赖：
+官方 `dev.rikka.shizuku:api` 已可直连两个管理器，无需改动。如需以源码方式依赖，把 `api/` 目录复制进你的项目：
 
 ```gradle
 // settings.gradle
