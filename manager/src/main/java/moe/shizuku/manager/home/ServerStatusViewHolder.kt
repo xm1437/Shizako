@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import moe.shizuku.manager.BuildConfig
 import moe.shizuku.manager.R
 import moe.shizuku.manager.databinding.HomeItemContainerBinding
 import moe.shizuku.manager.databinding.HomeServerStatusBinding
@@ -58,7 +59,10 @@ class ServerStatusViewHolder(private val binding: HomeServerStatusBinding, root:
                     "${Shizuku.getLatestServiceVersion()}.${ShizukuApiConstants.SERVER_PATCH_VERSION}"
                 )
             } else {
-                context.getString(R.string.home_status_service_version, user, "${apiVersion}.${patchVersion}")
+                // Versions match: show the marketing version (zako2.x, from
+                // BuildConfig). Protocol numbers (13.6) stay in the mismatch
+                // branch below as a diagnostic hint only.
+                context.getString(R.string.home_status_service_version, user, BuildConfig.VERSION_NAME)
             }
         } else {
             ""

@@ -6,8 +6,13 @@ import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
 
 public class ShizukuApiConstants {
 
-    public static final int SERVER_VERSION = 2;
-    public static final int SERVER_PATCH_VERSION = 2;
+    // NOTE: these two are PROTOCOL version numbers (Shizuku API v13), reported to
+    // client apps in the attachApplication reply. Official dev.rikka.shizuku:api
+    // clients branch on Shizuku.getVersion() and expect the upstream values —
+    // keep them in sync with the upstream base this server implements.
+    // The marketing version (zako2.x) lives in root build.gradle (versionName).
+    public static final int SERVER_VERSION = 13;
+    public static final int SERVER_PATCH_VERSION = 6;
 
     // binder
     public static final String BINDER_DESCRIPTOR = "moe.shizuku.server.IShizukuService";

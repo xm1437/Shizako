@@ -492,7 +492,12 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
                 if (pi == null || pi.requestedPermissions == null)
                     continue;
 
-                if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)) {
+                // PERMISSION_UPSTREAM_API: apps built with the official
+                // dev.rikka.shizuku:api (e.g. MT Manager) only request the upstream
+                // permission name. Without this branch they get no binder when they
+                // are already running at server start, only on their next uid event.
+                if (ArraysKt.contains(pi.requestedPermissions, PERMISSION)
+                        || ArraysKt.contains(pi.requestedPermissions, PERMISSION_UPSTREAM_API)) {
                     sendBinderToUserApp(binder, pi.packageName, userId);
                 }
             }
