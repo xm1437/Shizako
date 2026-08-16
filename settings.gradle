@@ -1,5 +1,25 @@
 pluginManagement {
     repositories {
+        // CN mirrors (Aliyun) first, fall back to originals
+        maven {
+            url("https://maven.aliyun.com/repository/google")
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        maven {
+            url("https://maven.aliyun.com/repository/public")
+            content {
+                includeGroupByRegex("org\\.jetbrains.*")
+                includeGroupByRegex("org\\.jetbrains\\.kotlin.*")
+                includeGroupByRegex("dev\\.rikka.*")
+            }
+        }
+        maven {
+            url("https://maven.aliyun.com/repository/gradle-plugin")
+        }
         google()
         mavenLocal()
         mavenCentral()
@@ -16,6 +36,26 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        // CN mirrors (Aliyun) first, fall back to originals
+        maven {
+            url("https://maven.aliyun.com/repository/google")
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        maven {
+            url("https://maven.aliyun.com/repository/public")
+            content {
+                includeGroupByRegex("org\\.jetbrains.*")
+                includeGroupByRegex("org\\.jetbrains\\.kotlin.*")
+                includeGroupByRegex("dev\\.rikka.*")
+                includeGroupByRegex("org\\.slf4j.*")
+                includeGroupByRegex("com\\.squareup.*")
+                includeGroupByRegex("org\\.ow2.*")
+            }
+        }
         google()
         mavenLocal()
         mavenCentral()

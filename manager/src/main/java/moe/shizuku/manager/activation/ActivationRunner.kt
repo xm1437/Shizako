@@ -36,10 +36,6 @@ object ActivationRunner {
     /**
      * Executes `command` with `sh -c` on the server (shell uid for adb start,
      * root uid for root start) and collects stdout + stderr.
-     *
-     * @param timeoutSeconds the process is destroyed after this long; commands
-     * like the Brevent bootstrap may keep running, in which case the output
-     * gathered so far is still returned with [Result.timedOut].
      */
     fun run(command: String, timeoutSeconds: Int = 90): Result {
         val service = service() ?: return Result(-1, "", false, IllegalStateException("service not running"))
@@ -54,10 +50,8 @@ object ActivationRunner {
             var timedOut = false
             var exit = -1
             val exited = try {
-                // waitForTimeout returns whether the process exited within the timeout
                 process.waitForTimeout(timeoutSeconds.toLong(), TimeUnit.SECONDS.name)
             } catch (e: Exception) {
-                // waitForTimeout unavailable on very old servers; fall back
                 try {
                     process.waitFor()
                     true
@@ -115,19 +109,39 @@ object ActivationRunner {
     }
 
     /**
+     * Checks whether [packageName] is installed by running `pm list packages`
+     * through the Shizaku server. This bypasses Android 11+ package visibility
+     * restrictions that may cause [android.content.pm.PackageManager.getPackageInfo]
+     * to miss packages.
+     */
+    fun isPackageInstalled(packageName: String): Boolean {
+        if (!Shizuku.pingBinder()) return false
+        if (TextUtils.isEmpty(packageName)) return false
+        val result = run("pm list packages $packageName", timeoutSeconds = 10)
+        if (result.error != null) return false
+        return result.output.contains("package:$packageName")
+    }
+
+    /**
      * Whether [packageName] currently holds the device owner role, detected
-     * from `dumpsys device_policy`.
+     * from `dumpsys device_policy`. Searches the entire output (not line-by-line)
+     * because the format varies across Android versions and vendor ROMs.
      */
     fun isDeviceOwner(packageName: String): Boolean {
         if (!Shizuku.pingBinder()) return false
         if (TextUtils.isEmpty(packageName)) return false
         val result = run("dumpsys device_policy", timeoutSeconds = 20)
         if (result.error != null) return false
-        // dumpsys lists owners like:
-        //   Device Owner: web1n.stopapp/admin component or the package itself
-        return result.output.split("\n").any {
-            val l = it.trim()
-            (l.startsWith("Device Owner") || l.startsWith("Profile Owner")) && l.contains(packageName)
-        }
+        // Search the entire output for the package name in context of device/profile owner
+        val output = result.output
+        // Common patterns across Android versions:
+        //   "Device Owner: ...packageName..."
+        //   "mDeviceOwner=ComponentInfo{packageName/...}"
+        //   "admin=ComponentInfo{packageName/...}"
+        return output.contains(packageName) && (
+            output.contains("Device Owner", ignoreCase = true) ||
+            output.contains("Profile Owner", ignoreCase = true) ||
+            output.contains("mDeviceOwner", ignoreCase = true)
+        )
     }
 }

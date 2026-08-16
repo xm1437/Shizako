@@ -97,8 +97,8 @@ abstract class HomeActivity : AppBarActivity() {
                 val binding = AboutDialogBinding.inflate(LayoutInflater.from(this), null, false)
                 binding.sourceCode.movementMethod = LinkMovementMethod.getInstance()
                 binding.sourceCode.text = getString(
-                    R.string.about_view_source_code,
-                    "<b><a href=\"https://github.com/RikkaApps/Shizuku\">GitHub</a></b>"
+                    R.string.about_based_on_text,
+                    "<b><a href=\"https://github.com/RikkaApps/Shizuku\">Shizuku</a></b>"
                 ).toHtml()
                 binding.icon.setImageBitmap(
                     AppIconCache.getOrLoadBitmap(
@@ -108,6 +108,7 @@ abstract class HomeActivity : AppBarActivity() {
                         resources.getDimensionPixelOffset(R.dimen.default_app_icon_size)
                     )
                 )
+                binding.appName.text = getString(R.string.app_name)
                 binding.versionName.text = packageManager.getPackageInfo(packageName, 0).versionName
                 MaterialAlertDialogBuilder(this)
                     .setView(binding.root)

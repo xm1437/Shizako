@@ -12,15 +12,6 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_activation">
-
-        <Preference
-            android:key="one_click_activation"
-            android:summary="@string/settings_activation_summary"
-            android:title="@string/activation_title" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/settings_language">
 
         <rikka.preference.SimpleMenuPreference

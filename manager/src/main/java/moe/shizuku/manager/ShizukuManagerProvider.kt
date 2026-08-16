@@ -15,6 +15,7 @@ import java.util.concurrent.TimeoutException
 class ShizukuManagerProvider : ShizukuProvider() {
 
     companion object {
+        // Internal protocol key, must match ShizukuProvider.EXTRA_BINDER in the Shizuku-API library
         private const val EXTRA_BINDER = "moe.shizuku.privileged.api.intent.extra.BINDER"
         private const val METHOD_SEND_USER_SERVICE = "sendUserService"
     }

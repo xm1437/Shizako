@@ -12,7 +12,7 @@ plugins {
 android {
     namespace 'moe.shizuku.manager'
     defaultConfig {
-        applicationId "moe.shizuku.privileged.api"
+        applicationId "com.churan.shizako"
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         externalNativeBuild {
@@ -112,7 +112,7 @@ afterEvaluate {
 
 android.applicationVariants.configureEach { variant ->
     variant.outputs.configureEach {
-        outputFileName = "shizuku-v${variant.versionName}-${variant.name}.apk"
+        outputFileName = "shizako-v${variant.versionName}-${variant.name}.apk"
 
         variant.assembleProvider.get().doLast {
             def outDir = new File(rootDir, "out")

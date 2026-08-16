@@ -18,23 +18,24 @@
         android:required="false" />
 
     <permission-group
-        android:name="moe.shizuku.manager.permission-group.API"
+        android:name="com.churan.shizako.permission-group.API"
         android:description="@string/permission_group_description"
         android:icon="@drawable/ic_system_icon"
         android:label="@string/permission_group_label" />
 
     <permission
-        android:name="moe.shizuku.manager.permission.MANAGER"
+        android:name="com.churan.shizako.permission.MANAGER"
         android:protectionLevel="signature" />
-    <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
+    <uses-permission android:name="com.churan.shizako.permission.MANAGER" />
 
     <permission
-        android:name="moe.shizuku.manager.permission.API_V23"
+        android:name="com.churan.shizako.permission.API_V23"
         android:description="@string/permission_description"
         android:icon="@drawable/ic_system_icon"
         android:label="@string/permission_label"
-        android:permissionGroup="moe.shizuku.manager.permission-group.API"
+        android:permissionGroup="com.churan.shizako.permission-group.API"
         android:protectionLevel="dangerous" />
+    <!-- strip the uses-permission merged in from the Shizuku-API library aar -->
     <uses-permission
         android:name="moe.shizuku.manager.permission.API_V23"
         tools:node="remove" />
@@ -100,7 +101,7 @@
             android:name=".activation.OneClickActivationActivity"
             android:exported="false"
             android:label="@string/activation_title"
-            android:parentActivityName=".settings.SettingsActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".starter.StarterActivity"
             android:label="@string/starter" />
@@ -133,7 +134,7 @@
             android:name=".legacy.LegacyIsNotSupportedActivity"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:permission="moe.shizuku.manager.permission.API"
+            android:permission="com.churan.shizako.permission.API"
             android:theme="@style/GrantPermissions">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.REQUEST_AUTHORIZATION" />

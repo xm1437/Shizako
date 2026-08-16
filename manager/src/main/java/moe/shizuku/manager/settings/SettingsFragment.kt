@@ -150,11 +150,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         updateCrashLogsSummary()
         crashLogsPreference.onPreferenceClickListener =
             Preference.OnPreferenceClickListener { showCrashLogsDialog(); true }
-
-        findPreference<Preference>("one_click_activation")?.setOnPreferenceClickListener {
-            startActivity(Intent(context, moe.shizuku.manager.activation.OneClickActivationActivity::class.java))
-            true
-        }
     }
 
     private lateinit var crashLogsPreference: Preference

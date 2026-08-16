@@ -95,6 +95,11 @@ You may need to restart Shizako for the operation to take effect."</string>
     <!-- Terminal -->
     <string name="home_terminal_title">Use Shizako in terminal apps</string>
     <string name="home_terminal_description">Run commands through Shizako in terminal apps you like</string>
+
+    <!-- One-click activation home card -->
+    <string name="home_activation_title">One-click activation</string>
+    <string name="home_activation_summary">Activate Brevent, Stopapp and more without a computer</string>
+    <string name="home_activation_summary_not_running">Start Shizako first to use one-click activation</string>
     <string name="terminal_tutorial_1">First, Export files to any where you want. You will find two files, %1$s and %2$s.</string>
     <string name="terminal_tutorial_1_description">"If there are files with the same name in the selected folder, they will be deleted.
 
@@ -127,11 +132,10 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="settings_crash_logs_deleted">Deleted</string>
 
     <!-- One-click activation -->
-    <string name="settings_activation">One-click activation</string>
-    <string name="settings_activation_summary">Activate apps that normally need ADB commands from a computer (Brevent, Stopapp, etc.)</string>
     <string name="activation_title">One-click activation</string>
     <string name="activation_subtitle">Run the ADB commands that used to require a computer, right from here</string>
-    <string name="activation_service_running">Shizako is running (uid %1$d), ready to run activation commands</string>
+    <string name="activation_service_running">Shizaku is running, ready to activate</string>
+    <string name="activation_service_running_brief">Shizaku is running</string>
     <string name="activation_service_not_running">Shizaku is not running, please start the service from the home page first</string>
     <string name="activation_activate">Activate</string>
     <string name="activation_activated">Activated</string>
@@ -164,6 +168,13 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <!-- About -->
     <string name="action_about">About</string>
     <string name="about_view_source_code"><![CDATA[View source code at %s]]></string>
+    <string name="about_author">Author</string>
+    <string name="about_author_name">初然</string>
+    <string name="about_based_on">Based on</string>
+    <string name="about_based_on_text"><![CDATA[%s open source project]]></string>
+    <string name="about_license">License</string>
+    <string name="about_license_text">Apache License 2.0</string>
+    <string name="about_footer">Shizako — Made with ❤️</string>
 
     <!-- Stop -->
     <string name="action_stop">Stop Shizako</string>

@@ -14,7 +14,7 @@ import rikka.shizuku.Shizuku
 /**
  * Persistent "Shizako is running" status notification with the character icon.
  *
- * Shizuku 13.6.0 removed the running-status notification, so this reposts one
+ * Shizako keeps a persistent status notification so the user knows the service is running.
  * whenever the server binder arrives, and cancels it when the binder dies.
  */
 object StatusNotification {

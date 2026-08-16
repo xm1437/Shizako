@@ -557,6 +557,9 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
             }
 
             Bundle extra = new Bundle();
+            // NOTE: this extra key is an internal protocol constant shared with the
+            // Shizuku-API library (api/provider, MIT). It must stay in sync with
+            // ShizukuProvider.EXTRA_BINDER to keep the binder handshake working.
             extra.putParcelable("moe.shizuku.privileged.api.intent.extra.BINDER", new BinderContainer(binder));
 
             Bundle reply = IContentProviderUtils.callCompat(provider, null, name, "sendBinder", null, extra);
