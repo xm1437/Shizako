@@ -11,3 +11,5 @@
 /manager/signing.properties
 /out
 /signing.properties
+*.jks
+manager/*.jks
