@@ -198,6 +198,13 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="notification_adb_pairing_failed_title">Pairing failed</string>
     <string name="notification_adb_pairing_retry">Retry</string>
 
+    <!-- Quick settings tiles -->
+    <string name="tile_service_label">Shizako service</string>
+    <string name="tile_service_subtitle_running">Running</string>
+    <string name="tile_service_subtitle_stopped">Stopped</string>
+    <string name="tile_wireless_adb_label">Wireless debugging</string>
+    <string name="tile_wireless_adb_subtitle">Shizako</string>
+
     <!-- Permission related, appears in system permission UI -->
     <string name="permission_group_label" translatable="false">Shizako</string>
     <string name="permission_group_description" translatable="false">@string/permission_label</string>

@@ -149,6 +149,30 @@
             android:exported="false"
             android:foregroundServiceType="shortService" />
 
+        <service
+            android:name=".tile.ServiceTile"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_bolt_24dp"
+            android:label="@string/tile_service_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".tile.WirelessAdbTile"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_wadb_24"
+            android:label="@string/tile_wireless_adb_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <receiver
             android:name=".receiver.BootCompleteReceiver"
             android:directBootAware="true"

@@ -100,6 +100,13 @@
     <string name="activation_copy">复制</string>
     <string name="activation_copied">已复制</string>
 
+    <!-- Quick settings tiles -->
+    <string name="tile_service_label">Shizako酱服务</string>
+    <string name="tile_service_subtitle_running">待命中</string>
+    <string name="tile_service_subtitle_stopped">睡懒觉中</string>
+    <string name="tile_wireless_adb_label">无线调试</string>
+    <string name="tile_wireless_adb_subtitle">Shizako酱</string>
+
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
     <string name="dialog_adb_port">端口号</string>
     <string name="adb_pairing">狠狠地蹂躏调教</string>
