@@ -1,30 +1,42 @@
 <div align="center">
 
-<img src="manager/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="96" alt="Shizako logo" />
+<img src="docs/banner.jpg" alt="Shizako酱抱着终端的横幅插画" width="820" />
 
 # Shizako
 
-你的 Android 小助手，不用 Root 也能使唤系统级 API
+**不用 Root，让猫耳看板娘替你使唤系统级 API**
+
+*Your catgirl assistant for privileged Android APIs — no root required.*
 
 基于 [Shizuku](https://github.com/RikkaApps/Shizuku) 二次开发 · 作者 [初然](https://github.com/xm1437)
 
 [![Release](https://img.shields.io/github/v/release/xm1437/Shizako?style=flat-square&label=%E7%89%88%E6%9C%AC)](https://github.com/xm1437/Shizako/releases)
 [![Downloads](https://img.shields.io/github/downloads/xm1437/Shizako/total?style=flat-square&label=%E4%B8%8B%E8%BD%BD)](https://github.com/xm1437/Shizako/releases)
 [![Platform](https://img.shields.io/badge/Android-7.0%2B-34A853?style=flat-square&logo=android&logoColor=white)](https://github.com/xm1437/Shizako/releases)
-[![Based on](https://img.shields.io/badge/%E5%9F%BA%E4%BA%8E-Shizuku%2013.x-3F51B5?style=flat-square)](https://github.com/RikkaApps/Shizuku)
+[![Based on](https://img.shields.io/badge/%E5%9F%BA%E4%BA%8E-Shizuku%2013.x-7C6FD0?style=flat-square)](https://github.com/RikkaApps/Shizuku)
 [![License](https://img.shields.io/github/license/xm1437/Shizako?style=flat-square)](LICENSE)
 
 </div>
 
 ---
 
-## 它是干嘛的
+> 「你好呀，我是 **Shizako酱** `(ฅ'ω'ฅ)`
+>
+> 你的手机里有一大堆"系统限定"的好东西——静默安装、冻结应用、调权限、读系统设置——平时只有系统自己才碰得到。Root 当然能拿到钥匙，但代价不小。
+>
+> 我走了另一条路：先替你跑一个特权小进程（通过无线调试、USB 或 Root 唤醒我），然后把这个特权**借给你信任的应用**。不是开门揖盗哦——每个应用都要你点头才发通行证，随时可以收回。」
 
-想象一下：你的手机里有一大堆"系统限定"的好东西——静默安装、冻结应用、调权限、读系统设置——平时只有系统自己才碰得到。Root 当然能拿到钥匙，但代价也不小。
+## 🐾 见面礼：她能做到的事
 
-Shizako 走了另一条路：它自己先悄悄跑一个特权小进程（通过无线调试、USB 或者 Root），然后把这个特权**借给你信任的应用**。不是开门揖盗，而是给每个应用一张需要你点头才生效的通行证，随时可以收回。
+| 特性 | 说明 |
+|------|------|
+| 免 Root 特权 | 通过 ADB / 无线调试获得近似 Root 的能力，不拆机不刷机 |
+| 通行证制度 | 每个应用第一次连接都要你亲自授权，随时反悔收回 |
+| 官方生态直连 | 用官方 Shizuku-API 写的应用**一行代码不用改**就能连上她 |
+| 一键注入 | 首页卡片一键把权限分给常用应用，不用一个个点 |
+| 双管理器共存 | 和官方 Shizuku 同时安装互不干扰 |
 
-## 随手就能用
+## 🚀 带她回家
 
 | 要求 | 说明 |
 |------|------|
@@ -32,18 +44,9 @@ Shizako 走了另一条路：它自己先悄悄跑一个特权小进程（通过
 | 无线调试激活 | 需 Android 11 及以上 |
 | USB / Root 激活 | 没有额外限制 |
 
-下载走 [Releases](https://github.com/xm1437/Shizako/releases) 拿最新版就行。
+下载走 [Releases](https://github.com/xm1437/Shizako/releases) 拿最新版就行。激活教程可以参考上游 Shizuku 的[配置指南](https://shizuku.rikka.app/zh-hans/guide/setup/)，流程完全一致。
 
-## 和原版 Shizuku 有什么不一样
-
-| 小改动 | 有什么用 |
-|------|------|
-| 一键注入 | 首页多了一张卡片，服务跑起来之后一键把权限分给常用应用，不用一个个点 |
-| 官方生态兼容 | 用官方 Shizuku-API 写的应用**不用改一行代码**就能连上 Shizako |
-| 自己的名字和图标 | 独立品牌、独立版本号 `zako2.2`，不和上游搞混 |
-| 守规矩地改名 | 包名和权限名都换了，遵守上游的许可要求 |
-
-## 兼容性：能连什么、不能连什么
+## 🔗 生态兼容：能连什么
 
 ### 底层就是 Shizuku 的 API
 
@@ -51,7 +54,7 @@ Shizako 走了另一条路：它自己先悄悄跑一个特权小进程（通过
 
 ### 为什么权限名不一样了
 
-上游 Shizuku 的 [许可条款](https://github.com/RikkaApps/Shizuku#license) 说得很清楚：fork 项目不能占用 `moe.shizuku.manager.permission.*` 这套权限名，也不能用官方的包名。所以你看到的 Shizako 是：
+上游 Shizuku 的 [许可条款](https://github.com/RikkaApps/Shizuku#license) 说得很清楚：fork 项目不能占用 `moe.shizuku.manager.permission.*` 这套权限名，也不能用官方的包名。所以 Shizako 是：
 
 | 项目 | Shizako 这边 |
 |------|---------|
@@ -60,18 +63,26 @@ Shizako 走了另一条路：它自己先悄悄跑一个特权小进程（通过
 
 ### 官方生态应用也能直连
 
-好消息是，改了名字不代表改了脾气。用官方 `dev.rikka.shizuku:api` 写的应用，**不用改代码、不用重编译**，装好就能连上 Shizako：
+改了名字不代表改了脾气。用官方 `dev.rikka.shizuku:api` 写的应用（MT 管理器、冰箱、SystemUI Tuner 等），**不用改代码、不用重编译**，装好就能连上：
 
 | 什么应用 | 连官方 Shizuku | 连 Shizako |
 |----------|:---:|:---:|
 | 官方 `dev.rikka.shizuku:api` 写的 | ✅ | ✅ |
 | 用本仓库 `api/` 写的 | ✅ | ✅ |
 
-秘密在于服务端——它认的是"你请求了权限"，而不是"你请求了哪个权限名"。每个应用第一次连的时候，Shizako 会弹出和上游一模一样的授权对话框，你点了同意才算数，之后随时可以在 Shizako 里反悔。整个过程没有声明过任何上游权限名，老老实实遵守上游的许可条款。两个管理器也可以同时装着，谁也不碍着谁。
+秘密在于服务端——它认的是"你请求了权限"，而不是"你请求了哪个权限名"。每个应用第一次连的时候，Shizako 会弹出和上游一样的授权对话框，你点了同意才算数。整个过程没有声明任何上游权限名，老老实实遵守上游的许可条款。
 
-## 给开发者
+## 🎨 关于看板娘
 
-官方 `dev.rikka.shizuku:api` 已经能直连两个管理器了，什么都不用改。
+<div align="center">
+<img src="manager/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="96" alt="Shizako logo" />
+</div>
+
+Shizako酱是本项目的看板娘：白发猫耳、月牙发饰，名字来自 Shizu**ko**（Shizuku + 子）。项目图标、应用内文案和宣传物料都围绕她展开，欢迎拿去当表情包用 (ˊᗜˋ*)
+
+## 🛠️ 给开发者
+
+官方 `dev.rikka.shizuku:api` 已经能直连两个管理器，什么都不用改。
 
 如果你更喜欢源码级依赖，把 `api/` 目录搬进项目就行：
 
@@ -90,7 +101,7 @@ implementation project(':provider')
 
 代码怎么写？和官方 API 一模一样——`Shizuku.bindUserService(...)`、`Shizuku.requestPermission(...)` 该怎么写还怎么写。换了个依赖来源，你的应用就同时拥抱了两个生态。
 
-## 自己动手编译
+## 📦 自己动手编译
 
 ```bash
 git clone https://github.com/xm1437/Shizako.git
@@ -106,7 +117,7 @@ cd Shizako
 
 国内网络不用操心，仓库里已经配好了阿里云 Maven 镜像。编译产物在 `manager/build/outputs/apk/release/`，没配签名的话会自动用 debug 签名顶上。
 
-## 代码长这样
+## 🗂️ 代码长这样
 
 ```
 Shizako/
@@ -115,18 +126,28 @@ Shizako/
 ├── starter/    服务启动器
 ├── shell/      预编译的 shell 工具
 ├── common/     共享模块
+├── docs/       看板娘物料
 └── api/        Shizuku-API 客户端库源码（MIT），已内置
 ```
 
-## 感谢
+## 💗 感谢
 
 - [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) 和它的贡献者们——Shizako 的全部核心能力来自这里
 - [RikkaApps/Shizuku-API](https://github.com/RikkaApps/Shizuku-API)——客户端通信库
+- 每一个给 Shizako酱点 Star 的你
 
-## 许可
+## 📄 许可
 
 本项目继承上游 [Apache License 2.0](LICENSE)，另见 [NOTICE](NOTICE)。
 
 - 原项目版权归 RikkaApps 所有，Shizako 的修改部分版权归 初然 所有
 - 未使用上游 `Shizuku` 名称、`moe.shizuku.privileged.api` 包名、`moe.shizuku.manager.permission.*` 权限及上游图标
 - `api/` 目录遵循其自身的 MIT License
+
+---
+
+<div align="center">
+
+<sub>English summary: Shizako is an Apache-2.0 licensed fork of Shizuku with an original catgirl mascot. It runs a privileged service via ADB / wireless debugging / root and lends elevated APIs to apps you trust — including apps built with the official `dev.rikka.shizuku:api`, which connect without any code change.</sub>
+
+</div>
