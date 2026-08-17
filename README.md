@@ -136,6 +136,16 @@ Shizako/
 - [RikkaApps/Shizuku-API](https://github.com/RikkaApps/Shizuku-API)——客户端通信库
 - 每一个给 Shizako酱点 Star 的你
 
+## 📬 勾搭看板娘
+
+遇到 Bug 想报、有了想法想聊、或者单纯想夸她可爱：
+
+| 方式 | 入口 |
+|------|------|
+| QQ 反馈 | [891276089](https://qm.qq.com/cgi-bin/qm/qr?k=891276089) |
+| QQ 吹水群 | [1104445003](https://qm.qq.com/cgi-bin/qm/qr?k=1104445003) |
+| GitHub Issues | [Issues](https://github.com/xm1437/Shizako/issues) |
+
 ## 📄 许可
 
 本项目继承上游 [Apache License 2.0](LICENSE)，另见 [NOTICE](NOTICE)。
