@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
+import moe.shizuku.manager.ShizukuSettings.AUTO_UPDATE
 import moe.shizuku.manager.ShizukuSettings.KEEP_START_ON_BOOT
+import moe.shizuku.manager.ShizukuSettings.WATCHDOG_ENABLED
 import moe.shizuku.manager.app.ThemeHelper
 import moe.shizuku.manager.app.ThemeHelper.KEY_BLACK_NIGHT_THEME
 import moe.shizuku.manager.app.ThemeHelper.KEY_USE_SYSTEM_COLOR
@@ -30,6 +32,9 @@ import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.receiver.BootCompleteReceiver
 import moe.shizuku.manager.utils.CrashLog
 import moe.shizuku.manager.utils.CustomTabsHelper
+import moe.shizuku.manager.update.AutoUpdateScheduler
+import moe.shizuku.manager.update.UpdateChecker
+import moe.shizuku.manager.watchdog.WatchdogService
 import rikka.core.util.ResourceUtils
 import rikka.material.app.LocaleDelegate
 import rikka.recyclerview.addEdgeSpacing
@@ -78,6 +83,35 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     context.packageManager.isComponentEnabled(componentName) == newValue
                 } else false
             }
+
+        val watchdogPreference = findPreference<TwoStatePreference>(WATCHDOG_ENABLED)!!
+        watchdogPreference.isChecked = ShizukuSettings.isWatchdogEnabled()
+        watchdogPreference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
+                if (newValue is Boolean) {
+                    if (newValue) {
+                        WatchdogService.start(context)
+                    } else {
+                        WatchdogService.stop(context)
+                    }
+                    true
+                } else false
+            }
+
+        val autoUpdatePreference = findPreference<TwoStatePreference>(AUTO_UPDATE)!!
+        autoUpdatePreference.isChecked = ShizukuSettings.isAutoUpdateEnabled()
+        autoUpdatePreference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
+                if (newValue is Boolean) {
+                    if (newValue) {
+                        AutoUpdateScheduler.schedule(context)
+                    } else {
+                        AutoUpdateScheduler.cancel(context)
+                    }
+                    true
+                } else false
+            }
+
         languagePreference.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
                 if (newValue is String) {
@@ -150,6 +184,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
         updateCrashLogsSummary()
         crashLogsPreference.onPreferenceClickListener =
             Preference.OnPreferenceClickListener { showCrashLogsDialog(); true }
+
+        val checkUpdatePreference = findPreference<Preference>("check_update")!!
+        checkUpdatePreference.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+            Toast.makeText(context, R.string.update_checking, Toast.LENGTH_SHORT).show()
+            UpdateChecker.checkForUpdate(context) { info ->
+                if (info != null) {
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.update_available_title)
+                        .setMessage(context.getString(R.string.update_dialog_message, info.tagName, info.body))
+                        .setPositiveButton(R.string.update_download) { _, _ ->
+                            UpdateChecker.downloadAndInstall(context, info)
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show()
+                } else {
+                    Toast.makeText(context, R.string.update_up_to_date, Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
     }
 
     private lateinit var crashLogsPreference: Preference

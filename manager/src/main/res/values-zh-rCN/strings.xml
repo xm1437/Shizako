@@ -107,6 +107,49 @@
     <string name="tile_wireless_adb_label">无线调试</string>
     <string name="tile_wireless_adb_subtitle">Shizako酱</string>
 
+    <string name="settings_high_refresh_rate">高刷新率</string>
+    <string name="settings_high_refresh_rate_summary">让 Shizako酱 的动画跑满屏幕最高刷新率；关闭则跟随系统默认（更省电）</string>
+
+    <string name="settings_stability">稳定性与自动化</string>
+    <string name="settings_watchdog">看门狗</string>
+    <string name="settings_watchdog_summary">Shizako酱 崩溃后自动重启。开启后会显示常驻通知。</string>
+    <string name="settings_auto_update">自动更新</string>
+    <string name="settings_auto_update_summary">每天自动检查 GitHub 新版本，发现更新后推送通知</string>
+
+    <!-- Update -->
+    <string name="settings_check_update">检查更新</string>
+    <string name="settings_check_update_summary">从 GitHub 检查新版本</string>
+    <string name="update_checking">正在检查更新\u2026</string>
+    <string name="update_up_to_date">已是最新版本</string>
+    <string name="update_available_title">发现新版本</string>
+    <string name="update_available_text">版本 %1$s 已发布</string>
+    <string name="update_dialog_message">版本 %1$s 已发布\n\n%2$s</string>
+    <string name="update_download">下载</string>
+    <string name="update_downloading">正在下载\u2026</string>
+    <string name="update_downloading_progress">正在下载\u2026 %1$d%%</string>
+    <string name="update_check_failed">检查失败：%1$s</string>
+    <string name="update_download_failed">下载失败：%1$s</string>
+    <string name="update_install_failed">安装失败：%1$s</string>
+    <string name="update_channel_name">Shizako 更新</string>
+
+    <!-- Watchdog -->
+    <string name="watchdog_channel_name">Shizako酱 看门狗</string>
+    <string name="watchdog_notification_title">Shizako酱 看门狗</string>
+    <string name="watchdog_notification_running">Shizako酱 正在运行中</string>
+    <string name="watchdog_notification_waiting">等待 Shizako酱 启动中…</string>
+    <string name="watchdog_notification_crashed">已崩溃 %1$d 次，将重试…</string>
+
+    <!-- Tasker / automation -->
+    <string name="tasker_already_running">Shizako酱 已在运行</string>
+    <string name="tasker_not_running">Shizako酱 未运行</string>
+    <string name="tasker_started_root">Shizako酱 已启动（root）</string>
+    <string name="tasker_started_adb">Shizako酱 已启动（ADB）</string>
+    <string name="tasker_stopped">Shizako酱 已停止</string>
+    <string name="tasker_start_failed">启动失败</string>
+    <string name="tasker_stop_failed">停止失败</string>
+    <string name="tasker_no_launch_mode">未配置启动模式</string>
+    <string name="tasker_adb_unavailable">ADB 自动启动不可用</string>
+
     <string name="settings_translation_summary">帮助我们将 %s 翻译至您的语言</string>
     <string name="dialog_adb_port">端口号</string>
     <string name="adb_pairing">狠狠地蹂躏调教</string>

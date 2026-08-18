@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -173,6 +175,12 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".watchdog.WatchdogService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
         <receiver
             android:name=".receiver.BootCompleteReceiver"
             android:directBootAware="true"
@@ -197,6 +205,36 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".receiver.TaskerReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.START" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.STOP" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.START_ROOT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.START_ADB" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".update.UpdateCheckReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.UPDATE_CHECK" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name=".ShizukuManagerProvider"
             android:authorities="${applicationId}.shizuku"
@@ -205,6 +243,16 @@
             android:exported="true"
             android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.update_file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

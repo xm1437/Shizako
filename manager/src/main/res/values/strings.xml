@@ -164,6 +164,48 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="settings_start_on_boot">Start on boot (root)</string>
     <string name="settings_start_on_boot_summary">For rooted devices, Shizako is able to start automatically on boot</string>
     <string name="settings_use_system_color">Use system theme color</string>
+    <string name="settings_high_refresh_rate">High refresh rate</string>
+    <string name="settings_high_refresh_rate_summary">Run animations at the display\'s highest refresh rate; disable to follow the system default (saves power)</string>
+
+    <string name="settings_stability">Stability &amp; automation</string>
+    <string name="settings_watchdog">Watchdog</string>
+    <string name="settings_watchdog_summary">Auto-restart Shizuku if it crashes. A persistent notification will show the watchdog status.</string>
+    <string name="settings_auto_update">Auto-update</string>
+    <string name="settings_auto_update_summary">Automatically check for new releases on GitHub every day and notify when an update is available</string>
+
+    <!-- Update -->
+    <string name="settings_check_update">Check for updates</string>
+    <string name="settings_check_update_summary">Check GitHub for new releases</string>
+    <string name="update_checking">Checking for updates\u2026</string>
+    <string name="update_up_to_date">You are up to date</string>
+    <string name="update_available_title">Update available</string>
+    <string name="update_available_text">Version %1$s is available</string>
+    <string name="update_dialog_message">Version %1$s is available\n\n%2$s</string>
+    <string name="update_download">Download</string>
+    <string name="update_downloading">Downloading\u2026</string>
+    <string name="update_downloading_progress">Downloading\u2026 %1$d%%</string>
+    <string name="update_check_failed">Check failed: %1$s</string>
+    <string name="update_download_failed">Download failed: %1$s</string>
+    <string name="update_install_failed">Install failed: %1$s</string>
+    <string name="update_channel_name">Shizako updates</string>
+
+    <!-- Watchdog -->
+    <string name="watchdog_channel_name">Shizako watchdog</string>
+    <string name="watchdog_notification_title">Shizako watchdog</string>
+    <string name="watchdog_notification_running">Shizako is running</string>
+    <string name="watchdog_notification_waiting">Waiting for Shizako to start\u2026</string>
+    <string name="watchdog_notification_crashed">Crashed %1$d times, will retry\u2026</string>
+
+    <!-- Tasker / automation -->
+    <string name="tasker_already_running">Shizako is already running</string>
+    <string name="tasker_not_running">Shizako is not running</string>
+    <string name="tasker_started_root">Shizako started (root)</string>
+    <string name="tasker_started_adb">Shizako started (ADB)</string>
+    <string name="tasker_stopped">Shizako stopped</string>
+    <string name="tasker_start_failed">Failed to start Shizako</string>
+    <string name="tasker_stop_failed">Failed to stop Shizako</string>
+    <string name="tasker_no_launch_mode">No launch mode configured</string>
+    <string name="tasker_adb_unavailable">ADB auto-start not available</string>
 
     <!-- About -->
     <string name="action_about">About</string>

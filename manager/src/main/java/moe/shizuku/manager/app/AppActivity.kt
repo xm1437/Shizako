@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import moe.shizuku.manager.R
+import moe.shizuku.manager.ShizukuSettings
 import rikka.core.res.isNight
 import rikka.core.res.resolveColor
 import rikka.material.app.MaterialActivity
@@ -18,6 +19,13 @@ abstract class AppActivity : MaterialActivity() {
         applyHighRefreshRate()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Re-check so toggling the setting applies immediately, without
+        // recreating activities that are already on the back stack.
+        applyHighRefreshRate()
+    }
+
     /**
      * Prefer the highest refresh rate supported by the display so that UI
      * animations run smoothly on high refresh rate devices.
@@ -25,9 +33,22 @@ abstract class AppActivity : MaterialActivity() {
      * On Android 11+ (API 30) the same can be declared per-activity via
      * android:preferredRefreshRate in the manifest, but setting the window's
      * preferred display mode at runtime works from API 23 on every device.
+     *
+     * Controlled by the "high_refresh_rate" setting; when disabled the
+     * preference is cleared so the system's default mode is used.
      */
     private fun applyHighRefreshRate() {
         val window = window ?: return
+        val lp = window.attributes
+
+        if (!ShizukuSettings.isHighRefreshRateEnabled()) {
+            if (lp.preferredDisplayModeId != 0) {
+                lp.preferredDisplayModeId = 0
+                window.attributes = lp
+            }
+            return
+        }
+
         val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             this.display
         } else {
@@ -47,7 +68,6 @@ abstract class AppActivity : MaterialActivity() {
             ?: modes.maxByOrNull { it.refreshRate }
             ?: return
 
-        val lp = window.attributes
         if (lp.preferredDisplayModeId == best.modeId) return
         lp.preferredDisplayModeId = best.modeId
         window.attributes = lp

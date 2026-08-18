@@ -25,6 +25,9 @@ public class ShizukuSettings {
     public static final String NIGHT_MODE = "night_mode";
     public static final String LANGUAGE = "language";
     public static final String KEEP_START_ON_BOOT = "start_on_boot";
+    public static final String HIGH_REFRESH_RATE = "high_refresh_rate";
+    public static final String WATCHDOG_ENABLED = "watchdog_enabled";
+    public static final String AUTO_UPDATE = "auto_update";
 
     private static SharedPreferences sPreferences;
 
@@ -82,6 +85,22 @@ public class ShizukuSettings {
 
     public static void setLastLaunchMode(@LaunchMethod int method) {
         getPreferences().edit().putInt("mode", method).apply();
+    }
+
+    /**
+     * Whether activities should request the display's highest refresh rate.
+     * Defaults to true (the historical behavior).
+     */
+    public static boolean isHighRefreshRateEnabled() {
+        return getPreferences().getBoolean(HIGH_REFRESH_RATE, true);
+    }
+
+    public static boolean isWatchdogEnabled() {
+        return getPreferences().getBoolean(WATCHDOG_ENABLED, false);
+    }
+
+    public static boolean isAutoUpdateEnabled() {
+        return getPreferences().getBoolean(AUTO_UPDATE, false);
     }
 
     @AppCompatDelegate.NightMode

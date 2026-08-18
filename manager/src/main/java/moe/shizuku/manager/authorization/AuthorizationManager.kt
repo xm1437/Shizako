@@ -85,4 +85,5 @@ object AuthorizationManager {
             Shizuku.updateFlagsForUid(uid, MASK_PERMISSION, 0)
         }
     }
-}
+
+    }
