@@ -131,6 +131,15 @@
     <string name="update_download_failed">下载失败：%1$s</string>
     <string name="update_install_failed">安装失败：%1$s</string>
     <string name="update_channel_name">Shizako 更新</string>
+    <string name="update_download_channel">Shizako 下载</string>
+    <string name="update_retrying">正在重试（第 %1$d/%2$d 次）…</string>
+    <string name="update_connecting">正在连接…</string>
+    <string name="update_downloading_detail">%1$s / %2$s（%3$d%%）</string>
+    <string name="update_download_complete">下载完成</string>
+    <string name="update_tap_to_install">点击安装（%1$s）</string>
+    <string name="update_download_failed_title">下载失败</string>
+    <string name="update_speed">%1$s/s</string>
+    <string name="update_download_cancelled">已取消下载</string>
 
     <!-- Watchdog -->
     <string name="watchdog_channel_name">Shizako酱 看门狗</string>

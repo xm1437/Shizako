@@ -33,6 +33,7 @@ import moe.shizuku.manager.receiver.BootCompleteReceiver
 import moe.shizuku.manager.utils.CrashLog
 import moe.shizuku.manager.utils.CustomTabsHelper
 import moe.shizuku.manager.update.AutoUpdateScheduler
+import moe.shizuku.manager.update.DownloadProgressDialog
 import moe.shizuku.manager.update.UpdateChecker
 import moe.shizuku.manager.watchdog.WatchdogService
 import rikka.core.util.ResourceUtils
@@ -191,11 +192,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Toast.makeText(context, R.string.update_checking, Toast.LENGTH_SHORT).show()
             UpdateChecker.checkForUpdate(context) { info ->
                 if (info != null) {
+                    // Android 13+: notifications (progress bar) need runtime permission
+                    if (Build.VERSION.SDK_INT >= 33) {
+                        requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 10086)
+                    }
                     MaterialAlertDialogBuilder(context)
                         .setTitle(R.string.update_available_title)
                         .setMessage(context.getString(R.string.update_dialog_message, info.tagName, info.body))
                         .setPositiveButton(R.string.update_download) { _, _ ->
-                            UpdateChecker.downloadAndInstall(context, info)
+                            startDownloadWithDialog(context, info)
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .show()
@@ -205,6 +210,45 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
+    }
+
+    /**
+     * Shows an in-app progress dialog (bar + percentage + size + speed)
+     * alongside the notification progress while downloading.
+     */
+    private fun startDownloadWithDialog(context: Context, info: UpdateChecker.ReleaseInfo) {
+        val progressDialog = DownloadProgressDialog.show(
+            context,
+            title = context.getString(R.string.update_downloading),
+            version = info.tagName,
+            onCancel = { UpdateChecker.cancelDownload() }
+        )
+        progressDialog.setState(context.getString(R.string.update_connecting))
+
+        UpdateChecker.downloadAndInstall(context, info, object : UpdateChecker.DownloadListener {
+            override fun onProgress(downloaded: Long, total: Long, speedBps: Long) {
+                if (progressDialog.isShowing) progressDialog.update(downloaded, total, speedBps)
+            }
+
+            override fun onRetry(attempt: Int, max: Int) {
+                if (progressDialog.isShowing) {
+                    progressDialog.setState(context.getString(R.string.update_retrying, attempt, max))
+                }
+            }
+
+            override fun onComplete(apkFile: java.io.File) {
+                progressDialog.dismiss()
+            }
+
+            override fun onFailed(reason: String) {
+                progressDialog.dismiss()
+            }
+
+            override fun onCancelled() {
+                progressDialog.dismiss()
+                Toast.makeText(context, R.string.update_download_cancelled, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private lateinit var crashLogsPreference: Preference

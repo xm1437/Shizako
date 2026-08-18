@@ -188,6 +188,15 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="update_download_failed">Download failed: %1$s</string>
     <string name="update_install_failed">Install failed: %1$s</string>
     <string name="update_channel_name">Shizako updates</string>
+    <string name="update_download_channel">Shizako download</string>
+    <string name="update_retrying">Retrying (attempt %1$d/%2$d)\u2026</string>
+    <string name="update_connecting">Connecting\u2026</string>
+    <string name="update_downloading_detail">%1$s / %2$s (%3$d%%)</string>
+    <string name="update_download_complete">Download complete</string>
+    <string name="update_tap_to_install">Tap to install (%1$s)</string>
+    <string name="update_download_failed_title">Download failed</string>
+    <string name="update_speed">%1$s/s</string>
+    <string name="update_download_cancelled">Download cancelled</string>
 
     <!-- Watchdog -->
     <string name="watchdog_channel_name">Shizako watchdog</string>
