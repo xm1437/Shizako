@@ -84,6 +84,8 @@ Shizako酱是本项目的看板娘：白发猫耳、月牙发饰，名字来自 
 
 官方 `dev.rikka.shizuku:api` 已经能直连两个管理器，什么都不用改。
 
+**API 怎么用？完整指南见 [docs/API.md](docs/API.md)** —— 依赖配置、权限申请、binder 生命周期、AIDL 用户服务全流程都有代码示例。
+
 如果你更喜欢源码级依赖，把 `api/` 目录搬进项目就行：
 
 ```gradle
