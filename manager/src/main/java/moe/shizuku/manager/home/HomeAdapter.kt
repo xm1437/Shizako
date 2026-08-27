@@ -1,6 +1,7 @@
 package moe.shizuku.manager.home
 
 import android.os.Build
+import moe.shizuku.manager.ShizukuSettings
 import moe.shizuku.manager.management.AppsViewModel
 import moe.shizuku.manager.utils.EnvironmentUtils
 import moe.shizuku.manager.utils.UserHandleCompat
@@ -60,15 +61,31 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
             val root = EnvironmentUtils.isRooted()
             val rootRestart = running && status.uid == 0
 
-            if (root) {
-                addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)
+            // Available start methods. The one picked in the setup wizard
+            // (ShizukuSettings.PREFERRED_START_METHOD) is shown first; the
+            // rest keep the default order below it.
+            val preferred = ShizukuSettings.getPreferredStartMethod()
+
+            data class MethodEntry(val method: Int, val add: () -> Unit)
+
+            val methods = buildList {
+                if (root) {
+                    add(MethodEntry(ShizukuSettings.StartMethod.ROOT) {
+                        addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)
+                    })
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R || EnvironmentUtils.getAdbTcpPort() > 0) {
+                    add(MethodEntry(ShizukuSettings.StartMethod.WIRELESS_ADB) {
+                        addItem(StartWirelessAdbViewHolder.CREATOR, null, ID_START_WADB)
+                    })
+                }
+                add(MethodEntry(ShizukuSettings.StartMethod.COMPUTER_ADB) {
+                    addItem(StartAdbViewHolder.CREATOR, null, ID_START_ADB)
+                })
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R || EnvironmentUtils.getAdbTcpPort() > 0) {
-                addItem(StartWirelessAdbViewHolder.CREATOR, null, ID_START_WADB)
-            }
-
-            addItem(StartAdbViewHolder.CREATOR, null, ID_START_ADB)
+            methods.sortedBy { if (it.method == preferred) 0 else 1 }
+                .forEach { it.add() }
 
             if (!root) {
                 addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)

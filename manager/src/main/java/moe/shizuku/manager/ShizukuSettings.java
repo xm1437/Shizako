@@ -25,6 +25,8 @@ public class ShizukuSettings {
     public static final String NIGHT_MODE = "night_mode";
     public static final String LANGUAGE = "language";
     public static final String KEEP_START_ON_BOOT = "start_on_boot";
+    public static final String SETUP_COMPLETED = "setup_completed";
+    public static final String PREFERRED_START_METHOD = "preferred_start_method";
 
     private static SharedPreferences sPreferences;
 
@@ -99,5 +101,43 @@ public class ShizukuSettings {
             return Locale.getDefault();
         }
         return Locale.forLanguageTag(tag);
+    }
+
+    /**
+     * Whether the user has finished (or skipped) the first-launch setup wizard.
+     */
+    public static boolean isSetupCompleted() {
+        return getPreferences().getBoolean(SETUP_COMPLETED, false);
+    }
+
+    public static void setSetupCompleted(boolean completed) {
+        getPreferences().edit().putBoolean(SETUP_COMPLETED, completed).apply();
+    }
+
+    /**
+     * Start method picked in the setup wizard. The home page orders its
+     * "start" cards accordingly so the preferred one comes first.
+     */
+    @StartMethod
+    public static int getPreferredStartMethod() {
+        return getPreferences().getInt(PREFERRED_START_METHOD, StartMethod.UNSET);
+    }
+
+    public static void setPreferredStartMethod(@StartMethod int method) {
+        getPreferences().edit().putInt(PREFERRED_START_METHOD, method).apply();
+    }
+
+    @IntDef({
+            StartMethod.UNSET,
+            StartMethod.WIRELESS_ADB,
+            StartMethod.ROOT,
+            StartMethod.COMPUTER_ADB,
+    })
+    @Retention(SOURCE)
+    public @interface StartMethod {
+        int UNSET = 0;
+        int WIRELESS_ADB = 1;
+        int ROOT = 2;
+        int COMPUTER_ADB = 3;
     }
 }

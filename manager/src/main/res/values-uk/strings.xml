@@ -32,7 +32,7 @@
     <string name="home_status_service_not_running">%1$s не працює</string>
     <string name="about_view_source_code"><![CDATA[Переглянути вихідний код на %s]]></string>
     <string name="app_management_dialog_adb_is_limited_message">Можливо, ваш виробник пристрою лімітує дозвіл adb.&lt;p&gt;Можливо, є рішення для вашої системи у &lt;b&gt;&lt;a href=\"%1$s\"&gt;цьому документі&lt;/a&gt;&lt;/b&gt;.</string>
-    <string name="home_adb_description">Для пристроїв без root потрібно використовувати ADB для запуску Shizako (потрібне підключення до комп’ютера). Цей процес потрібно повторювати кожного разу, коли пристрій перезавантажується. Будь ласка, прочитайте довідку.</string>
+    <string name="home_adb_description">Для пристроїв без root потрібно використовувати ADB для запуску Shizako (потрібне підключення до комп’ютера). Цей процес потрібно повторювати кожного разу, коли пристрій перезавантажується. Будь ласка, &lt;b>&lt;a href=\"%1$s\">прочитайте довідку&lt;/a>&lt;/b>.</string>
     <string name="home_adb_title">Почніть з підключення до ПК</string>
     <string name="home_root_title"><![CDATA[Запустіть службу з root доступом]]></string>
     <string name="toast_copied_to_clipboard_with_text"><b>%s</b> скопійовано в буфер обміну.</string>
@@ -136,4 +136,78 @@
 Можливо потрібно буде перезапустити Shizako."</string>
     <string name="home_adb_is_limited_title">Потрібен ще один крок</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Будь ласка, спробуйте вимкнути та увімкнути \"Налагодження через Wi-Fi\", якщо пошук продовжується.</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">Активація в один клік</string>
+    <string name="home_activation_summary">Активуйте Brevent, Stopapp та інші без комп\'ютера</string>
+    <string name="home_activation_summary_not_running">Спочатку запустіть Shizako, щоб використовувати активацію в один клік</string>
+    <string name="settings_debug">Налагодження</string>
+    <string name="settings_crash_logs">Журнали збоїв</string>
+    <string name="settings_crash_logs_summary">Тут зберігаються журнали збоїв, коли застосунок несподівано завершує роботу</string>
+    <string name="settings_crash_logs_empty">Немає журналів збоїв</string>
+    <string name="settings_crash_logs_count">Журналів збоїв: %1$d</string>
+    <string name="settings_crash_logs_share">Поділитися</string>
+    <string name="settings_crash_logs_delete">Видалити</string>
+    <string name="settings_crash_logs_delete_all">Видалити всі</string>
+    <string name="settings_crash_logs_deleted">Видалено</string>
+    <string name="activation_title">Активація в один клік</string>
+    <string name="activation_subtitle">Виконуйте команди ADB, для яких раніше потрібен був комп\'ютер, просто тут</string>
+    <string name="activation_service_running">Shizako запущено та готово до активації</string>
+    <string name="activation_service_running_brief">Shizako запущено</string>
+    <string name="activation_service_not_running">Shizako не запущено. Спочатку запустіть службу на головній сторінці</string>
+    <string name="activation_activate">Активувати</string>
+    <string name="activation_activated">Активовано</string>
+    <string name="activation_status_not_installed">%1$s · не встановлено</string>
+    <string name="activation_status_installed">%1$s · встановлено</string>
+    <string name="activation_status_activated">%1$s · уже активовано</string>
+    <string name="activation_status_not_activated">%1$s · встановлено, не активовано</string>
+    <string name="activation_note_device_owner">Спочатку потрібно видалити всі облікові записи та додаткових користувачів (гостьовий режим / клонування застосунків). Після активації їх можна додати назад. Можливі особливості залежно від прошивки виробника.</string>
+    <string name="activation_note_brevent">Сервер Brevent потребує повторної активації після кожного перезавантаження.</string>
+    <string name="activation_custom_title">Власна команда</string>
+    <string name="activation_custom_hint">Будь-яка команда оболонки, напр. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Команда порожня</string>
+    <string name="activation_run">Запустити</string>
+    <string name="activation_running">Виконується…</string>
+    <string name="activation_success">Активовано</string>
+    <string name="activation_failed">Не вдалося. Деталі у виводі нижче</string>
+    <string name="activation_failed_with_code">Не вдалося (код виходу %1$d). Деталі у виводі нижче</string>
+    <string name="activation_timeout">Команда все ще виконується; очікування припинено (нормально для серверних команд)</string>
+    <string name="activation_output">Вивід</string>
+    <string name="activation_output_empty">(виводу ще немає)</string>
+    <string name="activation_copy">Копіювати</string>
+    <string name="activation_copied">Скопійовано</string>
+    <string name="activation_back">Назад</string>
+    <string name="about_author">Автор</string>
+    <string name="about_based_on">На основі</string>
+    <string name="about_based_on_text">проєкту з відкритим кодом %s</string>
+    <string name="about_license">Ліцензія</string>
+    <string name="about_footer">Shizako — зроблено з ❤️</string>
+    <string name="notification_channel_status">Стан служби</string>
+    <string name="tile_service_label">Служба Shizako</string>
+    <string name="tile_service_subtitle_running">Працює</string>
+    <string name="tile_service_subtitle_stopped">Зупинено</string>
+    <string name="tile_wireless_adb_label">Бездротове налагодження</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Ласкаво просимо</string>
+    <string name="setup_welcome_subtitle">Кілька швидких налаштувань — і Shizako готовий до роботи.</string>
+    <string name="setup_disclaimer_title">Відмова від відповідальності</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizuko надається «як є», без жодних гарантій.<p>Shizako працює, запускаючи привілейований сервіс на вашому пристрої. Розробник не несе відповідальності за будь-які пошкодження пристрою або втрату даних, що можуть виникнути внаслідок використання цього застосунку або надання застосункам доступу до Shizuko.<p>Використовуйте на власний ризик.]]></string>
+    <string name="setup_disclaimer_agree">Я прочитав(-ла) і погоджуюся з наведеним вище</string>
+    <string name="setup_language_title">Виберіть мову</string>
+    <string name="setup_language_subtitle">Пізніше її можна змінити в налаштуваннях.</string>
+    <string name="setup_mode_subtitle">Виберіть, як виглядатиме Shizako. Пізніше можна змінити в налаштуваннях.</string>
+    <string name="setup_mode_follow_system">Як у системі</string>
+    <string name="setup_mode_light">Світла</string>
+    <string name="setup_mode_dark">Темна</string>
+    <string name="setup_start_method_title">Спосіб активації</string>
+    <string name="setup_start_method_subtitle">Виберіть, як плануєте запускати Shizako. Головна сторінка показуватиме цей спосіб першим.</string>
+    <string name="setup_start_method_wadb">Бездротове налагодження</string>
+    <string name="setup_start_method_wadb_summary">На Android 11 і новіших, комп\'ютер не потрібен</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Для пристроїв із root, запуск одним дотиком</string>
+    <string name="setup_start_method_adb">Підключення до комп\'ютера</string>
+    <string name="setup_start_method_adb_summary">Використовуйте adb через USB, повторюйте після кожного перезапуску</string>
+    <string name="setup_back">Назад</string>
+    <string name="setup_next">Далі</string>
+    <string name="setup_get_started">Почати</string>
+    <string name="setup_skip">Пропустити</string>
 </resources>

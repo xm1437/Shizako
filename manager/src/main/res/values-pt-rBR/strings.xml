@@ -86,7 +86,7 @@ Observe, não desative \"Opções do Desenvolvedor\" ou \"Depuração via USB\",
     <string name="home_adb_dialog_view_command_copy_button">Copiar</string>
     <string name="home_adb_button_view_command">Ver o comando</string>
     <string name="home_adb_button_view_help">Ler a ajuda</string>
-    <string name="home_adb_description">Para aparelhos sem ROOT, será necessário usar o ADB para iniciar o Shizako (requer conexão ao computador). Este processo precisa ser repetido sempre que o aparelho for reiniciado. Por favor leia a ajuda.</string>
+    <string name="home_adb_description">Para aparelhos sem ROOT, será necessário usar o ADB para iniciar o Shizako (requer conexão ao computador). Este processo precisa ser repetido sempre que o aparelho for reiniciado. Por favor &lt;b>&lt;a href=\"%1$s\">leia a ajuda&lt;/a>&lt;/b>.</string>
     <string name="home_adb_title">Comece conectando-se a um computador</string>
     <string name="terminal_tutorial_3">Finalmente, mova os arquivos para algum lugar onde seu aplicativo terminal possa acessar, você poderá usar %1$s para executar comandos através do Shizako.</string>
     <string name="terminal_tutorial_3_description">Algumas dicas: conceda permissão de execução a %1$s e adicione-a a %2$s, você poderá usar %1$s diretamente.</string>
@@ -134,4 +134,78 @@ A função de exportação usa SAF (Storage Access Framework). É relatado que a
 Normalmente, essa limitação pode ser eliminada ajustando algumas opções nas “Opções do desenvolvedor”. Por favor, leia a ajuda para obter detalhes sobre como fazer isso. 
  
 Pode ser necessário reiniciar o Shizako para que a operação tenha efeito."</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">Ativação com um toque</string>
+    <string name="home_activation_summary">Ative Brevent, Stopapp e mais sem computador</string>
+    <string name="home_activation_summary_not_running">Inicie o Shizako primeiro para usar a ativação com um toque</string>
+    <string name="settings_debug">Depuração</string>
+    <string name="settings_crash_logs">Registros de falhas</string>
+    <string name="settings_crash_logs_summary">As falhas são salvas aqui quando o app fecha inesperadamente</string>
+    <string name="settings_crash_logs_empty">Nenhum registro de falhas</string>
+    <string name="settings_crash_logs_count">%1$d registro(s) de falhas</string>
+    <string name="settings_crash_logs_share">Compartilhar</string>
+    <string name="settings_crash_logs_delete">Excluir</string>
+    <string name="settings_crash_logs_delete_all">Excluir todos</string>
+    <string name="settings_crash_logs_deleted">Excluído</string>
+    <string name="activation_title">Ativação com um toque</string>
+    <string name="activation_subtitle">Execute aqui os comandos ADB que antes exigiam um computador</string>
+    <string name="activation_service_running">O Shizako está em execução, pronto para ativar</string>
+    <string name="activation_service_running_brief">O Shizako está em execução</string>
+    <string name="activation_service_not_running">O Shizako não está em execução; inicie o serviço pela página inicial primeiro</string>
+    <string name="activation_activate">Ativar</string>
+    <string name="activation_activated">Ativado</string>
+    <string name="activation_status_not_installed">%1$s · não instalado</string>
+    <string name="activation_status_installed">%1$s · instalado</string>
+    <string name="activation_status_activated">%1$s · já ativado</string>
+    <string name="activation_status_not_activated">%1$s · instalado, não ativado</string>
+    <string name="activation_note_device_owner">Requer remover antes todas as contas e usuários secundários (modo visitante / app gêmeo); você pode adicioná-los de volta após a ativação. Podem haver particularidades da ROM do fabricante.</string>
+    <string name="activation_note_brevent">O servidor do Brevent precisa ser reativado após cada reinício.</string>
+    <string name="activation_custom_title">Comando personalizado</string>
+    <string name="activation_custom_hint">Qualquer comando shell, ex.: dpm set-device-owner …</string>
+    <string name="activation_custom_empty">O comando está vazio</string>
+    <string name="activation_run">Executar</string>
+    <string name="activation_running">Executando…</string>
+    <string name="activation_success">Ativado</string>
+    <string name="activation_failed">Falhou; veja a saída abaixo</string>
+    <string name="activation_failed_with_code">Falhou (código de saída %1$d); veja a saída abaixo</string>
+    <string name="activation_timeout">O comando ainda está em execução; a espera foi interrompida (normal para comandos de servidor)</string>
+    <string name="activation_output">Saída</string>
+    <string name="activation_output_empty">(ainda sem saída)</string>
+    <string name="activation_copy">Copiar</string>
+    <string name="activation_copied">Copiado</string>
+    <string name="activation_back">Voltar</string>
+    <string name="about_author">Autor</string>
+    <string name="about_based_on">Baseado em</string>
+    <string name="about_based_on_text">o projeto open source %s</string>
+    <string name="about_license">Licença</string>
+    <string name="about_footer">Shizako — feito com ❤️</string>
+    <string name="notification_channel_status">Status do serviço</string>
+    <string name="tile_service_label">Serviço Shizako</string>
+    <string name="tile_service_subtitle_running">Em execução</string>
+    <string name="tile_service_subtitle_stopped">Parado</string>
+    <string name="tile_wireless_adb_label">Depuração sem fio</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Bem-vindo</string>
+    <string name="setup_welcome_subtitle">Com alguns ajustes rápidos, o Shizako estará pronto para usar.</string>
+    <string name="setup_disclaimer_title">Aviso legal</string>
+    <string name="setup_disclaimer_text"><![CDATA[O Shizako é fornecido «no estado em que se encontra», sem garantia de qualquer tipo.<p>O Shizako funciona executando um serviço privilegiado no seu dispositivo. O desenvolvedor não é responsável por quaisquer danos ao dispositivo ou perda de dados que possam resultar do uso deste app ou da concessão de acesso ao Shizako.<p>Use por sua conta e risco.]]></string>
+    <string name="setup_disclaimer_agree">Li e concordo com o exposto acima</string>
+    <string name="setup_language_title">Escolher idioma</string>
+    <string name="setup_language_subtitle">Você poderá alterá-lo depois nas configurações.</string>
+    <string name="setup_mode_subtitle">Escolha a aparência do Shizako. Você poderá alterá-la depois nas configurações.</string>
+    <string name="setup_mode_follow_system">Seguir o sistema</string>
+    <string name="setup_mode_light">Claro</string>
+    <string name="setup_mode_dark">Escuro</string>
+    <string name="setup_start_method_title">Método de ativação</string>
+    <string name="setup_start_method_subtitle">Escolha como você planeja iniciar o Shizako. A página inicial mostrará esse método primeiro.</string>
+    <string name="setup_start_method_wadb">Depuração sem fio</string>
+    <string name="setup_start_method_wadb_summary">No Android 11 ou superior, sem precisar de computador</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Para dispositivos rooteados, iniciar com um toque</string>
+    <string name="setup_start_method_adb">Conectar a um computador</string>
+    <string name="setup_start_method_adb_summary">Use adb via USB, repita após cada reinicialização</string>
+    <string name="setup_back">Voltar</string>
+    <string name="setup_next">Avançar</string>
+    <string name="setup_get_started">Começar</string>
+    <string name="setup_skip">Ignorar</string>
 </resources>

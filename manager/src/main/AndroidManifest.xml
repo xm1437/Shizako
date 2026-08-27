@@ -84,6 +84,10 @@
             android:name=".management.ApplicationManagementActivity"
             android:label="@string/home_app_management_title" />
         <activity
+            android:name=".setup.SetupActivity"
+            android:exported="false"
+            android:label="@string/app_name" />
+        <activity
             android:name=".adb.AdbPairingTutorialActivity"
             android:label="@string/adb_pairing" />
         <activity

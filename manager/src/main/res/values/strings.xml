@@ -131,19 +131,44 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="settings_crash_logs_delete_all">Delete all</string>
     <string name="settings_crash_logs_deleted">Deleted</string>
 
+    <!-- Setup wizard -->
+    <string name="setup_welcome_title">Welcome</string>
+    <string name="setup_welcome_subtitle">A few quick settings and Shizako is ready to use.</string>
+    <string name="setup_disclaimer_title">Disclaimer</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako is provided <b>"as is"</b>, without warranty of any kind.<p>Shizako works by running a privileged service on your device. While it is designed to be safe, the developer is not responsible for any damage to your device, or any loss of data, that may result from using this app or granting apps access to Shizako.<p>Use it at your own risk.]]></string>
+    <string name="setup_disclaimer_agree">I have read and agree to the above</string>
+    <string name="setup_language_title">Choose language</string>
+    <string name="setup_language_subtitle">You can change this later in Settings.</string>
+    <string name="setup_mode_subtitle">Choose how Shizako looks. You can change this later in Settings.</string>
+    <string name="setup_mode_follow_system">Follow system</string>
+    <string name="setup_mode_light">Light</string>
+    <string name="setup_mode_dark">Dark</string>
+    <string name="setup_start_method_title">Activation method</string>
+    <string name="setup_start_method_subtitle">Pick how you plan to start Shizako. The home page will show that method first.</string>
+    <string name="setup_start_method_wadb">Wireless debugging</string>
+    <string name="setup_start_method_wadb_summary">On Android 11 or above, no computer needed</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">For rooted devices, one tap to start</string>
+    <string name="setup_start_method_adb">Connect to a computer</string>
+    <string name="setup_start_method_adb_summary">Use adb over USB, repeat after each reboot</string>
+    <string name="setup_back">Back</string>
+    <string name="setup_next">Next</string>
+    <string name="setup_get_started">Get started</string>
+    <string name="setup_skip">Skip</string>
+
     <!-- One-click activation -->
     <string name="activation_title">One-click activation</string>
     <string name="activation_subtitle">Run the ADB commands that used to require a computer, right from here</string>
-    <string name="activation_service_running">Shizaku is running, ready to activate</string>
-    <string name="activation_service_running_brief">Shizaku is running</string>
-    <string name="activation_service_not_running">Shizaku is not running, please start the service from the home page first</string>
+    <string name="activation_service_running">Shizako is running, ready to activate</string>
+    <string name="activation_service_running_brief">Shizako is running</string>
+    <string name="activation_service_not_running">Shizako is not running, please start the service from the home page first</string>
     <string name="activation_activate">Activate</string>
     <string name="activation_activated">Activated</string>
     <string name="activation_status_not_installed">%1$s · not installed</string>
     <string name="activation_status_installed">%1$s · installed</string>
     <string name="activation_status_activated">%1$s · already activated</string>
     <string name="activation_status_not_activated">%1$s · installed, not activated</string>
-    <string name="activation_status_checking">%1$s</string>
+    <string name="activation_status_checking" translatable="false">%1$s</string>
     <string name="activation_note_device_owner">Requires all accounts and secondary users (guest mode / app twin) to be removed first; you can add them back after activation. Vendor ROM quirks may apply.</string>
     <string name="activation_note_brevent">The Brevent server needs to be activated again after every reboot.</string>
     <string name="activation_custom_title">Custom command</string>
@@ -159,6 +184,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="activation_output_empty">(no output yet)</string>
     <string name="activation_copy">Copy</string>
     <string name="activation_copied">Copied</string>
+    <string name="activation_back">Back</string>
 
     <string name="settings_translation_summary">Help us translate %s into your language</string>
     <string name="settings_start_on_boot">Start on boot (root)</string>
@@ -169,11 +195,11 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="action_about">About</string>
     <string name="about_view_source_code"><![CDATA[View source code at %s]]></string>
     <string name="about_author">Author</string>
-    <string name="about_author_name">初然</string>
+    <string name="about_author_name" translatable="false">初然</string>
     <string name="about_based_on">Based on</string>
     <string name="about_based_on_text"><![CDATA[%s open source project]]></string>
     <string name="about_license">License</string>
-    <string name="about_license_text">Apache License 2.0</string>
+    <string name="about_license_text" translatable="false">Apache License 2.0</string>
     <string name="about_footer">Shizako — Made with ❤️</string>
 
     <!-- Stop -->
@@ -203,7 +229,7 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="tile_service_subtitle_running">Running</string>
     <string name="tile_service_subtitle_stopped">Stopped</string>
     <string name="tile_wireless_adb_label">Wireless debugging</string>
-    <string name="tile_wireless_adb_subtitle">Shizako</string>
+    <string name="tile_wireless_adb_subtitle" translatable="false">Shizako</string>
 
     <!-- Permission related, appears in system permission UI -->
     <string name="permission_group_label" translatable="false">Shizako</string>

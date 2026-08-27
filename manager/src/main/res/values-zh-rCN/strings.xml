@@ -74,8 +74,8 @@
     <!-- One-click activation -->
     <string name="activation_title">一键注入</string>
     <string name="activation_subtitle">让 Shizako酱替主人执行那些原本需要电脑的指令</string>
-    <string name="activation_service_running">Shizaku 已运行，可以注入</string>
-    <string name="activation_service_running_brief">Shizaku 已运行</string>
+    <string name="activation_service_running">Shizako 已运行，可以注入</string>
+    <string name="activation_service_running_brief">Shizako 已运行</string>
     <string name="activation_service_not_running">Shizako 未运行，请先回到主页启动服务</string>
     <string name="activation_activate">注入</string>
     <string name="activation_activated">已注入</string>
@@ -99,6 +99,7 @@
     <string name="activation_output_empty">（还没有反馈呢，主人先注入吧~）</string>
     <string name="activation_copy">复制</string>
     <string name="activation_copied">已复制</string>
+    <string name="activation_back">返回</string>
 
     <!-- Quick settings tiles -->
     <string name="tile_service_label">Shizako酱服务</string>
@@ -190,4 +191,28 @@
 通常，在"开发者选项"中调整一些选项即可解除此限制。请阅读帮助来了解具体的操作方式。
 
 您可能需要重新启动 Shizako以使操作生效。"</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">初次见面，主人</string>
+    <string name="setup_welcome_subtitle">只需几步简单的调教，Shizako酱就能为主人效劳了。</string>
+    <string name="setup_disclaimer_title">免责声明</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako酱按「原样」提供给主人，不附带任何形式的保证。<p>Shizako酱的原理是在主人的设备上运行特权服务。虽然设计上已经尽可能保证安全，但使用本软件、或允许其他应用调教 Shizako酱所导致的任何设备损坏或数据丢失，开发者都概不负责。<p>风险请主人自行斟酌哦～]]></string>
+    <string name="setup_disclaimer_agree">主人已阅读并同意上述内容</string>
+    <string name="setup_language_title">选择语言</string>
+    <string name="setup_language_subtitle">主人想用哪种语言和 Shizako酱交流呢？稍后可以在设置中更改。</string>
+    <string name="setup_mode_subtitle">Shizako酱该穿什么样的外观呢？稍后可以在设置中更改。</string>
+    <string name="setup_mode_follow_system">跟随系统</string>
+    <string name="setup_mode_light">浅色</string>
+    <string name="setup_mode_dark">深色</string>
+    <string name="setup_start_method_title">选择激活方式</string>
+    <string name="setup_start_method_subtitle">主人打算怎么调教 Shizako酱呢？主页会把这个方式放在最前面。</string>
+    <string name="setup_start_method_wadb">无线调试</string>
+    <string name="setup_start_method_wadb_summary">Android 11 或以上，无需电脑</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">已 root 的设备，一键启动</string>
+    <string name="setup_start_method_adb">连接电脑</string>
+    <string name="setup_start_method_adb_summary">通过 USB 使用 adb，每次重启后需重复</string>
+    <string name="setup_back">上一步</string>
+    <string name="setup_next">下一步</string>
+    <string name="setup_get_started">开始调教</string>
+    <string name="setup_skip">跳过</string>
 </resources>

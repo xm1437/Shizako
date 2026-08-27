@@ -120,10 +120,92 @@ Qeyd edək ki, Tərtibatçı seçimlərini, USB Debaqı və ya Shizako-nu sönd�
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Bəzi başqa mülahizələr də var, lütfən, əvvəlcə yardımı oxuduğunuzu təsdiqləyin.</string>
     <string name="home_adb_button_view_command">Əmirə baxın</string>
     <string name="home_adb_button_view_help">Yardım</string>
-    <string name="home_adb_description">Root olmayan cihazlarda Shizako-nu işə salmaq üçün adb-dən istifadə etməlisiniz (kompüter bağlantısı tələb olunur). Cihaz hər dəfə yenidən işə salındıqda bu proses təkrarlanmalıdır. Lütfən, yardımı oxuyun.</string>
+    <string name="home_adb_description">Root olmayan cihazlarda Shizako-nu işə salmaq üçün adb-dən istifadə etməlisiniz (kompüter bağlantısı tələb olunur). Cihaz hər dəfə yenidən işə salındıqda bu proses təkrarlanmalıdır. Lütfən, &lt;b>&lt;a href=\"%1$s\">yardımı oxuyun&lt;/a>&lt;/b>.</string>
     <string name="home_adb_title">Kompüterə qoşularaq başlayın</string>
     <string name="home_status_service_version_update">Versiya %2$s, %1$s &lt;br&gt; %3$s Versiyasına güncəlləmək üçün proqramı yenidən başladın</string>
     <string name="home_status_service_version">Versiya %2$s, %1$s</string>
     <string name="home_status_service_not_running">%1$s davam etmir</string>
     <string name="home_status_service_is_running">%1$s davam edir</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Axtarış davam edirsə, "Simsiz sazlamanı" deaktiv edib yenidən aktivləşdirməyə çalışın.</string>
+    <string name="home_app_management_empty">Shizako istəyən və ya dəstəkləyən tətbiqlər burada göstərilir.</string>
+    <string name="home_adb_is_limited_title">Əlavə bir addım atmalısınız</string>
+    <string name="home_adb_is_limited_description">Cihazınızın istehsalçısı adb icazələrini məhdudladırıb və Shizako istifadə edən tətbiqlər düzgün işləməyəcək.
+
+Adətən, bu məhdudiyyət "Tərtibatçı seçimləri"ndə bəzi parametrləri dəyişməklə aradan qaldırıla bilər. Bunun necə ediləcəyini öyrənmək üçün köməyi oxuyun.
+
+Dəyişikliyin tətbiqi üçün Shizako-nu yenidən başlatmağınız lazım ola bilər.</string>
+    <string name="home_activation_title">Bir toxunuşla aktivləşdirmə</string>
+    <string name="home_activation_summary">Brevent, Stopapp və digərlərini kompütersiz aktivləşdirin</string>
+    <string name="home_activation_summary_not_running">Bir toxunuşla aktivləşdirmə üçün əvvəlcə Shizako-nu başladın</string>
+    <string name="settings_debug">Sazlama</string>
+    <string name="settings_crash_logs">Çökmə jurnalları</string>
+    <string name="settings_crash_logs_summary">Tətbiq gözlənilmədən bağlandıqda çökmələr burada saxlanılır</string>
+    <string name="settings_crash_logs_empty">Çökmə jurnalı yoxdur</string>
+    <string name="settings_crash_logs_count">%1$d çökmə jurnalı</string>
+    <string name="settings_crash_logs_share">Paylaş</string>
+    <string name="settings_crash_logs_delete">Sil</string>
+    <string name="settings_crash_logs_delete_all">Hamısını sil</string>
+    <string name="settings_crash_logs_deleted">Silindi</string>
+    <string name="activation_title">Bir toxunuşla aktivləşdirmə</string>
+    <string name="activation_subtitle">Əvvəllər kompüter tələb edən ADB əmrlərini birbaşa buradan icra edin</string>
+    <string name="activation_service_running">Shizako işləyir, aktivləşdirməyə hazırdır</string>
+    <string name="activation_service_running_brief">Shizako işləyir</string>
+    <string name="activation_service_not_running">Shizako işləmir; əvvəlcə əsas ekrandan xidməti başladın</string>
+    <string name="activation_activate">Aktivləşdir</string>
+    <string name="activation_activated">Aktivləşdirildi</string>
+    <string name="activation_status_not_installed">%1$s · quraşdırılmayıb</string>
+    <string name="activation_status_installed">%1$s · quraşdırılıb</string>
+    <string name="activation_status_activated">%1$s · artıq aktivdir</string>
+    <string name="activation_status_not_activated">%1$s · quraşdırılıb, aktiv deyil</string>
+    <string name="activation_note_device_owner">Əvvəlcə bütün hesabların və ikinci dərəcəli istifadəçilərin (qonaq rejimi / tətbiq əkizi) silinməsi lazımdır; aktivləşdirmədən sonra onları geri əlavə edə bilərsiniz. İstehsalçının ROM-undan asılı olaraq fərqlər ola bilər.</string>
+    <string name="activation_note_brevent">Brevent serveri hər yenidən başlatmadan sonra yenidən aktivləşdirilməlidir.</string>
+    <string name="activation_custom_title">Xüsusi əmr</string>
+    <string name="activation_custom_hint">İstənilən shell əmri, məs. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Əmr boşdur</string>
+    <string name="activation_run">İcra et</string>
+    <string name="activation_running">İcra olunur…</string>
+    <string name="activation_success">Aktivləşdirildi</string>
+    <string name="activation_failed">Alınmadı, aşağıdakı nəticəyə baxın</string>
+    <string name="activation_failed_with_code">Alınmadı (çıxış kodu %1$d), aşağıdakı nəticəyə baxın</string>
+    <string name="activation_timeout">Əmr hələ də icra olunur; gözləmə dayandırıldı (server tipli əmrlər üçün normaldır)</string>
+    <string name="activation_output">Nəticə</string>
+    <string name="activation_output_empty">(hələ nəticə yoxdur)</string>
+    <string name="activation_copy">Kopyala</string>
+    <string name="activation_copied">Kopyalandı</string>
+    <string name="activation_back">Geri</string>
+    <string name="about_author">Müəllif</string>
+    <string name="about_based_on">Əsasında</string>
+    <string name="about_based_on_text">%s açıq mənbəli layihəsi</string>
+    <string name="about_license">Lisenziya</string>
+    <string name="about_footer">Shizako — ❤️ ilə hazırlanıb</string>
+    <string name="notification_channel_status">Xidmətin vəziyyəti</string>
+    <string name="tile_service_label">Shizako xidməti</string>
+    <string name="tile_service_subtitle_running">İşləyir</string>
+    <string name="tile_service_subtitle_stopped">Dayandırılıb</string>
+    <string name="tile_wireless_adb_label">Simsiz sazlama</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Xoş gəlmisiniz</string>
+    <string name="setup_welcome_subtitle">Bir neçə sürətli parametrlə Shizako istifadəyə hazırdır.</string>
+    <string name="setup_disclaimer_title">Məsuliyyətdən imtina</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako «olduğu kimi» təqdim olunur, heç bir zəmanət verilmir.<p>Shizako cihazınızda imtiyazlı xidmət işlədir. Bu tətbiqin istifadəsindən və ya tətbiqlərə Shizako girişinin verilməsindən yaranan zərər və ya məlumat itkisinə görə tərtibatçı məsuliyyət daşımır.<p>Öz riskinizlə istifadə edin.]]></string>
+    <string name="setup_disclaimer_agree">Yuxarıdakıları oxudum və razıyam</string>
+    <string name="setup_language_title">Dil seçin</string>
+    <string name="setup_language_subtitle">Bunu daha sonra Parametrlərdə dəyişə bilərsiniz.</string>
+    <string name="setup_mode_subtitle">Shizako-nun necə görünəcəyini seçin. Daha sonra Parametrlərdə dəyişə bilərsiniz.</string>
+    <string name="setup_mode_follow_system">Sistemi izlə</string>
+    <string name="setup_mode_light">Açıq</string>
+    <string name="setup_mode_dark">Tünd</string>
+    <string name="setup_start_method_title">Aktivləşdirmə üsulu</string>
+    <string name="setup_start_method_subtitle">Shizako-nu necə başladacağınızı seçin. Əsas səhifədə bu üsul birinci göstəriləcək.</string>
+    <string name="setup_start_method_wadb">Naqilsiz sazlama</string>
+    <string name="setup_start_method_wadb_summary">Android 11 və daha yeni, kompüter tələb olunmur</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Root-lu cihazlar üçün, bir toxunuşla başladın</string>
+    <string name="setup_start_method_adb">Kompüterə qoşulun</string>
+    <string name="setup_start_method_adb_summary">USB üzərindən adb istifadə edin, hər yenidən başlatmadan sonra təkrarlayın</string>
+    <string name="setup_back">Geri</string>
+    <string name="setup_next">İrəli</string>
+    <string name="setup_get_started">Başla</string>
+    <string name="setup_skip">Ötür</string>
 </resources>

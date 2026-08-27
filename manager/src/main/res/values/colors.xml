@@ -10,4 +10,12 @@
          as a distinct glass layer, while the blurred scrolling content
          behind it still shows through. -->
     <color name="appbar_frost_scrim">#D9FFFFFF</color>
+
+    <!-- One-click activation: service banner dot and output result lines.
+         Night variants live in values-night/colors.xml. -->
+    <color name="activation_status_active">#2E7D32</color>
+    <color name="activation_status_inactive">#C62828</color>
+    <color name="activation_status_unknown">#9E9E9E</color>
+    <color name="activation_output_success">#2E7D32</color>
+    <color name="activation_output_error">#C62828</color>
 </resources>

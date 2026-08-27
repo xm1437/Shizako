@@ -96,7 +96,7 @@
     <string name="dialog_requesting_legacy_button_open_shizuku">Deschide Shizako</string>
     <string name="translation_contributors">Igor</string>
     <string name="home_status_service_version">Versiune %2$s, %1$s</string>
-    <string name="home_adb_description">Pentru dispozitivele fără root, trebuie să utilizezi adb pentru a porni Shizako (necesită conexiune la computer). Acest proces trebuie repetat de fiecare dată când dispozitivul este repornit. Citește ajutorul.</string>
+    <string name="home_adb_description">Pentru dispozitivele fără root, trebuie să utilizezi adb pentru a porni Shizako (necesită conexiune la computer). Acest proces trebuie repetat de fiecare dată când dispozitivul este repornit. &lt;b>&lt;a href=\"%1$s\">Citește ajutorul&lt;/a>&lt;/b>.</string>
     <string name="home_wireless_adb_description">Pe Android 11 sau o versiune ulterioară, poți activa depanarea wireless și poți porni Shizako direct de pe dispozitiv, fără a te conecta la un computer.&lt;p>Mai întâi consultă ghidul pas cu pas.</string>
     <string name="dialog_adb_discovery_message">"Activează „Depanare wireless” în „Opțiuni dezvoltator”. „Depanarea wireless” se dezactivează automat când se schimbă rețeaua. 
  
@@ -135,4 +135,78 @@ De obicei, această limitare poate fi ridicată prin ajustarea unor opțiuni din
 Poate fi necesar să repornești Shizako pentru ca operațiunea să intre în vigoare."</string>
     <string name="home_adb_is_limited_title">Trebuie să faci un pas suplimentar</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Încearcă să dezactivezi și să activezi „Depanare fără fir” dacă caută în continuare.</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">Activare dintr-o atingere</string>
+    <string name="home_activation_summary">Activează Brevent, Stopapp și altele fără calculator</string>
+    <string name="home_activation_summary_not_running">Pornește mai întâi Shizako pentru a folosi activarea dintr-o atingere</string>
+    <string name="settings_debug">Depanare</string>
+    <string name="settings_crash_logs">Jurnalele de erori</string>
+    <string name="settings_crash_logs_summary">Aici sunt salvate erorile atunci când aplicația se închide neașteptat</string>
+    <string name="settings_crash_logs_empty">Nu există jurnale de erori</string>
+    <string name="settings_crash_logs_count">%1$d jurnal(e) de erori</string>
+    <string name="settings_crash_logs_share">Distribuie</string>
+    <string name="settings_crash_logs_delete">Șterge</string>
+    <string name="settings_crash_logs_delete_all">Șterge tot</string>
+    <string name="settings_crash_logs_deleted">Șters</string>
+    <string name="activation_title">Activare dintr-o atingere</string>
+    <string name="activation_subtitle">Rulează aici comenzile ADB care altădată necesitau un calculator</string>
+    <string name="activation_service_running">Shizako rulează, pregătit pentru activare</string>
+    <string name="activation_service_running_brief">Shizako rulează</string>
+    <string name="activation_service_not_running">Shizako nu rulează; porniți mai întâi serviciul din pagina principală</string>
+    <string name="activation_activate">Activează</string>
+    <string name="activation_activated">Activat</string>
+    <string name="activation_status_not_installed">%1$s · neinstalat</string>
+    <string name="activation_status_installed">%1$s · instalat</string>
+    <string name="activation_status_activated">%1$s · deja activat</string>
+    <string name="activation_status_not_activated">%1$s · instalat, neactivat</string>
+    <string name="activation_note_device_owner">Necesită eliminarea prealabilă a tuturor conturilor și utilizatorilor secundari (modul invitat / clona aplicației); îi poți adăuga din nou după activare. Pot exista particularități în funcție de ROM-ul producătorului.</string>
+    <string name="activation_note_brevent">Serverul Brevent trebuie reactivat după fiecare repornire.</string>
+    <string name="activation_custom_title">Comandă personalizată</string>
+    <string name="activation_custom_hint">Orice comandă shell, ex. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Comanda este goală</string>
+    <string name="activation_run">Rulează</string>
+    <string name="activation_running">Se rulează…</string>
+    <string name="activation_success">Activat</string>
+    <string name="activation_failed">Eșec, vezi rezultatul de mai jos</string>
+    <string name="activation_failed_with_code">Eșec (cod de ieșire %1$d), vezi rezultatul de mai jos</string>
+    <string name="activation_timeout">Comanda rulează încă; s-a renunțat la așteptare (normal pentru comenzile de tip server)</string>
+    <string name="activation_output">Rezultat</string>
+    <string name="activation_output_empty">(niciun rezultat încă)</string>
+    <string name="activation_copy">Copiază</string>
+    <string name="activation_copied">Copiat</string>
+    <string name="activation_back">Înapoi</string>
+    <string name="about_author">Autor</string>
+    <string name="about_based_on">Bazat pe</string>
+    <string name="about_based_on_text">proiectul open source %s</string>
+    <string name="about_license">Licență</string>
+    <string name="about_footer">Shizako — făcut cu ❤️</string>
+    <string name="notification_channel_status">Starea serviciului</string>
+    <string name="tile_service_label">Serviciul Shizako</string>
+    <string name="tile_service_subtitle_running">Rulează</string>
+    <string name="tile_service_subtitle_stopped">Oprit</string>
+    <string name="tile_wireless_adb_label">Depanare wireless</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Bine ați venit</string>
+    <string name="setup_welcome_subtitle">Cu câteva setări rapide, Shizako este gata de utilizare.</string>
+    <string name="setup_disclaimer_title">Avertisment</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako este furnizat «ca atare», fără nicio garanție.<p>Shizako funcționează prin rularea unui serviciu privilegiat pe dispozitivul dvs. Dezvoltatorul nu este responsabil pentru daunele aduse dispozitivului sau pierderea de date care pot rezulta din utilizarea acestei aplicații sau din acordarea accesului la Shizuko.<p>Utilizați pe propriul risc.]]></string>
+    <string name="setup_disclaimer_agree">Am citit și accept cele de mai sus</string>
+    <string name="setup_language_title">Alegeți limba</string>
+    <string name="setup_language_subtitle">O puteți schimba mai târziu din Setări.</string>
+    <string name="setup_mode_subtitle">Alegeți cum arată Shizako. Îl puteți schimba mai târziu din Setări.</string>
+    <string name="setup_mode_follow_system">Urmează sistemul</string>
+    <string name="setup_mode_light">Deschis</string>
+    <string name="setup_mode_dark">Întunecat</string>
+    <string name="setup_start_method_title">Metodă de activare</string>
+    <string name="setup_start_method_subtitle">Alegeți cum intenționați să porniți Shizako. Pagina principală va afișa mai întâi acea metodă.</string>
+    <string name="setup_start_method_wadb">Depanare wireless</string>
+    <string name="setup_start_method_wadb_summary">Pe Android 11 sau mai nou, fără computer</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Pentru dispozitive cu root, pornire dintr-o atingere</string>
+    <string name="setup_start_method_adb">Conectare la un computer</string>
+    <string name="setup_start_method_adb_summary">Folosiți adb prin USB, repetați după fiecare repornire</string>
+    <string name="setup_back">Înapoi</string>
+    <string name="setup_next">Înainte</string>
+    <string name="setup_get_started">Începeți</string>
+    <string name="setup_skip">Omiteți</string>
 </resources>

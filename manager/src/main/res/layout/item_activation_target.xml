@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the activation target list. The status line (installed /
+     already activated / …) is colored at runtime by the activity. -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="?attr/materialCardViewFilledStyle"
@@ -34,11 +36,10 @@
                     android:textAppearance="?textAppearanceTitleMedium" />
 
                 <TextView
-                    android:id="@+id/target_notes"
+                    android:id="@+id/target_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:lineSpacingExtra="2dp"
                     android:textAppearance="?textAppearanceBodySmall"
                     android:textColor="?android:textColorSecondary" />
             </LinearLayout>
@@ -52,5 +53,14 @@
                 android:minWidth="0dp"
                 android:textSize="13sp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/target_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="2dp"
+            android:textAppearance="?textAppearanceBodySmall"
+            android:textColor="?android:textColorSecondary" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

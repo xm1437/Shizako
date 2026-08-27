@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- One-click activation page. The content scrolls under the frosted app bar
+     (added by AppBarActivity), so the scroll view is padded by the action
+     bar size instead of being constrained below it. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <rikka.widget.borderview.BorderNestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingTop="?actionBarSize"
         android:scrollbarStyle="insideOverlay"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        app:borderBottomVisibility="never"
+        app:borderTopDrawable="@null"
+        app:borderTopVisibility="whenTop"
+        app:fitsSystemWindowsInsets="top|bottom">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,6 +27,65 @@
             android:paddingStart="@dimen/rd_activity_horizontal_margin"
             android:paddingEnd="@dimen/rd_activity_horizontal_margin"
             android:paddingBottom="32dp">
+
+            <!-- Page intro -->
+            <TextView
+                android:id="@+id/page_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/activation_subtitle"
+                android:textAppearance="?textAppearanceBodyMedium"
+                android:textColor="?android:textColorSecondary" />
+
+            <!-- Service status banner: green dot while the Shizaku
+                 service runs, red when it is stopped. Updated live via
+                 the binder listeners. -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/status_card"
+                style="?attr/materialCardViewFilledStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/home_card_background_color"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/status_dot"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/shape_status_dot"
+                        android:importantForAccessibility="no" />
+
+                    <TextView
+                        android:id="@+id/status_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="@string/activation_service_not_running"
+                        android:textAppearance="?textAppearanceBodyMedium" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Indeterminate progress bar shown while a command is
+                 executing on the server. -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/running_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:trackCornerRadius="3dp" />
 
             <!-- Target cards -->
             <LinearLayout
@@ -133,5 +196,5 @@
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </rikka.widget.borderview.BorderNestedScrollView>
+</FrameLayout>

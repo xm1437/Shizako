@@ -4,4 +4,11 @@
          dark scrim keeps light toolbar text and status bar icons readable
          while blurred content shows through. -->
     <color name="appbar_frost_scrim">#D9191C20</color>
+
+    <!-- One-click activation, dark variants: lighter tones for dark surfaces. -->
+    <color name="activation_status_active">#81C784</color>
+    <color name="activation_status_inactive">#E57373</color>
+    <color name="activation_status_unknown">#B0B0B0</color>
+    <color name="activation_output_success">#81C784</color>
+    <color name="activation_output_error">#E57373</color>
 </resources>

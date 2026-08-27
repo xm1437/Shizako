@@ -10,7 +10,7 @@
     <string name="home_root_button_restart">重新啟動</string>
     <string name="home_root_title">啟動 (針對已 Root 裝置)</string>
     <string name="home_adb_title">透過與電腦連線來啟動 (使用 ADB)</string>
-    <string name="home_adb_description">沒有 Root 的裝置需藉助 ADB 來啟動 Shizako (須與電腦連線)。在裝置每次重新啟動後，這項作業皆須重新進行。請閱讀說明。</string>
+    <string name="home_adb_description">沒有 Root 的裝置需藉助 ADB 來啟動 Shizako (須與電腦連線)。在裝置每次重新啟動後，這項作業皆須重新進行。請&lt;b>&lt;a href=\"%1$s\">閱讀說明&lt;/a>&lt;/b>。</string>
     <string name="home_root_description">另外，Shizako 可以在開機時自動啟動。如果沒有啟動，請檢查 Shizako 是否被您的系統或是第三方工具限制。&lt;br>你可以參考 %s。</string>
     <string name="home_adb_dialog_view_command_copy_button">複製</string>
     <string name="home_adb_dialog_view_command_button_send">傳送</string>
@@ -133,4 +133,78 @@
 通常，在「開發人員選項」中調整一些選項即可解除此限制。請閱讀說明來瞭解具體的作業方式。 
  
 您可能需要重新啟動 Shizako 以使作業生效。"</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">一鍵注入</string>
+    <string name="home_activation_summary">不用電腦，讓 Shizako醬 幫你調教它們❤️</string>
+    <string name="home_activation_summary_not_running">先讓 Shizako醬 醒過來才能幫你注入喔~</string>
+    <string name="settings_debug">除錯</string>
+    <string name="settings_crash_logs">當機記錄</string>
+    <string name="settings_crash_logs_summary">應用程式意外結束時，當機記錄會儲存在這裡</string>
+    <string name="settings_crash_logs_empty">沒有當機記錄</string>
+    <string name="settings_crash_logs_count">%1$d 筆當機記錄</string>
+    <string name="settings_crash_logs_share">分享</string>
+    <string name="settings_crash_logs_delete">刪除</string>
+    <string name="settings_crash_logs_delete_all">全部刪除</string>
+    <string name="settings_crash_logs_deleted">已刪除</string>
+    <string name="activation_title">一鍵注入</string>
+    <string name="activation_subtitle">讓 Shizako醬 替主人執行那些原本需要電腦的指令</string>
+    <string name="activation_service_running">Shizako 已執行，可以注入</string>
+    <string name="activation_service_running_brief">Shizako 已執行</string>
+    <string name="activation_service_not_running">Shizako 未執行，請先回到首頁啟動服務</string>
+    <string name="activation_activate">注入</string>
+    <string name="activation_activated">已注入</string>
+    <string name="activation_status_not_installed">%1$s · 未安裝</string>
+    <string name="activation_status_installed">%1$s · 已安裝</string>
+    <string name="activation_status_activated">%1$s · 已注入</string>
+    <string name="activation_status_not_activated">%1$s · 已安裝，尚未注入</string>
+    <string name="activation_note_device_owner">需要先移除所有帳戶與次要使用者（訪客模式／應用分身），注入後可以再加回來。各家 ROM 可能有不同的限制。</string>
+    <string name="activation_note_brevent">Brevent 伺服器在每次重新開機後都需要重新注入。</string>
+    <string name="activation_custom_title">自訂指令</string>
+    <string name="activation_custom_hint">任意 Shell 指令，例如 dpm set-device-owner …</string>
+    <string name="activation_custom_empty">指令是空的</string>
+    <string name="activation_run">執行</string>
+    <string name="activation_running">執行中…</string>
+    <string name="activation_success">已注入</string>
+    <string name="activation_failed">失敗了，請看下方輸出</string>
+    <string name="activation_failed_with_code">失敗（結束代碼 %1$d），請看下方輸出</string>
+    <string name="activation_timeout">指令仍在執行中；已停止等待（對伺服器類指令來說是正常現象）</string>
+    <string name="activation_output">輸出</string>
+    <string name="activation_output_empty">（還沒有輸出）</string>
+    <string name="activation_copy">複製</string>
+    <string name="activation_copied">已複製</string>
+    <string name="activation_back">返回</string>
+    <string name="about_author">作者</string>
+    <string name="about_based_on">基於</string>
+    <string name="about_based_on_text">%s 開源專案二次開發</string>
+    <string name="about_license">開源授權條款</string>
+    <string name="about_footer">Shizako — 為愛發電</string>
+    <string name="notification_channel_status">服務狀態</string>
+    <string name="tile_service_label">Shizako 服務</string>
+    <string name="tile_service_subtitle_running">執行中</string>
+    <string name="tile_service_subtitle_stopped">已停止</string>
+    <string name="tile_wireless_adb_label">無線偵錯</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">初次見面，主人</string>
+    <string name="setup_welcome_subtitle">只需幾步簡單的調教，Shizako醬就能為主人效勞了。</string>
+    <string name="setup_disclaimer_title">免責聲明</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako醬按「原樣」提供給主人，不附帶任何形式的保證。<p>Shizuko醬的原理是在主人的裝置上執行特殊權限服務。雖然設計上已盡可能保證安全，但使用本軟體、或允許其他應用調教 Shizako醬所導致的任何裝置損壞或資料遺失，開發者都概不負責。<p>風險請主人自行斟酌哦～]]></string>
+    <string name="setup_disclaimer_agree">主人已閱讀並同意上述內容</string>
+    <string name="setup_language_title">選擇語言</string>
+    <string name="setup_language_subtitle">主人想用哪種語言和 Shizako醬交流呢？稍後可以在設定中變更。</string>
+    <string name="setup_mode_subtitle">Shizako醬該穿什麼樣的外觀呢？稍後可以在設定中變更。</string>
+    <string name="setup_mode_follow_system">跟隨系統</string>
+    <string name="setup_mode_light">淺色</string>
+    <string name="setup_mode_dark">深色</string>
+    <string name="setup_start_method_title">選擇啟用方式</string>
+    <string name="setup_start_method_subtitle">主人打算怎麼調教 Shizako醬呢？首頁會把這個方式放在最前面。</string>
+    <string name="setup_start_method_wadb">無線偵錯</string>
+    <string name="setup_start_method_wadb_summary">Android 11 或以上，無需電腦</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">已 root 的裝置，一鍵啟動</string>
+    <string name="setup_start_method_adb">連接電腦</string>
+    <string name="setup_start_method_adb_summary">透過 USB 使用 adb，每次重新開機後需重複</string>
+    <string name="setup_back">上一步</string>
+    <string name="setup_next">下一步</string>
+    <string name="setup_get_started">開始調教</string>
+    <string name="setup_skip">跳過</string>
 </resources>

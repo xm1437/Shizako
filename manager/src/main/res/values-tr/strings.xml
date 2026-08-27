@@ -20,7 +20,7 @@ Not, \"Geliştirici seçenekleri\" veya \"USB hata ayıklama\" devre dışı bı
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* Başka hususlar da var, lütfen önce yardımı okuduğunuzu onaylayın.</string>
     <string name="home_adb_button_view_command">Komutu görüntüle</string>
     <string name="home_adb_button_view_help">Yardımı oku</string>
-    <string name="home_adb_description">Rootsuz cihazlar için Shizako’yu başlatmak için adb kullanmanız gerekir (bilgisayar bağlantısı gerektirir). Bu işlemin cihaz her yeniden başlatıldığında tekrarlanması gerekir. Lütfen yardımı okuyun.</string>
+    <string name="home_adb_description">Rootsuz cihazlar için Shizako’yu başlatmak için adb kullanmanız gerekir (bilgisayar bağlantısı gerektirir). Bu işlemin cihaz her yeniden başlatıldığında tekrarlanması gerekir. Lütfen &lt;b>&lt;a href=\"%1$s\">yardımı okuyun&lt;/a>&lt;/b>.</string>
     <string name="home_adb_title">Bilgisayara bağlanarak başlatın</string>
     <string name="home_status_service_version_update">Sürüm %2$s, %1$s&lt;br&gt;Sürüm %3$s, güncelleştirmek için yeniden başlatın</string>
     <string name="home_status_service_version">Sürüm %2$s, %1$s</string>
@@ -136,4 +136,78 @@ Dışa aktarma işlevi SAF’yi (Depolama Erişim Çerçevesi) kullanır. MIUI�
 Genellikle, bu kısıtlama \"Geliştirici seçenekleri\"ndeki bazı ayarlar değiştirilerek kaldırılabilir. Bunun nasıl yapılacağına ilişkin ayrıntılar için lütfen yardımı okuyun.  
   
 İşlemin etkili olabilmesi için Shizako yeniden başlatılmalı."</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">Tek dokunuşla etkinleştirme</string>
+    <string name="home_activation_summary">Brevent, Stopapp ve daha fazlasını bilgisayar olmadan etkinleştirin</string>
+    <string name="home_activation_summary_not_running">Tek dokunuşla etkinleştirmeyi kullanmak için önce Shizako\'yu başlatın</string>
+    <string name="settings_debug">Hata ayıklama</string>
+    <string name="settings_crash_logs">Çökme kayıtları</string>
+    <string name="settings_crash_logs_summary">Uygulama beklenmedik şekilde kapanınca çökmeler buraya kaydedilir</string>
+    <string name="settings_crash_logs_empty">Çökme kaydı yok</string>
+    <string name="settings_crash_logs_count">%1$d çökme kaydı</string>
+    <string name="settings_crash_logs_share">Paylaş</string>
+    <string name="settings_crash_logs_delete">Sil</string>
+    <string name="settings_crash_logs_delete_all">Tümünü sil</string>
+    <string name="settings_crash_logs_deleted">Silindi</string>
+    <string name="activation_title">Tek dokunuşla etkinleştirme</string>
+    <string name="activation_subtitle">Eskiden bilgisayar gerektiren ADB komutlarını buradan çalıştırın</string>
+    <string name="activation_service_running">Shizako çalışıyor, etkinleştirmeye hazır</string>
+    <string name="activation_service_running_brief">Shizako çalışıyor</string>
+    <string name="activation_service_not_running">Shizako çalışmıyor; lütfen önce ana sayfadan hizmeti başlatın</string>
+    <string name="activation_activate">Etkinleştir</string>
+    <string name="activation_activated">Etkinleştirildi</string>
+    <string name="activation_status_not_installed">%1$s · kurulu değil</string>
+    <string name="activation_status_installed">%1$s · kurulu</string>
+    <string name="activation_status_activated">%1$s · zaten etkin</string>
+    <string name="activation_status_not_activated">%1$s · kurulu, etkin değil</string>
+    <string name="activation_note_device_owner">Önce tüm hesapların ve ikincil kullanıcıların (konuk modu / uygulama ikizi) kaldırılması gerekir; etkinleştirmeden sonra geri ekleyebilirsiniz. Üreticinin ROM\'una göre özel durumlar olabilir.</string>
+    <string name="activation_note_brevent">Brevent sunucusu her yeniden başlatmadan sonra yeniden etkinleştirilmelidir.</string>
+    <string name="activation_custom_title">Özel komut</string>
+    <string name="activation_custom_hint">Herhangi bir kabuk komutu, örn. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Komut boş</string>
+    <string name="activation_run">Çalıştır</string>
+    <string name="activation_running">Çalışıyor…</string>
+    <string name="activation_success">Etkinleştirildi</string>
+    <string name="activation_failed">Başarısız, aşağıdaki çıktıya bakın</string>
+    <string name="activation_failed_with_code">Başarısız (çıkış kodu %1$d), aşağıdaki çıktıya bakın</string>
+    <string name="activation_timeout">Komut hâlâ çalışıyor; bekleme durduruldu (sunucu türü komutlar için normaldir)</string>
+    <string name="activation_output">Çıktı</string>
+    <string name="activation_output_empty">(henüz çıktı yok)</string>
+    <string name="activation_copy">Kopyala</string>
+    <string name="activation_copied">Kopyalandı</string>
+    <string name="activation_back">Geri</string>
+    <string name="about_author">Geliştirici</string>
+    <string name="about_based_on">Temel</string>
+    <string name="about_based_on_text">%s açık kaynak projesi</string>
+    <string name="about_license">Lisans</string>
+    <string name="about_footer">Shizako — ❤️ ile yapıldı</string>
+    <string name="notification_channel_status">Hizmet durumu</string>
+    <string name="tile_service_label">Shizako hizmeti</string>
+    <string name="tile_service_subtitle_running">Çalışıyor</string>
+    <string name="tile_service_subtitle_stopped">Durduruldu</string>
+    <string name="tile_wireless_adb_label">Kablosuz hata ayıklama</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Hoş geldiniz</string>
+    <string name="setup_welcome_subtitle">Birkaç hızlı ayarla Shizako kullanıma hazır.</string>
+    <string name="setup_disclaimer_title">Sorumluluk reddi</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako «olduğu gibi» sunulur, hiçbir garanti verilmez.<p>Shizako, cihazınızda ayrıcalıklı bir servis çalıştırarak işlev görür. Bu uygulamanın kullanımından veya uygulamalara Shizako erişimi verilmesinden kaynaklanabilecek herhangi bir cihaz hasarından veya veri kaybından geliştirici sorumlu değildir.<p>Kendi riskinizle kullanın.]]></string>
+    <string name="setup_disclaimer_agree">Yukarıdakileri okudum ve kabul ediyorum</string>
+    <string name="setup_language_title">Dil seçin</string>
+    <string name="setup_language_subtitle">Bunu daha sonra Ayarlar’dan değiştirebilirsiniz.</string>
+    <string name="setup_mode_subtitle">Shizako’nun nasıl görüneceğini seçin. Daha sonra Ayarlar’dan değiştirebilirsiniz.</string>
+    <string name="setup_mode_follow_system">Sistemi izle</string>
+    <string name="setup_mode_light">Açık</string>
+    <string name="setup_mode_dark">Koyu</string>
+    <string name="setup_start_method_title">Etkinleştirme yöntemi</string>
+    <string name="setup_start_method_subtitle">Shizako\'yu nasıl başlatmayı planladığınızı seçin. Ana sayfa bu yöntemi ilk sırada gösterecek.</string>
+    <string name="setup_start_method_wadb">Kablosuz hata ayıklama</string>
+    <string name="setup_start_method_wadb_summary">Android 11 ve üzerinde, bilgisayar gerekmez</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Root\'lu cihazlar için, tek dokunuşla başlatma</string>
+    <string name="setup_start_method_adb">Bilgisayara bağlan</string>
+    <string name="setup_start_method_adb_summary">USB üzerinden adb kullanın, her yeniden başlatmadan sonra tekrarlayın</string>
+    <string name="setup_back">Geri</string>
+    <string name="setup_next">İleri</string>
+    <string name="setup_get_started">Başla</string>
+    <string name="setup_skip">Atla</string>
 </resources>

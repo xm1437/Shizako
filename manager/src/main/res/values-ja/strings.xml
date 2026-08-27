@@ -59,7 +59,7 @@
     <string name="home_adb_dialog_view_command_message">&lt;font face=monospace&gt;%1$s&lt;/font&gt;&lt;br&gt;&lt;br&gt;* 他にもいくつか注意点がありますので、まずはヘルプを読んで確認してください。</string>
     <string name="home_adb_button_view_help">ヘルプ</string>
     <string name="home_adb_button_view_command">コマンドを表示する</string>
-    <string name="home_adb_description">root権限を持たないデバイスの場合、adbを使ってShizakoを起動する必要があります（コンピュータへの接続が必要）。この作業は、端末を再起動するたびに繰り返す必要があります。詳しくはヘルプをお読みください。</string>
+    <string name="home_adb_description">root権限を持たないデバイスの場合、adbを使ってShizakoを起動する必要があります（コンピュータへの接続が必要）。この作業は、端末を再起動するたびに繰り返す必要があります。詳しくは&lt;b>&lt;a href=\"%1$s\">ヘルプをお読みください&lt;/a>&lt;/b>。</string>
     <string name="home_root_description_sui">Magiskをお使いの方は、%1$sをお試しください。rootユーザにとっては、最終的にShizakoを置き換えることになるでしょう。なお、%2$sを使用するには、既存のアプリケーションを少し変更する必要があります。</string>
     <string name="dialog_adb_discovery_message">"「開発者向けオプション」で「ワイヤレスデバッグ」を有効にしてください。ネットワークが変更されると、「ワイヤレスデバッグ」は自動的に無効になります。 
  
@@ -133,4 +133,78 @@
  
 操作を有効にするために､ Shizakoを再起動する必要がある場合があります。"</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">検索され続ける場合は、「ワイヤレスデバッグ」の無効化と有効化をしてみてください。</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">ワンタップ有効化</string>
+    <string name="home_activation_summary">パソコンなしで、Brevent や Stopapp などを有効化</string>
+    <string name="home_activation_summary_not_running">ワンタップ有効化を使うには、先に Shizako を起動してください</string>
+    <string name="settings_debug">デバッグ</string>
+    <string name="settings_crash_logs">クラッシュログ</string>
+    <string name="settings_crash_logs_summary">アプリが予期せず終了した際、クラッシュログはここに保存されます</string>
+    <string name="settings_crash_logs_empty">クラッシュログはありません</string>
+    <string name="settings_crash_logs_count">クラッシュログ %1$d 件</string>
+    <string name="settings_crash_logs_share">共有</string>
+    <string name="settings_crash_logs_delete">削除</string>
+    <string name="settings_crash_logs_delete_all">すべて削除</string>
+    <string name="settings_crash_logs_deleted">削除しました</string>
+    <string name="activation_title">ワンタップ有効化</string>
+    <string name="activation_subtitle">パソコンが必要だった ADB コマンドを、この画面から直接実行できます</string>
+    <string name="activation_service_running">Shizako は実行中です。有効化できます</string>
+    <string name="activation_service_running_brief">Shizako 実行中</string>
+    <string name="activation_service_not_running">Shizako が実行されていません。先にホーム画面からサービスを起動してください</string>
+    <string name="activation_activate">有効化</string>
+    <string name="activation_activated">有効化済み</string>
+    <string name="activation_status_not_installed">%1$s · 未インストール</string>
+    <string name="activation_status_installed">%1$s · インストール済み</string>
+    <string name="activation_status_activated">%1$s · すでに有効</string>
+    <string name="activation_status_not_activated">%1$s · インストール済み、未設定</string>
+    <string name="activation_note_device_owner">まずすべてのアカウントとサブユーザー（ゲストモード・アプリの並行コピー）を削除する必要があります。有効化の後に再び追加できます。端末の ROM によっては制約がある場合があります。</string>
+    <string name="activation_note_brevent">Brevent のサーバーは、端末を再起動するたびに再度有効化する必要があります。</string>
+    <string name="activation_custom_title">カスタムコマンド</string>
+    <string name="activation_custom_hint">任意のシェルコマンド（例: dpm set-device-owner …）</string>
+    <string name="activation_custom_empty">コマンドが空です</string>
+    <string name="activation_run">実行</string>
+    <string name="activation_running">実行中…</string>
+    <string name="activation_success">有効化しました</string>
+    <string name="activation_failed">失敗しました。下の出力を確認してください</string>
+    <string name="activation_failed_with_code">失敗しました（終了コード %1$d）。下の出力を確認してください</string>
+    <string name="activation_timeout">コマンドはまだ実行中のため、待機を終了しました（サーバー型コマンドでは正常な動作です）</string>
+    <string name="activation_output">出力</string>
+    <string name="activation_output_empty">（出力はまだありません）</string>
+    <string name="activation_copy">コピー</string>
+    <string name="activation_copied">コピーしました</string>
+    <string name="activation_back">戻る</string>
+    <string name="about_author">作者</string>
+    <string name="about_based_on">ベース</string>
+    <string name="about_based_on_text">%s オープンソースプロジェクト</string>
+    <string name="about_license">ライセンス</string>
+    <string name="about_footer">Shizako — ❤️ を込めて作りました</string>
+    <string name="notification_channel_status">サービスの状態</string>
+    <string name="tile_service_label">Shizako サービス</string>
+    <string name="tile_service_subtitle_running">実行中</string>
+    <string name="tile_service_subtitle_stopped">停止</string>
+    <string name="tile_wireless_adb_label">ワイヤレスデバッグ</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">ようこそ</string>
+    <string name="setup_welcome_subtitle">いくつかの簡単な設定で、Shizako を使い始められます。</string>
+    <string name="setup_disclaimer_title">免責事項</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako は「現状有姿」で提供され、いかなる保証も伴いません。<p>Shizako はデバイス上で特権サービスを実行することで動作します。本アプリの使用や他アプリへの Shizako へのアクセス許可によって生じたいかなる損害やデータ損失についても、開発者は責任を負いません。<p>自己責任でご利用ください。]]></string>
+    <string name="setup_disclaimer_agree">上記を読み、同意しました</string>
+    <string name="setup_language_title">言語を選択</string>
+    <string name="setup_language_subtitle">後から設定で変更できます。</string>
+    <string name="setup_mode_subtitle">Shizako の見た目を選択してください。後から設定で変更できます。</string>
+    <string name="setup_mode_follow_system">システムに従う</string>
+    <string name="setup_mode_light">ライト</string>
+    <string name="setup_mode_dark">ダーク</string>
+    <string name="setup_start_method_title">有効化の方法</string>
+    <string name="setup_start_method_subtitle">Shizako をどの方法で開始するか選択してください。ホームページではその方法が最初に表示されます。</string>
+    <string name="setup_start_method_wadb">ワイヤレスデバッグ</string>
+    <string name="setup_start_method_wadb_summary">Android 11 以降ならパソコン不要</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">root 化した端末ならワンタップで起動</string>
+    <string name="setup_start_method_adb">パソコンに接続</string>
+    <string name="setup_start_method_adb_summary">USB 経由で adb を使用、再起動のたびに繰り返し</string>
+    <string name="setup_back">戻る</string>
+    <string name="setup_next">次へ</string>
+    <string name="setup_get_started">始める</string>
+    <string name="setup_skip">スキップ</string>
 </resources>

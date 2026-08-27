@@ -18,6 +18,7 @@ import moe.shizuku.manager.databinding.HomeActivityBinding
 import moe.shizuku.manager.ktx.toHtml
 import moe.shizuku.manager.management.appsViewModel
 import moe.shizuku.manager.settings.SettingsActivity
+import moe.shizuku.manager.setup.SetupActivity
 import moe.shizuku.manager.utils.AppIconCache
 import rikka.core.ktx.unsafeLazy
 import rikka.lifecycle.Status
@@ -44,6 +45,13 @@ abstract class HomeActivity : AppBarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // First launch: run the setup wizard before anything else.
+        if (!ShizukuSettings.isSetupCompleted()) {
+            startActivity(Intent(this, SetupActivity::class.java))
+            finish()
+            return
+        }
 
         val binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)

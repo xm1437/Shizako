@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_status_service_version_update">Versi %2$s, %1$s &lt;br&gt; Mulai ulang untuk upgrade ke versi %3$s</string>
-    <string name="home_adb_description">Untuk perangkat tanpa akses root, Anda harus menggunakan adb untuk memulai Shizako (perlu terhubung dengan komputer). Proses ini harus diulang setiap kali perangkat di-restart. Harap baca dokumentasi untuk info lebih lanjut.</string>
+    <string name="home_adb_description">Untuk perangkat tanpa akses root, Anda harus menggunakan adb untuk memulai Shizako (perlu terhubung dengan komputer). Proses ini harus diulang setiap kali perangkat di-restart. Harap &lt;b>&lt;a href=\"%1$s\">baca dokumentasi&lt;/a>&lt;/b> untuk info lebih lanjut.</string>
     <string name="dialog_adb_discovery_message">"Harap aktifkan \"Debug Nirkabel (Wireless Debugging)\" pada \"Pilihan Pengembang (Developer Option)\". Opsi \"Debug Nirkabel\" akan nonaktif otomatis saat koneksi berubah. 
  
 Sebagai catatan, jangan nonaktifkan \"Pilihan Pengembang\" atau \"Debug USB\", karena Shizako akan terhenti."</string>
@@ -133,4 +133,78 @@ Anda mungkin perlu memulai ulang Shizako agar operasi dapat diterapkan."</string
     <string name="home_adb_is_limited_title">Anda perlu mengambil langkah ekstra</string>
     <string name="home_app_management_empty">Aplikasi yang telah meminta atau mendeklarasikan Shizako akan ditampilkan di sini.</string>
     <string name="dialog_adb_discovery_message_toggle_wireless_debugging">Coba untuk matikan dan hidupkan kembali \"Debug nirkabel\" jika terus mencari.</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="home_activation_title">Aktivasi sekali ketuk</string>
+    <string name="home_activation_summary">Aktifkan Brevent, Stopapp, dan lainnya tanpa komputer</string>
+    <string name="home_activation_summary_not_running">Mulai Shizako terlebih dahulu untuk menggunakan aktivasi sekali ketuk</string>
+    <string name="settings_debug">Debug</string>
+    <string name="settings_crash_logs">Log kerusakan</string>
+    <string name="settings_crash_logs_summary">Kerusakan disimpan di sini saat aplikasi keluar secara tidak terduga</string>
+    <string name="settings_crash_logs_empty">Tidak ada log kerusakan</string>
+    <string name="settings_crash_logs_count">%1$d log kerusakan</string>
+    <string name="settings_crash_logs_share">Bagikan</string>
+    <string name="settings_crash_logs_delete">Hapus</string>
+    <string name="settings_crash_logs_delete_all">Hapus semua</string>
+    <string name="settings_crash_logs_deleted">Terhapus</string>
+    <string name="activation_title">Aktivasi sekali ketuk</string>
+    <string name="activation_subtitle">Jalankan perintah ADB yang dulu memerlukan komputer, langsung dari sini</string>
+    <string name="activation_service_running">Shizako sedang berjalan, siap untuk aktivasi</string>
+    <string name="activation_service_running_brief">Shizako sedang berjalan</string>
+    <string name="activation_service_not_running">Shizako tidak berjalan; silakan mulai layanan dari halaman utama terlebih dahulu</string>
+    <string name="activation_activate">Aktifkan</string>
+    <string name="activation_activated">Telah diaktifkan</string>
+    <string name="activation_status_not_installed">%1$s · tidak terpasang</string>
+    <string name="activation_status_installed">%1$s · terpasang</string>
+    <string name="activation_status_activated">%1$s · sudah aktif</string>
+    <string name="activation_status_not_activated">%1$s · terpasang, belum aktif</string>
+    <string name="activation_note_device_owner">Semua akun dan pengguna sekunder (mode tamu / kembar aplikasi) harus dihapus lebih dulu; Anda dapat menambahkannya kembali setelah aktivasi. Perilaku khusus ROM pabrikan mungkin berlaku.</string>
+    <string name="activation_note_brevent">Server Brevent perlu diaktifkan ulang setiap kali perangkat di-boot ulang.</string>
+    <string name="activation_custom_title">Perintah kustom</string>
+    <string name="activation_custom_hint">Perintah shell apa pun, mis. dpm set-device-owner …</string>
+    <string name="activation_custom_empty">Perintah kosong</string>
+    <string name="activation_run">Jalankan</string>
+    <string name="activation_running">Menjalankan…</string>
+    <string name="activation_success">Berhasil diaktifkan</string>
+    <string name="activation_failed">Gagal, lihat keluaran di bawah</string>
+    <string name="activation_failed_with_code">Gagal (kode keluar %1$d), lihat keluaran di bawah</string>
+    <string name="activation_timeout">Perintah masih berjalan; berhenti menunggu (normal untuk perintah semacam server)</string>
+    <string name="activation_output">Keluaran</string>
+    <string name="activation_output_empty">(belum ada keluaran)</string>
+    <string name="activation_copy">Salin</string>
+    <string name="activation_copied">Tersalin</string>
+    <string name="activation_back">Kembali</string>
+    <string name="about_author">Pengembang</string>
+    <string name="about_based_on">Berdasarkan</string>
+    <string name="about_based_on_text">proyek sumber terbuka %s</string>
+    <string name="about_license">Lisensi</string>
+    <string name="about_footer">Shizako — dibuat dengan ❤️</string>
+    <string name="notification_channel_status">Status layanan</string>
+    <string name="tile_service_label">Layanan Shizako</string>
+    <string name="tile_service_subtitle_running">Berjalan</string>
+    <string name="tile_service_subtitle_stopped">Berhenti</string>
+    <string name="tile_wireless_adb_label">Debug nirkabel</string>
+    <!-- Shizako: 补充翻译 -->
+    <string name="setup_welcome_title">Selamat datang</string>
+    <string name="setup_welcome_subtitle">Dengan beberapa pengaturan cepat, Shizako siap digunakan.</string>
+    <string name="setup_disclaimer_title">Penafian</string>
+    <string name="setup_disclaimer_text"><![CDATA[Shizako disediakan «sebagaimana adanya», tanpa jaminan apa pun.<p>Shizako bekerja dengan menjalankan layanan istimewa di perangkat Anda. Pengembang tidak bertanggung jawab atas kerusakan perangkat atau kehilangan data yang mungkin timbul dari penggunaan aplikasi ini atau pemberian akses aplikasi ke Shizako.<p>Gunakan dengan risiko Anda sendiri.]]></string>
+    <string name="setup_disclaimer_agree">Saya telah membaca dan menyetujui hal di atas</string>
+    <string name="setup_language_title">Pilih bahasa</string>
+    <string name="setup_language_subtitle">Anda dapat mengubahnya nanti di Pengaturan.</string>
+    <string name="setup_mode_subtitle">Pilih tampilan Shizako. Anda dapat mengubahnya nanti di Pengaturan.</string>
+    <string name="setup_mode_follow_system">Ikuti sistem</string>
+    <string name="setup_mode_light">Terang</string>
+    <string name="setup_mode_dark">Gelap</string>
+    <string name="setup_start_method_title">Metode aktivasi</string>
+    <string name="setup_start_method_subtitle">Pilih bagaimana Anda berencana memulai Shizako. Halaman utama akan menampilkan metode tersebut lebih dulu.</string>
+    <string name="setup_start_method_wadb">Debug nirkabel</string>
+    <string name="setup_start_method_wadb_summary">Pada Android 11 ke atas, tanpa perlu komputer</string>
+    <string name="setup_start_method_root">Root</string>
+    <string name="setup_start_method_root_summary">Untuk perangkat yang di-root, mulai dengan satu ketukan</string>
+    <string name="setup_start_method_adb">Hubungkan ke komputer</string>
+    <string name="setup_start_method_adb_summary">Gunakan adb lewat USB, ulangi setelah setiap reboot</string>
+    <string name="setup_back">Kembali</string>
+    <string name="setup_next">Berikutnya</string>
+    <string name="setup_get_started">Mulai</string>
+    <string name="setup_skip">Lewati</string>
 </resources>
