@@ -51,9 +51,36 @@
             android:key="use_system_color"
             android:title="@string/settings_use_system_color" />
 
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="true"
+            android:key="high_refresh_rate"
+            android:summary="@string/settings_high_refresh_rate_summary"
+            android:title="@string/settings_high_refresh_rate" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_stability">
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="watchdog_enabled"
+            android:summary="@string/settings_watchdog_summary"
+            android:title="@string/settings_watchdog" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="false"
+            android:key="auto_update"
+            android:summary="@string/settings_auto_update_summary"
+            android:title="@string/settings_auto_update" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_debug">
+
+        <Preference
+            android:key="check_update"
+            android:summary="@string/settings_check_update_summary"
+            android:title="@string/settings_check_update" />
 
         <Preference
             android:key="crash_logs"
