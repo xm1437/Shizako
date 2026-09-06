@@ -186,6 +186,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         crashLogsPreference.onPreferenceClickListener =
             Preference.OnPreferenceClickListener { showCrashLogsDialog(); true }
 
+        findPreference<Preference>("api_log")!!.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                context?.startActivity(Intent(context, ApiLogActivity::class.java))
+                true
+            }
+
         val checkUpdatePreference = findPreference<Preference>("check_update")!!
         checkUpdatePreference.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {

@@ -129,7 +129,7 @@ object UpdateChecker {
                     listener?.onComplete(apkFile)
                 }
             } catch (e: CancellationException) {
-                cleanPartialFile(context, info.tagName)
+                cleanPartialFile(context, "shizako-${info.tagName}.apk")
                 cancelDownloadNotification(context)
                 // withContext would rethrow immediately on a cancelled job,
                 // so dispatch the callback through a fresh child of the scope
@@ -150,9 +150,115 @@ object UpdateChecker {
         downloadJob = null
     }
 
-    private fun cleanPartialFile(context: Context, tagName: String) {
+    /**
+     * 从任意 URL 下载 APK（一键注入页/内网推送场景）：复用更新器的
+     * 下载、进度回调、完成通知与自动弹安装流程，UI 与「更新应用」同款。
+     */
+    fun downloadFromUrl(
+        context: Context,
+        url: String,
+        fileName: String,
+        listener: DownloadListener? = null
+    ) {
+        if (downloadJob?.isActive == true) return
+        ensureChannels(context)
+
+        downloadJob = scope.launch {
+            withContext(Dispatchers.Main) {
+                showProgressNotification(context, downloaded = -1, total = 0, extra = null)
+                listener?.onRetry(0, 0)
+            }
+            try {
+                val apkFile = downloadDirect(context, url, fileName, listener)
+                withContext(Dispatchers.Main) {
+                    showCompleteNotification(context, apkFile)
+                    listener?.onComplete(apkFile)
+                }
+            } catch (e: CancellationException) {
+                cleanPartialFile(context, fileName)
+                cancelDownloadNotification(context)
+                scope.launch(Dispatchers.Main) { listener?.onCancelled() }
+                throw e
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    showFailedNotification(context, e.message ?: "unknown error")
+                    listener?.onFailed(e.message ?: "unknown error")
+                }
+            }
+        }
+    }
+
+    private suspend fun downloadDirect(
+        context: Context,
+        url: String,
+        fileName: String,
+        listener: DownloadListener? = null
+    ): File =
+        withContext(Dispatchers.IO) {
+            val dir = File(context.cacheDir, "updates").apply { if (!exists()) mkdirs() }
+            val apkFile = File(dir, fileName)
+            if (apkFile.exists()) apkFile.delete()
+
+            val conn = URL(url).openConnection() as HttpURLConnection
+            try {
+                conn.setRequestProperty("User-Agent", userAgent())
+                conn.connectTimeout = 30_000
+                conn.readTimeout = 120_000
+                conn.instanceFollowRedirects = true
+
+                val code = conn.responseCode
+                if (code !in 200..299) {
+                    throw IOException("HTTP $code")
+                }
+
+                val total = conn.contentLengthLong
+                val input = conn.inputStream
+                val output = FileOutputStream(apkFile)
+
+                try {
+                    val buffer = ByteArray(16 * 1024)
+                    var downloaded = 0L
+                    var lastNotify = 0L
+                    var lastNotifyBytes = 0L
+
+                    while (true) {
+                        ensureActive()
+                        val n = input.read(buffer)
+                        if (n == -1) break
+                        output.write(buffer, 0, n)
+                        downloaded += n
+
+                        val now = System.currentTimeMillis()
+                        if (now - lastNotify >= NOTIFY_THROTTLE_MS) {
+                            val elapsed = (now - lastNotify).coerceAtLeast(1)
+                            val speedBps = if (lastNotify > 0) {
+                                (downloaded - lastNotifyBytes) * 1000 / elapsed
+                            } else 0L
+                            lastNotify = now
+                            lastNotifyBytes = downloaded
+                            postProgress(context, downloaded, if (total > 0) total else downloaded)
+                            val dl = downloaded; val tt = if (total > 0) total else downloaded; val sp = speedBps
+                            withContext(Dispatchers.Main) { listener?.onProgress(dl, tt, sp) }
+                        }
+                    }
+                    output.flush()
+                    if (apkFile.length() == 0L) throw IOException("downloaded file is empty")
+                    postProgress(context, apkFile.length(), if (total > 0) total else apkFile.length())
+                    val dl = apkFile.length(); val tt = if (total > 0) total else apkFile.length()
+                    withContext(Dispatchers.Main) { listener?.onProgress(dl, tt, 0) }
+                } finally {
+                    try { output.close() } catch (_: Exception) {}
+                    try { input.close() } catch (_: Exception) {}
+                }
+            } finally {
+                conn.disconnect()
+            }
+            apkFile
+        }
+
+    private fun cleanPartialFile(context: Context, fileName: String) {
         try {
-            val f = File(File(context.cacheDir, "updates"), "shizako-$tagName.apk")
+            val f = File(File(context.cacheDir, "updates"), fileName)
             if (f.exists()) f.delete()
         } catch (_: Exception) {
         }

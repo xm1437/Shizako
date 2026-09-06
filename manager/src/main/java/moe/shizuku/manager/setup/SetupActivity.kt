@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import moe.shizuku.manager.MainActivity
 import moe.shizuku.manager.R
 import moe.shizuku.manager.ShizukuSettings
@@ -51,7 +53,9 @@ class SetupActivity : AppActivity() {
         private const val STEP_LANGUAGE = 2
         private const val STEP_MODE = 3
         private const val STEP_START_METHOD = 4
-        private const val STEP_COUNT = 5
+        private const val STEP_ACTIVATE = 5
+        private const val STEP_FINISH = 6
+        private const val STEP_COUNT = 7
 
         private const val STEP_ANIM_DURATION = 300L
         private const val ENTRANCE_STAGGER = 90L
@@ -63,6 +67,10 @@ class SetupActivity : AppActivity() {
     private var restoredFromRecreate = false
     private var languageAdapter: LanguageAdapter? = null
     private lateinit var materialInterpolator: Interpolator
+
+    /** 免责声明强制阅读倒计时（硬控 10 秒） */
+    private var disclaimerCountdown = 10
+    private var disclaimerTimer: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +89,7 @@ class SetupActivity : AppActivity() {
         setupDisclaimerPage()
         setupModePage()
         setupStartMethodPage()
+        setupActivatePage()
 
         step = savedInstanceState?.getInt(KEY_STEP, STEP_WELCOME) ?: STEP_WELCOME
         if (savedInstanceState != null) {
@@ -107,7 +116,7 @@ class SetupActivity : AppActivity() {
 
     private fun navigateForward() {
         if (stepAnimating) return
-        if (step < STEP_START_METHOD) {
+        if (step < STEP_FINISH) {
             showStep(step + 1, animate = true)
         } else {
             finishSetup()
@@ -119,13 +128,16 @@ class SetupActivity : AppActivity() {
         STEP_DISCLAIMER -> binding.pageDisclaimer
         STEP_LANGUAGE -> binding.pageLanguage
         STEP_MODE -> binding.pageMode
-        else -> binding.pageStartMethod
+        STEP_START_METHOD -> binding.pageStartMethod
+        STEP_ACTIVATE -> binding.pageActivate
+        else -> binding.pageFinish
     }
 
     private val stepPages: List<View>
         get() = listOf(
             binding.pageWelcome, binding.pageDisclaimer, binding.pageLanguage,
-            binding.pageMode, binding.pageStartMethod
+            binding.pageMode, binding.pageStartMethod, binding.pageActivate,
+            binding.pageFinish
         )
 
     /**
@@ -136,6 +148,12 @@ class SetupActivity : AppActivity() {
     private fun showStep(newStep: Int, animate: Boolean) {
         val forward = newStep >= step
         step = newStep
+
+        if (newStep == STEP_DISCLAIMER) {
+            startDisclaimerCountdown()
+        } else {
+            cancelDisclaimerCountdown()
+        }
 
         val incoming = pageView(newStep)
         val outgoing = stepPages.firstOrNull { it !== incoming && it.isVisible }
@@ -152,6 +170,7 @@ class SetupActivity : AppActivity() {
             incoming.translationX = 0f
             updateChrome()
             if (newStep == STEP_WELCOME && !restoredFromRecreate) playWelcomeEntrance()
+            if (newStep == STEP_FINISH) updateFinishSummary()
             return
         }
 
@@ -180,12 +199,33 @@ class SetupActivity : AppActivity() {
             .setInterpolator(materialInterpolator)
 
         updateChrome(animate)
+        if (newStep == STEP_FINISH) updateFinishSummary()
+    }
+
+    /** 完成页摘要：把本向导里做的选择汇总成一句。 */
+    private fun updateFinishSummary() {
+        val methodText = getString(
+            when (ShizukuSettings.getPreferredStartMethod()) {
+                ShizukuSettings.StartMethod.ROOT -> R.string.setup_start_method_root
+                ShizukuSettings.StartMethod.WIRELESS_ADB -> R.string.setup_start_method_wadb
+                else -> R.string.setup_start_method_adb
+            }
+        )
+        val runningText = getString(
+            if (rikka.shizuku.Shizuku.pingBinder()) R.string.setup_activate_running
+            else R.string.setup_activate_not_running
+        )
+        binding.finishSummary.text = getString(
+            R.string.setup_finish_summary,
+            methodText,
+            runningText
+        )
     }
 
     /** Footer buttons reflect the current step, fading the back button in/out. */
     private fun updateChrome(animate: Boolean = false) {
         val showBack = step > STEP_WELCOME
-        val showSkip = step < STEP_START_METHOD
+        val showSkip = step < STEP_FINISH
 
         if (binding.backButton.isVisible != showBack) {
             if (animate) {
@@ -200,7 +240,11 @@ class SetupActivity : AppActivity() {
         binding.skipButton.isVisible = showSkip
         binding.nextButton.isEnabled = isNextEnabled()
         binding.nextButton.setText(
-            if (step == STEP_START_METHOD) R.string.setup_get_started else R.string.setup_next
+            when (step) {
+                STEP_FINISH -> R.string.setup_get_started
+                STEP_ACTIVATE -> R.string.setup_skip_activation
+                else -> R.string.setup_next
+            }
         )
     }
 
@@ -236,10 +280,52 @@ class SetupActivity : AppActivity() {
     }
 
     private fun setupDisclaimerPage() {
+        // XML 的 android:text 不解析 HTML，这里用 fromHtml 渲染加粗与段落
+        binding.disclaimerText.text = rikka.html.text.HtmlCompat.fromHtml(
+            getString(R.string.setup_disclaimer_text)
+        )
         binding.disclaimerAgree.setOnCheckedChangeListener { _, _ ->
             // Gate the Next button (and its label) behind the agreement.
             binding.nextButton.isEnabled = isNextEnabled()
         }
+    }
+
+    /** 硬控：声明页必须停留满 10 秒才能勾选同意。 */
+    private fun startDisclaimerCountdown() {
+        cancelDisclaimerCountdown()
+        binding.disclaimerAgree.isEnabled = false
+        binding.disclaimerAgree.isChecked = false
+        disclaimerCountdown = 10
+        updateDisclaimerLabel()
+
+        val tick = object : Runnable {
+            override fun run() {
+                disclaimerCountdown--
+                if (disclaimerCountdown <= 0) {
+                    binding.disclaimerAgree.isEnabled = true
+                    binding.disclaimerAgree.text = getString(R.string.setup_disclaimer_agree)
+                    disclaimerTimer = null
+                } else {
+                    updateDisclaimerLabel()
+                    binding.disclaimerAgree.postDelayed(this, 1000)
+                }
+            }
+        }
+        disclaimerTimer = tick
+        binding.disclaimerAgree.postDelayed(tick, 1000)
+    }
+
+    private fun updateDisclaimerLabel() {
+        binding.disclaimerAgree.text = getString(
+            R.string.setup_disclaimer_agree_countdown, disclaimerCountdown
+        )
+    }
+
+    private fun cancelDisclaimerCountdown() {
+        disclaimerTimer?.let { binding.disclaimerAgree.removeCallbacks(it) }
+        disclaimerTimer = null
+        binding.disclaimerAgree.isEnabled = true
+        binding.disclaimerAgree.text = getString(R.string.setup_disclaimer_agree)
     }
 
     /**
@@ -289,6 +375,148 @@ class SetupActivity : AppActivity() {
         }
         LocaleDelegate.defaultLocale = locale
         recreate()
+    }
+
+    // ---- 激活步骤：实际功能 ----
+
+    private val binderReceivedListener = rikka.shizuku.Shizuku.OnBinderReceivedListener {
+        runOnUiThread { refreshActivateStatus() }
+    }
+
+    private val binderDeadListener = rikka.shizuku.Shizuku.OnBinderDeadListener {
+        runOnUiThread { refreshActivateStatus() }
+    }
+
+    private fun setupActivatePage() {
+        rikka.shizuku.Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
+        rikka.shizuku.Shizuku.addBinderDeadListener(binderDeadListener)
+
+        binding.activateStartButton.setOnClickListener { onActivateStart() }
+        binding.activateCommandButton.setOnClickListener { onActivateCommand() }
+        binding.activateDhizukuButton.setOnClickListener { onActivateDhizuku() }
+
+        refreshActivateStatus()
+    }
+
+    private fun refreshActivateStatus() {
+        val running = rikka.shizuku.Shizuku.pingBinder()
+        val dot = binding.activateStatusDot
+        val runningColor = getColor(R.color.activation_status_active)
+        val idleColor = getColor(R.color.activation_status_inactive)
+        dot.background?.setTint(if (running) runningColor else idleColor)
+        binding.activateStatusText.setText(
+            if (running) R.string.setup_activate_running else R.string.setup_activate_not_running
+        )
+        binding.activateHint.setText(
+            if (running) R.string.setup_activate_hint_done else R.string.setup_activate_hint
+        )
+        binding.activateDhizukuButton.isEnabled = running
+        refreshActivateButtons()
+    }
+
+    private fun refreshActivateButtons() {
+        val running = rikka.shizuku.Shizuku.pingBinder()
+        val method = ShizukuSettings.getPreferredStartMethod()
+        binding.activateStartButton.setText(
+            when (method) {
+                ShizukuSettings.StartMethod.ROOT -> R.string.setup_activate_start_root
+                ShizukuSettings.StartMethod.WIRELESS_ADB -> R.string.setup_activate_start_wadb
+                else -> R.string.setup_activate_start
+            }
+        )
+        binding.activateStartButton.isEnabled = !running
+        binding.activateCommandButton.isVisible =
+            method == ShizukuSettings.StartMethod.COMPUTER_ADB
+    }
+
+    private fun onActivateStart() {
+        if (rikka.shizuku.Shizuku.pingBinder()) {
+            refreshActivateStatus()
+            return
+        }
+        when (ShizukuSettings.getPreferredStartMethod()) {
+            ShizukuSettings.StartMethod.ROOT -> {
+                moe.shizuku.manager.starter.ServiceStartHelper.startRoot { ok ->
+                    runOnUiThread {
+                        Toast.makeText(
+                            this,
+                            if (ok) R.string.setup_activate_started else R.string.setup_activate_failed,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        refreshActivateStatus()
+                    }
+                }
+            }
+            ShizukuSettings.StartMethod.WIRELESS_ADB -> {
+                if (moe.shizuku.manager.starter.ServiceStartHelper.canAdbAutoStart(this)) {
+                    moe.shizuku.manager.starter.ServiceStartHelper.startAdb(this)
+                    Toast.makeText(this, R.string.setup_activate_started, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, R.string.setup_activate_wadb_unavailable, Toast.LENGTH_LONG).show()
+                }
+            }
+            else -> onActivateCommand()
+        }
+    }
+
+    private fun onActivateCommand() {
+        val command = moe.shizuku.manager.starter.Starter.adbCommand
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.setup_activate_view_command)
+            .setMessage(
+                rikka.html.text.HtmlCompat.fromHtml(
+                    getString(R.string.home_adb_dialog_view_command_message, command)
+                )
+            )
+            .setPositiveButton(R.string.home_adb_dialog_view_command_copy_button) { _, _ ->
+                if (rikka.core.util.ClipboardUtils.put(this, command)) {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.toast_copied_to_clipboard, command),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun onActivateDhizuku() {
+        val ctx = this
+        if (!rikka.shizuku.Shizuku.pingBinder()) {
+            Toast.makeText(this, R.string.setup_activate_dhizuku_not_running, Toast.LENGTH_LONG).show()
+            return
+        }
+        binding.activateDhizukuButton.isEnabled = false
+        binding.activateDhizukuButton.setText(R.string.setup_activate_dhizuku_running)
+        Thread {
+            val result = moe.shizuku.manager.activation.ActivationRunner.run(
+                moe.shizuku.manager.dhizuku.DhizukuSettings.setDeviceOwnerCommand
+            )
+            runOnUiThread {
+                binding.activateDhizukuButton.isEnabled = true
+                binding.activateDhizukuButton.setText(R.string.setup_activate_dhizuku)
+                val active = moe.shizuku.manager.dhizuku.DhizukuSettings.isDeviceOwner(ctx)
+                Toast.makeText(
+                    ctx,
+                    if (result.success || active) R.string.setup_activate_dhizuku_success
+                    else R.string.setup_activate_dhizuku_failed,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }.start()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshActivateStatus()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cancelDisclaimerCountdown()
+        rikka.shizuku.Shizuku.removeBinderReceivedListener(binderReceivedListener)
+        rikka.shizuku.Shizuku.removeBinderDeadListener(binderDeadListener)
     }
 
     private fun setupModePage() {

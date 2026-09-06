@@ -1,7 +1,10 @@
 package moe.shizuku.manager.utils
 
+import android.content.ContentValues
 import android.content.Context
 import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import java.io.File
 import java.io.PrintWriter
@@ -83,13 +86,43 @@ object CrashLog {
         val stamp = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(Date(time))
         val file = File(dir(), "$FILE_PREFIX$stamp$FILE_SUFFIX")
 
-        file.writeText(buildString {
+        val content = buildString {
             append(formatHeader(time, thread))
             append('\n')
             append(stackTraceOf(throwable))
-        })
+        }
+        file.writeText(content)
+
+        // 同时导出一份到公共 Download 文件夹，方便用户直接取用
+        runCatching { exportToPublicDownload(stamp, content) }
+            .onFailure { Log.e(TAG, "Failed to export crash log to Download", it) }
 
         Log.e(TAG, "Crash log saved to ${file.absolutePath}")
+    }
+
+    /**
+     * 把崩溃日志写到公共 Download 目录（文件管理器可见）。
+     * Android 10+ 走 MediaStore，无需存储权限；旧版本直接写公共目录。
+     */
+    private fun exportToPublicDownload(stamp: String, content: String) {
+        val name = "Shizako-crash-$stamp.txt"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = ContentValues().apply {
+                put(MediaStore.Downloads.DISPLAY_NAME, name)
+                put(MediaStore.Downloads.MIME_TYPE, "text/plain")
+                put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+            }
+            val resolver = appContext.contentResolver
+            val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
+                ?: throw IllegalStateException("MediaStore insert returned null")
+            resolver.openOutputStream(uri)?.use { it.write(content.toByteArray(Charsets.UTF_8)) }
+                ?: throw IllegalStateException("openOutputStream returned null")
+        } else {
+            @Suppress("DEPRECATION")
+            val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            dir.mkdirs()
+            File(dir, name).writeText(content, Charsets.UTF_8)
+        }
     }
 
     private fun formatHeader(time: Long, thread: Thread): String {

@@ -21,6 +21,13 @@
 # (https://github.com/Dimezis/BlurView)
 -keep class moe.shizuku.blurview.** { *; }
 
+# Material navigation views are inflated from XML by LayoutInflater
+# reflection; R8 inlines/strips their (Context, AttributeSet) constructors
+# (NavigationBarView crash: NoSuchMethodException). Keep the whole
+# package, same as BlurView above.
+-keep class com.google.android.material.navigation.** { *; }
+-keep class com.google.android.material.bottomnavigation.BottomNavigationView { *; }
+
 # Missing class android.app.IProcessObserver$Stub
 # Missing class android.app.IUidObserver$Stub
 -keepclassmembers class rikka.hidden.compat.adapter.ProcessObserverAdapter {

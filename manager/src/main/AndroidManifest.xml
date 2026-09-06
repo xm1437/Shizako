@@ -11,6 +11,21 @@
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
+    <!-- 一键注入页需要直接检测目标应用的安装状态（Android 11+ 包可见性） -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <queries>
+        <package android:name="me.piebridge.brevent" />
+        <package android:name="web1n.stopapp" />
+        <package android:name="com.catchingnow.icebox" />
+        <package android:name="com.oasisfeng.island" />
+    </queries>
 
     <uses-feature
         android:name="android.software.leanback"
@@ -104,6 +119,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".update.InstallApkActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".settings.ApiLogActivity"
+            android:exported="false"
+            android:label="@string/api_log_title"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".activation.OneClickActivationActivity"
             android:exported="false"
             android:label="@string/activation_title"
@@ -148,6 +173,23 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".dhizuku.DhizukuPermissionActivity"
+            android:directBootAware="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@style/GrantPermissions">
+            <intent-filter>
+                <action android:name="${applicationId}.action.REQUEST_DHIZUKU_PERMISSION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".dhizuku.DhizukuManageActivity"
+            android:exported="false"
+            android:label="@string/dhizuku_manage_title"
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name=".adb.AdbPairingService"
@@ -225,6 +267,18 @@
             <intent-filter>
                 <action android:name="com.churan.shizako.action.START_ADB" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.ACTIVATE_DHIZUKU" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.QUERY_STATUS" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.NOTIFY_INSTALL" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.churan.shizako.action.DOWNLOAD_UPDATE" />
+            </intent-filter>
         </receiver>
 
         <receiver
@@ -241,7 +295,7 @@
 
         <provider
             android:name=".ShizukuManagerProvider"
-            android:authorities="${applicationId}.shizuku"
+            android:authorities="${applicationId}.shizuku;moe.shizuku.privileged.api.shizuku"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
@@ -257,6 +311,29 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- Dhizuku（Device Owner）集成：Dhizuku-API 应用通过该 authority
+             发现并连接 Shizako，authority 由客户端按「owner 包名 + 后缀」动态拼接。 -->
+        <provider
+            android:name=".dhizuku.DhizukuProvider"
+            android:authorities="${applicationId}.dhizuku_server.provider"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".dhizuku.DhizukuAdminReceiver"
+            android:description="@string/dhizuku_device_owner_desc"
+            android:exported="true"
+            android:label="@string/dhizuku_device_owner_label"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/dhizuku_device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

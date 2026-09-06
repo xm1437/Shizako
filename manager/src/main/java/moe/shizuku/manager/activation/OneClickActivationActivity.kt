@@ -3,6 +3,8 @@ package moe.shizuku.manager.activation
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -15,9 +17,13 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.core.widget.NestedScrollView
 import moe.shizuku.manager.R
 import moe.shizuku.manager.app.AppBarActivity
+import moe.shizuku.manager.update.DownloadProgressDialog
+import moe.shizuku.manager.update.UpdateChecker
+import moe.shizuku.manager.utils.CustomTabsHelper
 import rikka.shizuku.Shizuku
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -101,6 +107,8 @@ class OneClickActivationActivity : AppBarActivity() {
     override fun onResume() {
         super.onResume()
         onServiceStatusChanged(Shizuku.pingBinder())
+        // 安装完成后回来刷新 installed 状态
+        refreshTargetStatuses()
     }
 
     override fun onDestroy() {
@@ -129,18 +137,22 @@ class OneClickActivationActivity : AppBarActivity() {
             val view = inflater.inflate(R.layout.item_activation_target, targetsContainer, false)
             view.findViewById<TextView>(R.id.target_label).text = target.label
             view.findViewById<TextView>(R.id.target_notes).text = when (target.notesRes) {
-                0 -> getString(R.string.activation_note_brevent)
+                ActivationTarget.NOTE_BREVENT -> getString(R.string.activation_note_brevent)
                 else -> getString(R.string.activation_note_device_owner)
             }
             val button = view.findViewById<Button>(R.id.target_activate)
             button.setText(R.string.activation_activate)
-            button.setOnClickListener {
-                runCommand(target.label, target.command, target, button)
-            }
             val row = TargetRow(
                 target, view, button,
                 view.findViewById(R.id.target_status)
             )
+            button.setOnClickListener {
+                if (row.installed) {
+                    runCommand(target.label, target.command, target, button)
+                } else {
+                    download(target)
+                }
+            }
             rows.add(row)
             targetsContainer.addView(view)
         }
@@ -256,11 +268,23 @@ class OneClickActivationActivity : AppBarActivity() {
                     }
                     else -> {
                         appendOutput("[exit ${result.exitCode}]", OutputKind.ERROR)
-                        Toast.makeText(
-                            this,
-                            getString(R.string.activation_failed_with_code, result.exitCode),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        // 常见失败原因给出友好提示，原文仍留在输出区
+                        val hintRes = when {
+                            result.output.contains("several users") ->
+                                R.string.activation_error_multiple_users
+                            result.output.contains("several accounts") ->
+                                R.string.activation_error_multiple_accounts
+                            else -> 0
+                        }
+                        if (hintRes != 0) {
+                            Toast.makeText(this, hintRes, Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                getString(R.string.activation_failed_with_code, result.exitCode),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                 }
                 activeButton = null
@@ -275,16 +299,86 @@ class OneClickActivationActivity : AppBarActivity() {
         val serviceRunning = Shizuku.pingBinder()
         for (row in rows) {
             row.button.setText(
-                if (busy && row.button === activeButton) R.string.activation_running
-                else R.string.activation_activate
+                when {
+                    busy && row.button === activeButton -> R.string.activation_running
+                    !row.installed -> R.string.activation_download
+                    else -> R.string.activation_activate
+                }
             )
-            row.button.isEnabled = !busy && serviceRunning && row.installed
+            row.button.isEnabled = when {
+                busy -> false
+                !row.installed -> row.target.downloadUrl != null
+                else -> serviceRunning
+            }
         }
         customRun.setText(
             if (busy && customRun === activeButton) R.string.activation_running
             else R.string.activation_run
         )
         customRun.isEnabled = !busy && serviceRunning
+    }
+
+    // ---- 未安装应用的应用内下载（更新器同款：进度条对话框） ----
+
+    /** 未安装时点按钮：直链 APK 走更新器同款下载器（进度条对话框），网页地址走内置浏览器。 */
+    private fun download(target: ActivationTarget) {
+        val url = target.downloadUrl ?: return
+        if (url.endsWith(".apk", ignoreCase = true)) {
+            val fileName = "${target.packageName}.apk"
+            val dialog = DownloadProgressDialog.show(
+                this,
+                getString(R.string.activation_downloading),
+                target.label,
+                DownloadProgressDialog.OnCancelListener { UpdateChecker.cancelDownload() }
+            )
+            UpdateChecker.downloadFromUrl(this, url, fileName, object : UpdateChecker.DownloadListener {
+                override fun onProgress(downloaded: Long, total: Long, speedBps: Long) {
+                    if (downloaded <= 0) {
+                        dialog.setState(getString(R.string.activation_downloading))
+                    } else {
+                        dialog.update(downloaded, total, speedBps)
+                    }
+                }
+
+                override fun onRetry(attempt: Int, max: Int) {
+                    dialog.setState(getString(R.string.update_retrying, attempt, max))
+                }
+
+                override fun onComplete(apkFile: java.io.File) {
+                    dialog.dismiss()
+                    installApk(apkFile)
+                }
+
+                override fun onFailed(reason: String) {
+                    dialog.dismiss()
+                    Toast.makeText(
+                        this@OneClickActivationActivity,
+                        getString(R.string.activation_download_failed),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                override fun onCancelled() {
+                    dialog.dismiss()
+                }
+            })
+        } else {
+            CustomTabsHelper.launchUrl(this, Uri.parse(url))
+        }
+    }
+
+    /** 用系统安装器打开已下载的 APK（FileProvider 授权）。 */
+    private fun installApk(file: java.io.File) {
+        val uri = FileProvider.getUriForFile(
+            this,
+            "$packageName.update_file_provider",
+            file
+        )
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/vnd.android.package-archive")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        runCatching { startActivity(intent) }
     }
 
     private fun resolveThemeColor(attr: Int): Int {

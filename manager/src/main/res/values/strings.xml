@@ -19,6 +19,31 @@
     <string name="home_adb_dialog_view_command_copy_button">Copy</string>
     <string name="home_adb_dialog_view_command_button_send">Send</string>
 
+    <!-- Home - Dhizuku (Device Owner) -->
+    <string name="home_dhizuku_title">Activate via Device Owner</string>
+    <string name="home_dhizuku_description">Make Shizako the Device Owner of your device and she keeps her privileges without root and without keeping wireless debugging on. Run the command once from a computer, then Dhizuku-API apps (like Hail or FreezeYou) can borrow her power directly.</string>
+    <string name="home_dhizuku_description_active">Device Owner mode is active — authorized apps can now use Shizako\'s Device Owner privileges. You can revoke them anytime.</string>
+    <string name="home_dhizuku_button_view_command">View command</string>
+    <string name="home_dhizuku_button_manage">Authorized apps</string>
+    <string name="home_dhizuku_button_activate">One-tap activate</string>
+    <string name="home_dhizuku_button_activating">Activating…</string>
+    <string name="home_dhizuku_activate_success">Device Owner mode activated</string>
+    <string name="home_dhizuku_activate_failed">Activation failed: %1$s</string>
+    <string name="home_dhizuku_description_ready">Shizuku mode is running, so Device Owner mode can be activated right here — no computer needed.</string>
+    <string name="home_dhizuku_dialog_view_command_message"><![CDATA[<font face="monospace">%1$s</font><br><br>* Run it once from a computer with USB debugging enabled. No account may exist on the device, otherwise the command fails.]]></string>
+
+    <!-- Dhizuku -->
+    <string name="dhizuku_device_owner_label">Shizako (Device Owner)</string>
+    <string name="dhizuku_device_owner_desc">Required for Dhizuku mode: lets Shizako share her Device Owner privileges with authorized apps.</string>
+    <string name="dhizuku_device_owner_enabled">Shizako is now the Device Owner</string>
+    <string name="dhizuku_device_owner_disabled">Device Owner mode disabled</string>
+    <string name="dhizuku_manage_title">Dhizuku authorized apps</string>
+    <string name="dhizuku_manage_empty">No apps authorized yet.\nApps that support Dhizuku will ask for permission on first use.</string>
+    <string name="dhizuku_revoke_title">Revoke access</string>
+    <string name="dhizuku_revoke_message">Stop letting %1$s use Device Owner privileges?</string>
+    <string name="dhizuku_revoke_confirm">Revoke</string>
+    <string name="dhizuku_permission_warning_template"><![CDATA[Let <b>%1$s</b>%2$s borrow Shizako\'s Device Owner power?]]></string>
+
     <!-- Home - Wireless Adb -->
     <string name="home_wireless_adb_title"><![CDATA[Start via Wireless debugging]]></string>
     <string name="home_wireless_adb_description">On Android 11 or above, you can enable Wireless debugging and start Shizako directly from your device, without connecting to a computer.&lt;p>Please view the step-by-step guide first.</string>
@@ -135,8 +160,9 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="setup_welcome_title">Welcome</string>
     <string name="setup_welcome_subtitle">A few quick settings and Shizako is ready to use.</string>
     <string name="setup_disclaimer_title">Disclaimer</string>
-    <string name="setup_disclaimer_text"><![CDATA[Shizako is provided <b>"as is"</b>, without warranty of any kind.<p>Shizako works by running a privileged service on your device. While it is designed to be safe, the developer is not responsible for any damage to your device, or any loss of data, that may result from using this app or granting apps access to Shizako.<p>Use it at your own risk.]]></string>
+    <string name="setup_disclaimer_text"><![CDATA[<b>1. Provided "as is"</b><p>Shizako is provided "as is", without warranty of any kind, express or implied, including but not limited to merchantability and fitness for a particular purpose. The developer is not responsible for any device damage, data loss, or system malfunction resulting from using this app or granting apps access to Shizako.</p><p><b>2. It grants real privilege</b><p>Shizako runs a privileged service on your device (shell / root identity), or makes Shizako itself the Device Owner. Authorized apps gain near-system capabilities: freezing or uninstalling apps, changing system settings, reading/writing protected data. Only authorize apps you trust, and check where they come from.</p><p><b>3. Device Owner side effects</b><p>After activating Device Owner: Shizako cannot be uninstalled or downgraded until the Device Owner role is removed; only one Device Owner can exist per device; activation requires no accounts or secondary users (accounts can be restored afterwards).</p><p><b>4. Root risks</b><p>If you start Shizako with root, the risks of rooting itself (system integrity, warranty, malware abuse) are yours to bear.</p><p><b>5. Third-party behavior</b><p>Actions performed by third-party apps through Shizako, and their consequences, are between you and those apps. Shizako only provides the channel.</p><p><b>6. License</b><p>Apache License 2.0, based on RikkaApps/Shizuku. Use at your own risk — you can stop using Shizako at any time.</p>]]></string>
     <string name="setup_disclaimer_agree">I have read and agree to the above</string>
+    <string name="setup_disclaimer_agree_countdown">I have read and agree to the above (%1$d s)</string>
     <string name="setup_language_title">Choose language</string>
     <string name="setup_language_subtitle">You can change this later in Settings.</string>
     <string name="setup_mode_subtitle">Choose how Shizako looks. You can change this later in Settings.</string>
@@ -156,6 +182,31 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="setup_get_started">Get started</string>
     <string name="setup_skip">Skip</string>
 
+    <!-- Setup: activation step (real actions) -->
+    <string name="setup_skip_activation">Skip activation</string>
+    <string name="setup_activate_title">Wake her up</string>
+    <string name="setup_activate_subtitle">Start the Shizako service right here with the method you picked. You can skip this and do it later from the home page.</string>
+    <string name="setup_activate_not_running">Service not running yet</string>
+    <string name="setup_activate_running">Service is running — she is awake!</string>
+    <string name="setup_activate_hint">After starting, apps can ask Shizako for permission. You approve every app yourself and can revoke anytime.</string>
+    <string name="setup_activate_hint_done">All set. Continue to finish, or activate Device Owner mode below for Dhizuku apps.</string>
+    <string name="setup_activate_start">Start via computer (ADB)</string>
+    <string name="setup_activate_start_root">Start with root</string>
+    <string name="setup_activate_start_wadb">Start via wireless debugging</string>
+    <string name="setup_activate_view_command">View command</string>
+    <string name="setup_activate_started">Started</string>
+    <string name="setup_activate_failed">Failed to start</string>
+    <string name="setup_activate_wadb_unavailable">Wireless debugging is not ready yet. Pair it on the home page first.</string>
+    <string name="setup_activate_dhizuku">Activate Device Owner (Dhizuku)</string>
+    <string name="setup_activate_dhizuku_running">Activating…</string>
+    <string name="setup_activate_dhizuku_success">Device Owner mode activated</string>
+    <string name="setup_activate_dhizuku_failed">Device Owner activation failed</string>
+    <string name="setup_activate_dhizuku_not_running">Start the Shizaku service first</string>
+
+    <!-- Setup: finish step -->
+    <string name="setup_finish_title">Everything is ready</string>
+    <string name="setup_finish_summary">Start method: %1$s\nService: %2$s</string>
+
     <!-- One-click activation -->
     <string name="activation_title">One-click activation</string>
     <string name="activation_subtitle">Run the ADB commands that used to require a computer, right from here</string>
@@ -163,13 +214,18 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="activation_service_running_brief">Shizako is running</string>
     <string name="activation_service_not_running">Shizako is not running, please start the service from the home page first</string>
     <string name="activation_activate">Activate</string>
+    <string name="activation_download">Download</string>
+    <string name="activation_downloading">Downloading…</string>
+    <string name="activation_download_failed">Download failed, please try again</string>
+    <string name="activation_error_multiple_users">The device still has multiple users (guest mode / app twin). Remove them in Settings first, then inject again.</string>
+    <string name="activation_error_multiple_accounts">The device still has accounts. Remove them in Settings first, then inject again (you can add them back afterwards).</string>
     <string name="activation_activated">Activated</string>
     <string name="activation_status_not_installed">%1$s · not installed</string>
     <string name="activation_status_installed">%1$s · installed</string>
     <string name="activation_status_activated">%1$s · already activated</string>
     <string name="activation_status_not_activated">%1$s · installed, not activated</string>
     <string name="activation_status_checking" translatable="false">%1$s</string>
-    <string name="activation_note_device_owner">Requires all accounts and secondary users (guest mode / app twin) to be removed first; you can add them back after activation. Vendor ROM quirks may apply.</string>
+    <string name="activation_note_device_owner">Requires all accounts and secondary users (guest mode / app twin) to be removed first; you can add them back after activation. Note: Island creates its own work-profile user — it counts as a secondary user, so Device Owner and Island cannot coexist on one device. Vendor ROM quirks may apply.</string>
     <string name="activation_note_brevent">The Brevent server needs to be activated again after every reboot.</string>
     <string name="activation_custom_title">Custom command</string>
     <string name="activation_custom_hint">Any shell command, e.g. dpm set-device-owner …</string>
@@ -198,6 +254,27 @@ The export function uses SAF (Storage Access Framework). It's reported that MIUI
     <string name="settings_watchdog_summary">Auto-restart Shizuku if it crashes. A persistent notification will show the watchdog status.</string>
     <string name="settings_auto_update">Auto-update</string>
     <string name="settings_auto_update_summary">Automatically check for new releases on GitHub every day and notify when an update is available</string>
+
+    <!-- API audit log -->
+    <string name="settings_api_log">API call log</string>
+    <string name="settings_api_log_summary">See which apps called privileged APIs through Shizako</string>
+    <string name="api_log_title">API call log</string>
+    <string name="api_log_refresh">Refresh</string>
+    <string name="api_log_unavailable">Cannot read the log. Start Shizako first — the log is written by the server.</string>
+    <string name="api_log_empty">No API calls recorded yet.</string>
+
+    <!-- Tasker Dhizuku -->
+    <string name="tasker_dhizuku_already">Device Owner mode is already active</string>
+    <string name="tasker_dhizuku_not_running">Start Shizuku mode first to activate Device Owner</string>
+    <string name="tasker_dhizuku_success">Device Owner mode activated</string>
+    <string name="tasker_dhizuku_failed">Device Owner activation failed</string>
+
+    <!-- Install notification -->
+    <string name="notify_install_channel">Updates</string>
+    <string name="notify_install_title">Shizako update ready</string>
+    <string name="notify_install_text">Tap to install %1$s</string>
+    <string name="tasker_install_apk_missing">No Shizako APK found in Download</string>
+    <string name="tasker_download_bad_url">Download URL missing or invalid</string>
 
     <!-- Update -->
     <string name="settings_check_update">Check for updates</string>

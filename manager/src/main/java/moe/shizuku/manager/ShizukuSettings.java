@@ -102,7 +102,7 @@ public class ShizukuSettings {
     }
 
     public static boolean isAutoUpdateEnabled() {
-        return getPreferences().getBoolean(AUTO_UPDATE, false);
+        return getPreferences().getBoolean(AUTO_UPDATE, true);
     }
 
     @AppCompatDelegate.NightMode

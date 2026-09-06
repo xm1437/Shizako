@@ -23,13 +23,24 @@ data class ActivationTarget(
     /** How the activation state of this target can be detected. */
     val detection: Detection,
     /** Human readable notes shown before activation. */
-    val notesRes: Int
+    val notesRes: Int,
+    /**
+     * Official download location shown when the app is not installed.
+     * Direct APK links (ending in .apk) are downloaded in-app and installed;
+     * other URLs open in a Custom Tab.
+     */
+    val downloadUrl: String? = null
 ) {
     enum class Detection {
         /** Device owner apps: `dpm set-device-owner`, detect via dumpsys device_policy. */
         DEVICE_OWNER,
         /** Server bootstrap apps (Brevent): needs re-activation on every reboot, no persistent state. */
         BOOTSTRAP
+    }
+
+    companion object {
+        const val NOTE_BREVENT = 0
+        const val NOTE_DEVICE_OWNER = 1
     }
 }
 
@@ -43,7 +54,8 @@ object ActivationTargets {
                 "app_process /system/bin me.piebridge.brevent.server.BreventServer bootstrap; " +
                 "/system/bin/sh /data/local/tmp/brevent.sh",
         detection = ActivationTarget.Detection.BOOTSTRAP,
-        notesRes = 0
+        notesRes = ActivationTarget.NOTE_BREVENT,
+        downloadUrl = "https://github.com/xm1437/apk-mirror/releases/download/v1.0.0/me.piebridge.brevent.apk"
     )
 
     val STOPAPP = ActivationTarget(
@@ -51,7 +63,8 @@ object ActivationTargets {
         packageName = "web1n.stopapp",
         command = "dpm set-device-owner web1n.stopapp/.receiver.AdminReceiver",
         detection = ActivationTarget.Detection.DEVICE_OWNER,
-        notesRes = 1
+        notesRes = ActivationTarget.NOTE_DEVICE_OWNER,
+        downloadUrl = "https://github.com/xm1437/apk-mirror/releases/download/v1.0.0/web1n.stopapp.apk"
     )
 
     val ICEBOX = ActivationTarget(
@@ -59,7 +72,8 @@ object ActivationTargets {
         packageName = "com.catchingnow.icebox",
         command = "dpm set-device-owner com.catchingnow.icebox/.receiver.DPMReceiver",
         detection = ActivationTarget.Detection.DEVICE_OWNER,
-        notesRes = 1
+        notesRes = ActivationTarget.NOTE_DEVICE_OWNER,
+        downloadUrl = "https://github.com/xm1437/apk-mirror/releases/download/v1.0.0/com.catchingnow.icebox.apk"
     )
 
     val ISLAND = ActivationTarget(
@@ -67,7 +81,8 @@ object ActivationTargets {
         packageName = "com.oasisfeng.island",
         command = "dpm set-device-owner com.oasisfeng.island/.IslandDeviceAdminReceiver",
         detection = ActivationTarget.Detection.DEVICE_OWNER,
-        notesRes = 1
+        notesRes = ActivationTarget.NOTE_DEVICE_OWNER,
+        downloadUrl = "https://github.com/xm1437/apk-mirror/releases/download/v1.0.0/com.oasisfeng.island.apk"
     )
 
     val ALL = listOf(BREVENT, STOPAPP, ICEBOX, ISLAND)

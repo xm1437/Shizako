@@ -63,6 +63,16 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
         DdmHandleAppName.setAppName("shizuku_server", 0);
         RishConfig.setLibraryPath(System.getProperty("shizuku.library.path"));
 
+        // 启动即建审计日志文件，manager 端 tail 时不会报 No such file
+        try {
+            java.io.File audit = new java.io.File(AUDIT_LOG_PATH);
+            if (!audit.exists()) {
+                audit.getParentFile().mkdirs();
+                audit.createNewFile();
+            }
+        } catch (Throwable ignored) {
+        }
+
         Looper.prepareMainLooper();
         new ShizukuService();
         Looper.loop();
@@ -161,22 +171,63 @@ public class ShizukuService extends Service<ShizukuUserServiceManager, ShizukuCl
 
     @Override
     public boolean checkCallerPermission(String func, int callingUid, int callingPid, @Nullable ClientRecord clientRecord) {
+        boolean allowed;
         if (UserHandleCompat.getAppId(callingUid) == managerAppId) {
-            return true;
-        }
-        if (clientRecord != null) {
+            allowed = true;
+        } else if (clientRecord != null) {
             // Attached clients are authorized by the server-side grant record
             // (ClientRecord.allowed, persisted in the server config). This keeps
             // apps built with the official Shizuku-API working: they hold no
             // Shizaku permission (undefined on this side), but went through the
             // same user-confirmation dialog, so record.allowed is the source of
             // truth. This restores the pre-refactor upstream semantics.
-            return clientRecord.allowed;
+            allowed = clientRecord.allowed;
+        } else {
+            allowed = checkCallingPermission() == PackageManager.PERMISSION_GRANTED;
         }
-        if (checkCallingPermission() == PackageManager.PERMISSION_GRANTED) {
-            return true;
+        // 调用审计：记录哪个应用调用了哪个特权 API
+        auditCall(func, callingUid, callingPid, allowed);
+        return allowed;
+    }
+
+    private static final String AUDIT_LOG_PATH = "/data/local/tmp/shizako-api.log";
+    private static final long AUDIT_LOG_MAX_BYTES = 512L * 1024L;
+
+    /** 限流去重：同 uid+func 的调用 1 秒内只记一次，防止高频 API 刷爆日志 */
+    private static String lastAuditKey = null;
+    private static long lastAuditTime = 0L;
+
+    /**
+     * 每次特权 API 调用审计：时间,uid,pid,func,allowed。
+     * 写 /data/local/tmp/shizako-api.log（server 为 shell/root uid 可写），
+     * 超过 512KB 轮转。manager 的「API 调用日志」页面经 server 读取展示。
+     */
+    private void auditCall(String func, int uid, int pid, boolean allowed) {
+        try {
+            long now = System.currentTimeMillis();
+            String key = uid + ":" + func;
+            if (key.equals(lastAuditKey) && now - lastAuditTime < 1000L) {
+                return; // 1 秒内同 uid 同 API 去重
+            }
+            lastAuditKey = key;
+            lastAuditTime = now;
+
+            java.io.File file = new java.io.File(AUDIT_LOG_PATH);
+            if (file.length() > AUDIT_LOG_MAX_BYTES) {
+                // 轮转：旧文件挪走，只保留一份
+                java.io.File old = new java.io.File(AUDIT_LOG_PATH + ".old");
+                if (old.exists()) old.delete();
+                file.renameTo(old);
+            }
+            String stamp = new java.text.SimpleDateFormat("MM-dd HH:mm:ss", java.util.Locale.US)
+                    .format(new java.util.Date());
+            String line = stamp + "," + uid + "," + pid + "," + func + "," + (allowed ? "allow" : "deny") + "\n";
+            try (java.io.FileOutputStream fos = new java.io.FileOutputStream(file, true)) {
+                fos.write(line.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            }
+        } catch (Throwable ignored) {
+            // 审计失败不影响主流程
         }
-        return false;
     }
 
     @Override

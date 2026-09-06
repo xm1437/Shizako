@@ -68,7 +68,7 @@
             android:title="@string/settings_watchdog" />
 
         <rikka.material.preference.MaterialSwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="auto_update"
             android:summary="@string/settings_auto_update_summary"
             android:title="@string/settings_auto_update" />
@@ -86,6 +86,11 @@
             android:key="crash_logs"
             android:summary="@string/settings_crash_logs_summary"
             android:title="@string/settings_crash_logs" />
+
+        <Preference
+            android:key="api_log"
+            android:summary="@string/settings_api_log_summary"
+            android:title="@string/settings_api_log" />
 
     </PreferenceCategory>
 

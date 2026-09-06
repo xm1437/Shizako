@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.topjohnwu.superuser.Shell
+import moe.shizuku.manager.dhizuku.DhizukuSettings
 import moe.shizuku.manager.ktx.logd
 import moe.shizuku.manager.utils.CrashLog
 import moe.shizuku.manager.utils.StatusNotification
@@ -33,6 +34,7 @@ class ShizukuApplication : Application() {
 
     private fun init(context: Context?) {
         ShizukuSettings.initialize(context)
+        DhizukuSettings.initialize(requireNotNull(context))
         LocaleDelegate.defaultLocale = ShizukuSettings.getLocale()
         AppCompatDelegate.setDefaultNightMode(ShizukuSettings.getNightMode())
     }

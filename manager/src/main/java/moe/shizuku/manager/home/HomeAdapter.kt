@@ -28,6 +28,7 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         private const val ID_LEARN_MORE = 6L
         private const val ID_ADB_PERMISSION_LIMITED = 7L
         private const val ID_ACTIVATION = 8L
+        private const val ID_DHIZUKU = 9L
     }
 
     override fun onCreateCreatorPool(): IndexCreatorPool {
@@ -68,13 +69,15 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
 
             data class MethodEntry(val method: Int, val add: () -> Unit)
 
+            var dhizukuAdded = false
             val methods = buildList {
-                if (root) {
+                // 服务已激活时隐藏 Root / 无线调试卡片，未激活时再显示
+                if (root && !running) {
                     add(MethodEntry(ShizukuSettings.StartMethod.ROOT) {
                         addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)
                     })
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R || EnvironmentUtils.getAdbTcpPort() > 0) {
+                if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.R || EnvironmentUtils.getAdbTcpPort() > 0) && !running) {
                     add(MethodEntry(ShizukuSettings.StartMethod.WIRELESS_ADB) {
                         addItem(StartWirelessAdbViewHolder.CREATOR, null, ID_START_WADB)
                     })
@@ -85,9 +88,22 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
             }
 
             methods.sortedBy { if (it.method == preferred) 0 else 1 }
-                .forEach { it.add() }
+                .forEach {
+                    it.add()
+                    // Dhizuku（设备所有者）激活卡片：固定在无线调试卡片下方。
+                // Shizuku 模式（server 运行）时卡片内提供一键激活。
+                    if (it.method == ShizukuSettings.StartMethod.WIRELESS_ADB) {
+                        addItem(StartDhizukuViewHolder.CREATOR, status, ID_DHIZUKU)
+                        dhizukuAdded = true
+                    }
+                }
 
-            if (!root) {
+            // 无无线调试卡片（Android 10 及以下）时，Dhizuku 卡片排在激活方式末尾
+            if (!dhizukuAdded) {
+                addItem(StartDhizukuViewHolder.CREATOR, status, ID_DHIZUKU)
+            }
+
+            if (!root && !running) {
                 addItem(StartRootViewHolder.CREATOR, rootRestart, ID_START_ROOT)
             }
         }
