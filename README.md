@@ -15,6 +15,7 @@
 [![Platform](https://img.shields.io/badge/Android-7.0%2B-34A853?style=flat-square&logo=android&logoColor=white)](https://github.com/xm1437/Shizako/releases)
 [![Based on](https://img.shields.io/badge/%E5%9F%BA%E4%BA%8E-Shizuku%2013.x-7C6FD0?style=flat-square)](https://github.com/RikkaApps/Shizuku)
 [![License](https://img.shields.io/github/license/xm1437/Shizako?style=flat-square)](LICENSE)
+[![Star](https://img.shields.io/github/stars/xm1437/Shizako?style=for-the-badge&label=%E2%AD%90%20Star%20Shizako%20%E7%8C%AE%E7%BB%99%E5%A5%B9&color=FFD700)](https://github.com/xm1437/Shizako/stargazers)
 
 </div>
 
@@ -266,6 +267,17 @@ A：因为作者把她当女儿养（确信）。
 ---
 
 <div align="center">
+
+<div align="center">
+
+> ⭐ **喜欢 Shizako酱？点个 Star 再走吧** —— 每一颗星都是她的猫粮，
+> 她会对着星星喵喵叫感谢你的 (ฅ'ω'ฅ)
+>
+> [点这里投喂 Star →](https://github.com/xm1437/Shizako/stargazers)
+
+</div>
+
+---
 
 <sub>English summary: Shizako is an Apache-2.0 licensed fork of Shizuku with an original catgirl mascot. It runs a privileged service via ADB / wireless debugging / root and lends elevated APIs to apps you trust — including apps built with the official `dev.rikka.shizuku:api`, which connect without any code change. Star it or the catgirl will be sad. (She forgives easily though.)</sub>
 
