@@ -33,8 +33,13 @@
 | 免 Root 特权 | 通过 ADB / 无线调试获得近似 Root 的能力，不拆机不刷机 |
 | 通行证制度 | 每个应用第一次连接都要你亲自授权，随时反悔收回 |
 | 官方生态直连 | 用官方 Shizuku-API 写的应用**一行代码不用改**就能连上她 |
-| 一键注入 | 首页卡片一键把权限分给常用应用，不用一个个点 |
-| 双管理器共存 | 和官方 Shizuku 同时安装互不干扰 |
+| Dhizuku 模式 | 一键把她扶上「设备所有者」，之后特权常驻，免 Root 免无线调试；Dhizuku-API 应用（Hail、冰箱等）可直接借用 |
+| 新手引导 | 首次启动逐步向导：语言/外观/启动方式，引导内**直接完成激活**（启动服务、一键 Dhizuku），免责声明 10 秒强制阅读 |
+| 一键注入 | 一键把权限分给常用应用（黑域、小黑屋、冰箱、炼妖壶），未安装的直接**应用内下载**（进度条+速度，与更新器同款） |
+| 兼容桥 | 内置官方 `moe.shizuku.privileged.api.shizuku` provider 中转，检测不到 Fork 包名的老客户端也能连上 |
+| Tasker 支持 | 广播一键启停服务、激活 Dhizuku、查询状态、触发下载，自动化随便玩 |
+| API 审计 | 完整记录哪个应用调用了哪个特权 API，设置里随时查 |
+| 崩溃日志 | 崩溃自动落盘 `Download/Shizako-crash-*.txt`，排障不用愁 |
 
 ## 🚀 带她回家
 
@@ -43,6 +48,7 @@
 | 系统版本 | Android 7.0 及以上 |
 | 无线调试激活 | 需 Android 11 及以上 |
 | USB / Root 激活 | 没有额外限制 |
+| Device Owner 激活 | 电脑上执行一次 `adb shell dpm set-device-owner com.churan.shizako/.dhizuku.DhizukuAdminReceiver`（设备上不能有账户），之后免 Root、免无线调试；Dhizuku-API 应用直连，授权与收回走同一套通行证制度 |
 
 下载走 [Releases](https://github.com/xm1437/Shizako/releases) 拿最新版就行。激活教程可以参考上游 Shizuku 的[配置指南](https://shizuku.rikka.app/zh-hans/guide/setup/)，流程完全一致。
 
@@ -60,6 +66,17 @@
 |------|---------|
 | 包名 | `com.churan.shizako` |
 | 权限名 | `com.churan.shizako.permission.API_V23` |
+
+> 注意：Shizako 内置兼容桥占用了官方 provider authority `moe.shizuku.privileged.api.shizuku`，因此**不能与官方 Shizuku 同时安装**（Android 会报 provider 冲突）。二选一即可，Shizako 全功能覆盖官方。
+
+### Dhizuku 兼容：她是自己的设备所有者
+
+Dhizuku-API 应用靠「设备所有者（Device Owner）」特权工作，Shizako 直接兼任这个角色：
+
+- Shizako 被设为 Device Owner 后，用 Dhizuku-API 写的应用把 Shizako 当成 Dhizuku 使用，**不用改代码**
+- 特权转发全部发生在 Shizako 进程内，系统看到的调用者是 Shizako 自己——没有开放任何系统 binder 给第三方
+- 每个 Dhizuku-API 应用第一次借用特权时都会弹出和 Shizuku 一样的授权对话框，同意记录在本地白名单，可在「Dhizuku 授权的应用」页面随时收回
+- 协议实现为独立编写的兼容层（wire 协议与 Dhizuku-API 对齐），不依赖 GPL 许可的 Dhizuku-API 库，Shizako 保持 Apache-2.0
 
 ### 官方生态应用也能直连
 
@@ -118,6 +135,19 @@ cd Shizako
 | NDK | 29.0.13113456 |
 
 国内网络不用操心，仓库里已经配好了阿里云 Maven 镜像。编译产物在 `manager/build/outputs/apk/release/`，没配签名的话会自动用 debug 签名顶上。
+
+### Tasker / MacroDroid 广播指令
+
+| Action | 作用 |
+|--------|------|
+| `com.churan.shizako.action.START` | 按上次启动方式启动服务 |
+| `com.churan.shizako.action.STOP` | 停止服务 |
+| `com.churan.shizako.action.START_ROOT` | Root 启动 |
+| `com.churan.shizako.action.START_ADB` | 无线调试启动 |
+| `com.churan.shizako.action.ACTIVATE_DHIZUKU` | 一键激活设备所有者模式（需 Shizuku 模式运行中） |
+| `com.churan.shizako.action.QUERY_STATUS` | 查询状态（有序广播返回 extras：`running`、`dhizuku`） |
+| `com.churan.shizako.action.DOWNLOAD_UPDATE` | 用内部下载器拉取 `url` extra 指向的 APK（进度条+自动弹安装） |
+| `com.churan.shizako.action.NOTIFY_INSTALL` | 发可点击通知：点一下直接安装 Download 里最新的 APK |
 
 ## 🗂️ 代码长这样
 
