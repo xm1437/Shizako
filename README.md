@@ -243,7 +243,7 @@ A：因为作者把她当女儿养（确信）。
 
 - [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) 和它的贡献者们——Shizako 的全部核心能力来自这里，敬礼！
 - [RikkaApps/Shizuku-API](https://github.com/RikkaApps/Shizuku-API)——客户端通信库，稳如老狗
-- 每一个给 Shizako 酱点 Star 的你——你们是她的猫粮（不是）
+- 每一个给 Shizako酱点 Star 的你——你们是她的猫粮（不是）
 
 ## 📬 勾搭看板娘
 
